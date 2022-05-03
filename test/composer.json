@@ -1,0 +1,42 @@
+{
+    "name": "justapnet/justap-server-sdk-php",
+    "description": "",
+    "keywords": [
+        "justap",
+        "php",
+        "sdk",
+        "payment",
+        "pay sdk",
+        "api",
+        "聚合支付",
+        "微信支付",
+        "支付宝",
+        "支付sdk"
+    ],
+    "homepage": "http://swagger.io",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Swagger and contributors",
+            "homepage": "https://github.com/swagger-api/swagger-codegen"
+        }
+    ],
+    "require": {
+        "php": "^7 || ^8",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "squizlabs/php_codesniffer": "~2.6",
+        "friendsofphp/php-cs-fixer": "~2.12"
+    },
+    "autoload": {
+        "psr-4": { "Justapnet\\Justap\\" : "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "Justapnet\\Justap\\" : "test/" }
+    }
+}
