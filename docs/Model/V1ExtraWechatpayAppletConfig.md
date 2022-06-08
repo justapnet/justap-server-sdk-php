@@ -3,13 +3,13 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**app_id** | **string** |  | [optional] 
-**nonce_str** | **string** |  | [optional] 
-**package** | **string** |  | [optional] 
-**pay_sign** | **string** |  | [optional] 
-**sign_type** | **string** |  | [optional] 
-**time_stamp** | **string** |  | [optional] 
+**app_id** | **string** | 小程序appid | 
+**nonce_str** | **string** | 随机字符串 | 
+**package** | **string** | 扩展字段 | 
+**pay_sign** | **string** | 签名 | 
+**sign_type** | **string** | 签名类型 | 
+**time_stamp** | **string** | 时间戳 | 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

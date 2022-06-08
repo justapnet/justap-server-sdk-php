@@ -3,42 +3,42 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**advance_payment_type** | **string** |  | [optional] 
+**advance_payment_type** | **string** | 预授权类型 | 
 **agreement_params** | [**\Justapnet\Justap\Model\V1ExtraAlipayAgreementParams**](V1ExtraAlipayAgreementParams.md) |  | [optional] 
-**auth_code** | **string** |  | [optional] 
-**auth_confirm_mode** | **string** |  | [optional] 
-**auth_no** | **string** |  | [optional] 
-**buyer_id** | **string** |  | [optional] 
-**buyer_logon_id** | **string** |  | [optional] 
-**buyer_pay_amount** | **string** |  | [optional] 
-**buyer_user_id** | **string** |  | [optional] 
-**discount_amount** | **string** |  | [optional] 
-**discount_goods_detail** | **string** |  | [optional] 
-**discountable_amount** | **double** |  | [optional] 
+**auth_code** | **string** | 用户的条码 | 
+**auth_confirm_mode** | **string** | 授权确认方式 | 
+**auth_no** | **string** | 授权号 | 
+**buyer_id** | **string** | 买家的支付宝用户id | 
+**buyer_logon_id** | **string** | [ONLY IN RESPONSE] 买家支付宝账号 | 
+**buyer_pay_amount** | **double** | [ONLY IN RESPONSE] 付款金额 | 
+**buyer_user_id** | **string** | [ONLY IN RESPONSE] 买家在支付宝的用户id | 
+**discount_amount** | **double** | [ONLY IN RESPONSE] 商家优惠金额 | 
+**discount_goods_detail** | **string** | [ONLY IN RESPONSE] 商家优惠商品明细 | 
+**discountable_amount** | **double** | 可打折金额 | 
 **extend_params** | [**\Justapnet\Justap\Model\V1ExtraAlipayExtendParams**](V1ExtraAlipayExtendParams.md) |  | [optional] 
 **fund_bill_list** | [**\Justapnet\Justap\Model\V1ExtraAlipayFundBillList**](V1ExtraAlipayFundBillList.md) |  | [optional] 
-**gmt_payment** | **string** |  | [optional] 
-**goods_detail** | [**\Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[]**](V1ExtraAlipayGoodsDetail.md) |  | [optional] 
-**invoice_amount** | **string** |  | [optional] 
+**gmt_payment** | **string** | [ONLY IN RESPONSE] 支付时间 | 
+**goods_detail** | [**\Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[]**](V1ExtraAlipayGoodsDetail.md) | 商品明细列表 | [optional] 
+**invoice_amount** | **double** | [ONLY IN RESPONSE] 开票金额 | 
 **is_async_pay** | [**\Justapnet\Justap\Model\V1ExtraAlipayPayParams**](V1ExtraAlipayPayParams.md) |  | [optional] 
-**mdiscount_amount** | **string** |  | [optional] 
-**operator_id** | **string** |  | [optional] 
-**pay_params** | **string** |  | [optional] 
-**point_amount** | **string** |  | [optional] 
-**product_code** | **string** |  | [optional] 
-**query_options** | **string** |  | [optional] 
-**receipt_amount** | **string** |  | [optional] 
-**request_org_pid** | **string** |  | [optional] 
-**scene** | **string** |  | [optional] 
+**mdiscount_amount** | **double** | [ONLY IN RESPONSE] 平台优惠金额 | 
+**operator_id** | **string** | 商户操作员编号 | 
+**pay_params** | **string** | [ONLY IN RESPONSE] 支付宝返回的支付参数 | 
+**point_amount** | **double** | [ONLY IN RESPONSE] 集分宝金额 | 
+**product_code** | **string** | 销售产品码 | 
+**query_options** | **string** | 商户授权查询类型 | 
+**receipt_amount** | **double** | [ONLY IN RESPONSE] 实收金额 | 
+**request_org_pid** | **string** | 请求方机构id | 
+**scene** | **string** | 支付场景 | 
 **settle_info** | [**\Justapnet\Justap\Model\V1ExtraAlipaySettleInfo**](V1ExtraAlipaySettleInfo.md) |  | [optional] 
-**store_id** | **string** |  | [optional] 
-**store_name** | **string** |  | [optional] 
+**store_id** | **string** | 商户门店编号 | 
+**store_name** | **string** | [ONLY IN RESPONSE] 商户门店名称 | 
 **sub_merchant** | [**\Justapnet\Justap\Model\V1ExtraAlipaySubMerchant**](V1ExtraAlipaySubMerchant.md) |  | [optional] 
-**terminal_id** | **string** |  | [optional] 
-**total_amount** | **string** |  | [optional] 
-**undiscountable_amount** | **double** |  | [optional] 
+**terminal_id** | **string** | 商户机具终端编号 | 
+**total_amount** | **double** | [ONLY IN RESPONSE] 订单金额 | 
+**undiscountable_amount** | **double** | 不可打折金额 | 
 **voucher_detail_list** | [**\Justapnet\Justap\Model\V1ExtraAlipayVoucherDetailList**](V1ExtraAlipayVoucherDetailList.md) |  | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

@@ -4,16 +4,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **applet_config** | [**\Justapnet\Justap\Model\V1ExtraWechatpayAppletConfig**](V1ExtraWechatpayAppletConfig.md) |  | [optional] 
-**attach** | **string** |  | [optional] 
+**attach** | **string** | 元数据 | [optional] 
 **detail** | [**\Justapnet\Justap\Model\V1ExtraWechatpayDetail**](V1ExtraWechatpayDetail.md) |  | [optional] 
-**goods_tag** | **string** |  | [optional] 
+**goods_tag** | **string** | 订单优惠标记 | 
 **payer** | [**\Justapnet\Justap\Model\V1ExtraWechatpayPayer**](V1ExtraWechatpayPayer.md) |  | [optional] 
-**prepay_id** | **string** |  | [optional] 
+**prepay_id** | **string** | 预支付交易会话标识 | 
 **scene_info** | [**\Justapnet\Justap\Model\V1ExtraWechatpaySceneInfo**](V1ExtraWechatpaySceneInfo.md) |  | [optional] 
 **settle_info** | [**\Justapnet\Justap\Model\V1ExtraWechatpaySettleInfo**](V1ExtraWechatpaySettleInfo.md) |  | [optional] 
-**time_expire** | **string** |  | [optional] 
-**time_start** | **string** |  | [optional] 
+**time_expire** | **string** | 交易结束时间 | 
+**time_start** | **string** | 交易起始时间 | 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

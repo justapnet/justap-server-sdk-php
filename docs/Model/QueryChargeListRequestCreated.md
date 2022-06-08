@@ -8,6 +8,6 @@ Name | Type | Description | Notes
 **lt** | **int** | 大于 charge 对象的创建时间，用 Unix 时间戳表示 | [default to 0]
 **lte** | **int** | 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [default to 0]
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

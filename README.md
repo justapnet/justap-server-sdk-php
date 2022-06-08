@@ -1,7 +1,7 @@
 # justap-server-sdk-php
 
 - API version: 1.0
-- Build package: io.swagger.codegen.languages.PhpClientCodegen
+- Build package: io.swagger.codegen.v3.generators.php.PhpClientCodegen
 
 ## Document
 
@@ -21,7 +21,7 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/justapnet/justap-server-sdk-php.git"
+      "url": "justap-server-sdk-php/justapnet/justap-server-sdk-php.git"
     }
   ],
   "require": {
@@ -82,7 +82,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://127.0.0.1:21011*
+All URIs are relative to *http://127.0.0.1:21011/*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
@@ -104,8 +104,8 @@ Class | Method | HTTP request | Description
  - [ExtraAlipayRoyaltyInfoRoyaltyDetailInfos](docs/Model/ExtraAlipayRoyaltyInfoRoyaltyDetailInfos.md)
  - [ExtraAlipaySettleInfoSettleDetailInfos](docs/Model/ExtraAlipaySettleInfoSettleDetailInfos.md)
  - [ExtraWechatpayDetailGoodsDetail](docs/Model/ExtraWechatpayDetailGoodsDetail.md)
+ - [ExtraWechatpaySceneInfoH5Info](docs/Model/ExtraWechatpaySceneInfoH5Info.md)
  - [ExtraWechatpaySceneInfoStoreInfo](docs/Model/ExtraWechatpaySceneInfoStoreInfo.md)
- - [HealthCheckResponseServingStatus](docs/Model/HealthCheckResponseServingStatus.md)
  - [OpenApiRoyaltyDetailInfoPojoTradeFundBillItem](docs/Model/OpenApiRoyaltyDetailInfoPojoTradeFundBillItem.md)
  - [ProtobufAny](docs/Model/ProtobufAny.md)
  - [QueryChargeListRequestCreated](docs/Model/QueryChargeListRequestCreated.md)
@@ -158,7 +158,6 @@ Class | Method | HTTP request | Description
  - [V1ExtraWechatpayScan](docs/Model/V1ExtraWechatpayScan.md)
  - [V1ExtraWechatpaySceneInfo](docs/Model/V1ExtraWechatpaySceneInfo.md)
  - [V1ExtraWechatpaySettleInfo](docs/Model/V1ExtraWechatpaySettleInfo.md)
- - [V1HealthCheckResponse](docs/Model/V1HealthCheckResponse.md)
  - [V1Refund](docs/Model/V1Refund.md)
  - [V1RefundExtra](docs/Model/V1RefundExtra.md)
  - [V1RefundExtraAlipay](docs/Model/V1RefundExtraAlipay.md)

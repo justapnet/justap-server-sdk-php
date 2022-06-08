@@ -7,10 +7,10 @@ Name | Type | Description | Notes
 **app_id** | **string** | [REQUIRED] 应用 id | 
 **charge_id** | **string** | [REQUIRED] 支付 Charge Id | 
 **description** | **string** | [REQUIRED] 退款原因，最多 255 个 Unicode 字符。 | 
-**extra** | [**\Justapnet\Justap\Model\ProtobufAny**](ProtobufAny.md) | [OPTIONAL] 退款 extra 参数。 | [optional] 
+**extra** | [**\Justapnet\Justap\Model\ProtobufAny**](ProtobufAny.md) |  | [optional] 
 **merchant_refund_id** | **string** | [REQUIRED] 商户系统的退款单号，必须保证唯一。由于 charge 支持多次退款，对于失败重试动作确保使用相同的订单号，以避免重复退款造成损失。 | 
 **metadata** | **map[string,string]** | [OPTIONAL] 参考元数据。 | [optional] 
 
-[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
 
 

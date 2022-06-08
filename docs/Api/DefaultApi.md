@@ -1,16 +1,16 @@
-# Justapnet\Justap\DefaultApi
+# Justapnet\JustapDefaultApi
 
-All URIs are relative to *http://127.0.0.1:21011*
+All URIs are relative to *http://127.0.0.1:21011/*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**tradeServiceCharges**](DefaultApi.md#tradeServiceCharges) | **POST** /transaction/v1/charges | 创建 Charge 对象
-[**tradeServiceQueryCharge**](DefaultApi.md#tradeServiceQueryCharge) | **GET** /transaction/v1/charges/{charge_id} | 查询 Charge 对象
-[**tradeServiceQueryChargeList**](DefaultApi.md#tradeServiceQueryChargeList) | **GET** /transaction/v1/charges | 查询 Charge 对象列表
-[**tradeServiceQueryRefund**](DefaultApi.md#tradeServiceQueryRefund) | **GET** /transaction/v1/charges/{charge_id}/refunds/{refund_id} | 查询 Refund 对象
-[**tradeServiceQueryRefundList**](DefaultApi.md#tradeServiceQueryRefundList) | **GET** /transaction/v1/charges/{charge_id}/refunds | 查询 Refund 对象列表
-[**tradeServiceRefunds**](DefaultApi.md#tradeServiceRefunds) | **POST** /transaction/v1/refunds | 创建 Refund 对象
-[**tradeServiceReverseCharge**](DefaultApi.md#tradeServiceReverseCharge) | **POST** /transaction/v1/charges/{charge_id}/reverse | 撤销 Charge 对象
+[**tradeServiceCharges**](DefaultApi.md#tradeservicecharges) | **POST** /transaction/v1/charges | 创建 Charge 对象
+[**tradeServiceQueryCharge**](DefaultApi.md#tradeservicequerycharge) | **GET** /transaction/v1/charges/{charge_id} | 查询 Charge 对象
+[**tradeServiceQueryChargeList**](DefaultApi.md#tradeservicequerychargelist) | **GET** /transaction/v1/charges | 查询 Charge 对象列表
+[**tradeServiceQueryRefund**](DefaultApi.md#tradeservicequeryrefund) | **GET** /transaction/v1/charges/{charge_id}/refunds/{refund_id} | 查询 Refund 对象
+[**tradeServiceQueryRefundList**](DefaultApi.md#tradeservicequeryrefundlist) | **GET** /transaction/v1/charges/{charge_id}/refunds | 查询 Refund 对象列表
+[**tradeServiceRefunds**](DefaultApi.md#tradeservicerefunds) | **POST** /transaction/v1/refunds | 创建 Refund 对象
+[**tradeServiceReverseCharge**](DefaultApi.md#tradeservicereversecharge) | **POST** /transaction/v1/charges/{charge_id}/reverse | 撤销 Charge 对象
 
 
 # **tradeServiceCharges**
@@ -30,7 +30,7 @@ $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
 
-$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+$apiInstance = new Justapnet\Justap\ApiDefaultApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -49,8 +49,6 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
  **body** | [**\Justapnet\Justap\Model\V1CreateChargeRequest**](../Model/V1CreateChargeRequest.md)|  |
 
 ### Return type
@@ -59,7 +57,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth), 
 
 ### HTTP request headers
 
@@ -85,7 +83,7 @@ $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
 
-$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+$apiInstance = new Justapnet\Justap\ApiDefaultApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -105,8 +103,6 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
  **charge_id** | **string**| [REQUIRED] Charge 对象 id |
  **app_id** | **string**| [REQUIRED] 应用 id | [optional]
 
@@ -116,11 +112,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth), 
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -142,7 +138,7 @@ $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
 
-$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+$apiInstance = new Justapnet\Justap\ApiDefaultApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -157,7 +153,7 @@ $created_lt = 0; // int | 大于 charge 对象的创建时间，用 Unix 时间�
 $created_lte = 0; // int | 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示
 $created_gt = 0; // int | 小于 charge 对象的创建时间，用 Unix 时间戳表示
 $created_gte = 0; // int | 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示
-$channel = "CHANNEL_INVALID_UNSPECIFIED"; // string | [OPTIONAL] 渠道名称   - BALANCE: 余额  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付
+$channel = "CHANNEL_INVALID_UNSPECIFIED"; // string | [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付
 $paid = false; // bool | [OPTIONAL] 是否已付款
 $refunded = false; // bool | [OPTIONAL] 是否存在退款信息，无论退款是否成功。
 $reversed = false; // bool | [OPTIONAL] 是否已撤销
@@ -175,8 +171,6 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
  **app_id** | **string**| [REQUIRED] 应用 id | [optional]
  **limit** | **int**| [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 | [optional] [default to 10]
  **starting_after** | **string**| [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 | [optional]
@@ -186,7 +180,7 @@ Name | Type | Description  | Notes
  **created_lte** | **int**| 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
  **created_gt** | **int**| 小于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
  **created_gte** | **int**| 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
- **channel** | **string**| [OPTIONAL] 渠道名称   - BALANCE: 余额  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 | [optional] [default to CHANNEL_INVALID_UNSPECIFIED]
+ **channel** | **string**| [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 | [optional] [default to CHANNEL_INVALID_UNSPECIFIED]
  **paid** | **bool**| [OPTIONAL] 是否已付款 | [optional] [default to false]
  **refunded** | **bool**| [OPTIONAL] 是否存在退款信息，无论退款是否成功。 | [optional] [default to false]
  **reversed** | **bool**| [OPTIONAL] 是否已撤销 | [optional] [default to false]
@@ -199,11 +193,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth), 
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -225,7 +219,7 @@ $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
 
-$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+$apiInstance = new Justapnet\Justap\ApiDefaultApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -246,8 +240,6 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
  **charge_id** | **string**| [REQUIRED] 支付 Charge Id |
  **refund_id** | **string**| [REQUIRED] Refund 对象 id |
  **app_id** | **string**| [REQUIRED] 应用 id | [optional]
@@ -258,11 +250,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth), 
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -284,7 +276,7 @@ $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
 
-$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+$apiInstance = new Justapnet\Justap\ApiDefaultApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -307,8 +299,6 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
  **charge_id** | **string**| [REQUIRED] 支付 Charge Id |
  **app_id** | **string**| [REQUIRED] 应用 id | [optional]
  **limit** | **int**| [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 | [optional] [default to 10]
@@ -321,11 +311,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth), 
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
@@ -347,7 +337,7 @@ $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
 
-$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+$apiInstance = new Justapnet\Justap\ApiDefaultApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -366,8 +356,6 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
  **body** | [**\Justapnet\Justap\Model\V1CreateRefundRequest**](../Model/V1CreateRefundRequest.md)|  |
 
 ### Return type
@@ -376,7 +364,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth), 
 
 ### HTTP request headers
 
@@ -402,7 +390,7 @@ $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('
 // Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
 // $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
 
-$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+$apiInstance = new Justapnet\Justap\ApiDefaultApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
     new GuzzleHttp\Client(),
@@ -422,8 +410,6 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
  **charge_id** | **string**| Charge 对象 id |
  **app_id** | **string**| [REQUIRED] 应用 id | [optional]
 
@@ -433,11 +419,11 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[ApiKeyAuth](../../README.md#ApiKeyAuth)
+[ApiKeyAuth](../../README.md#ApiKeyAuth), 
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
