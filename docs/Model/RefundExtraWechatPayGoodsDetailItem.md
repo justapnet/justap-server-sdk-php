@@ -10,6 +10,6 @@ Name | Type | Description | Notes
 **unit_price** | **int** | 商品单价金额，单位为分 | 
 **wechatpay_goods_id** | **string** | 微信支付商品编码, 微信支付定义的统一商品编号（没有可不传） | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

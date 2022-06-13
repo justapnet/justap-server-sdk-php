@@ -3,7 +3,7 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**account** | [**\Justapnet\Justap\Model\V1RefundExtra**](V1RefundExtra.md) |  | [optional] 
+**account** | [**\Justapnet\Justap\Model\V1RefundExtra**](V1RefundExtra.md) | 支付渠道退款元参数 | [optional] 
 **amount** | **float** | 退款金额 | 
 **charge_id** | **string** | Charge 对象 id | 
 **charge_merchant_trade_id** | **string** | 商户系统订单号 | 
@@ -19,6 +19,6 @@ Name | Type | Description | Notes
 **success_at** | [**\DateTime**](\DateTime.md) | 退款成功时间 | [optional] 
 **transaction_no** | **string** | 交易号 | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

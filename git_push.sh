@@ -24,7 +24,7 @@ if [ "$release_note" = "" ]; then
 fi
 
 if [ "$git_repo_base_url" = "" ]; then
-    git_repo_base_url="justap-server-sdk-php"
+    git_repo_base_url="https://github.com"
     echo "[INFO] No command line input provided. Set \$git_repo_base_url to $git_repo_base_url"
 fi
 
@@ -47,7 +47,7 @@ if [ "$git_remote" = "" ]; then # git remote not defined
     else
         git_repo_base_url=${git_repo_base_url#*//}
         git_repo_base_url=${git_repo_base_url%%.*}
-        git remote add origin https://${git_user_id}:${GIT_TOKEN}@${git_repo_base_url}/${git_user_id}/${git_repo_id}.git
+        git remote add origin https://${git_user_id}:${GIT_TOKEN}@${git_repo_base_url}.com/${git_user_id}/${git_repo_id}.git
     fi
 
 fi
@@ -55,6 +55,6 @@ fi
 git pull origin master
 
 # Pushes (Forces) the changes in the local repository up to the remote repository
-echo "Git pushing to ${git_repo_base_url}/${git_user_id}/${git_repo_id}.git"
+echo "Git pushing to https://${git_repo_base_url}.com/${git_user_id}/${git_repo_id}.git"
 git push origin master 2>&1 | grep -v 'To https'
 

@@ -11,6 +11,6 @@ Name | Type | Description | Notes
 **name** | **string** | 真实用户的姓名 | 
 **need_check_info** | **string** | 是否需要补充身份信息 | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

@@ -10,16 +10,16 @@ Name | Type | Description | Notes
 **amount_settle** | **double** | 结算金额，不一定有，视支付通道情况返回 | 
 **app_id** | **string** | 应用ID | 
 **body** | **string** | 订单描述信息 | 
-**channel** | [**\Justapnet\Justap\Model\V1Channel**](V1Channel.md) |  | 
+**channel** | [**\Justapnet\Justap\Model\V1Channel**](V1Channel.md) | 支付渠道 | 
 **charge_id** | **string** | Charge 对象 id | 
 **client_ip** | **string** | 顾客IP | 
 **closed** | **bool** | 是否关闭 | [default to false]
 **closed_at** | [**\DateTime**](\DateTime.md) | 关闭时间 | [optional] 
 **created_at** | [**\DateTime**](\DateTime.md) | Charge 对象创建时间 | [optional] 
-**credential** | [**\Justapnet\Justap\Model\ProtobufAny**](ProtobufAny.md) |  | [optional] 
+**credential** | [**\Justapnet\Justap\Model\ProtobufAny**](ProtobufAny.md) | 支付凭证 | [optional] 
 **currency** | **string** | 货币单位，当前仅支持 CNY | 
 **description** | **string** | 描述信息 | 
-**extra** | [**\Justapnet\Justap\Model\V1ChargeExtra**](V1ChargeExtra.md) |  | [optional] 
+**extra** | [**\Justapnet\Justap\Model\V1ChargeExtra**](V1ChargeExtra.md) | 支付渠道元数据 | [optional] 
 **failure_code** | **string** | 收单机构错误码 | 
 **failure_msg** | **string** | 收单机构错误描述信息 | 
 **live_mode** | **bool** | 表明是否是沙箱环境 | [default to false]
@@ -36,6 +36,6 @@ Name | Type | Description | Notes
 **transaction_no** | **string** | Charge 的支付单号 | 
 **ttl** | **int** | 订单生存时间，单位秒 | [default to 0]
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

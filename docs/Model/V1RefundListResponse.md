@@ -8,6 +8,6 @@ Name | Type | Description | Notes
 **object** | **string** | 对象类型 | [default to 'Refund']
 **total** | **int** | 总数据条数 | [default to 0]
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

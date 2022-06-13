@@ -1,7 +1,7 @@
 # justap-server-sdk-php
 
 - API version: 1.0
-- Build package: io.swagger.codegen.v3.generators.php.PhpClientCodegen
+- Build package: io.swagger.codegen.languages.PhpClientCodegen
 
 ## Document
 
@@ -21,7 +21,7 @@ To install the bindings via [Composer](http://getcomposer.org/), add the followi
   "repositories": [
     {
       "type": "git",
-      "url": "justap-server-sdk-php/justapnet/justap-server-sdk-php.git"
+      "url": "https://github.com/justapnet/justap-server-sdk-php.git"
     }
   ],
   "require": {
@@ -82,7 +82,7 @@ try {
 
 ## Documentation for API Endpoints
 
-All URIs are relative to *http://127.0.0.1:21011/*
+All URIs are relative to *http://127.0.0.1:21011*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------

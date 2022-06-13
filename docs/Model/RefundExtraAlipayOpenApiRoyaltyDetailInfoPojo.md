@@ -20,6 +20,6 @@ Name | Type | Description | Notes
 **trans_out** | **string** | 支出方账户 | 
 **trans_out_type** | **string** | 支出方账户类型 | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

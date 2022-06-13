@@ -76,17 +76,17 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'buyer_id' => null,
+        'buyer_id' => 'string',
         'discountable_amount' => null,
         'goods_detail' => null,
-        'operator_id' => null,
-        'product_code' => null,
-        'qr_code' => null,
-        'qr_code_timeout_express' => null,
-        'qr_link' => null,
+        'operator_id' => 'string',
+        'product_code' => 'string',
+        'qr_code' => 'string',
+        'qr_code_timeout_express' => 'string',
+        'qr_link' => 'string',
         'query_options' => null,
-        'store_id' => null,
-        'terminal_id' => null
+        'store_id' => 'string',
+        'terminal_id' => 'string'
     ];
 
     /**
@@ -249,6 +249,30 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['buyer_id'] === null) {
+            $invalidProperties[] = "'buyer_id' can't be null";
+        }
+        if ($this->container['operator_id'] === null) {
+            $invalidProperties[] = "'operator_id' can't be null";
+        }
+        if ($this->container['product_code'] === null) {
+            $invalidProperties[] = "'product_code' can't be null";
+        }
+        if ($this->container['qr_code'] === null) {
+            $invalidProperties[] = "'qr_code' can't be null";
+        }
+        if ($this->container['qr_code_timeout_express'] === null) {
+            $invalidProperties[] = "'qr_code_timeout_express' can't be null";
+        }
+        if ($this->container['qr_link'] === null) {
+            $invalidProperties[] = "'qr_link' can't be null";
+        }
+        if ($this->container['store_id'] === null) {
+            $invalidProperties[] = "'store_id' can't be null";
+        }
+        if ($this->container['terminal_id'] === null) {
+            $invalidProperties[] = "'terminal_id' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -277,7 +301,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets buyer_id
      *
-     * @param string $buyer_id buyer_id
+     * @param string $buyer_id 买家的支付宝唯一用户号（2088开头的16位纯数字）
      *
      * @return $this
      */
@@ -301,7 +325,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets discountable_amount
      *
-     * @param string $discountable_amount discountable_amount
+     * @param string $discountable_amount 可打折金额. 参与优惠计算的金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000] 如果该值未传入，但传入了【订单总金额】，【不可打折金额】则该值默认为【订单总金额】-【不可打折金额】
      *
      * @return $this
      */
@@ -325,7 +349,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets goods_detail
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[] $goods_detail goods_detail
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[] $goods_detail 商品明细列表
      *
      * @return $this
      */
@@ -349,7 +373,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets operator_id
      *
-     * @param string $operator_id operator_id
+     * @param string $operator_id 商户操作员编号
      *
      * @return $this
      */
@@ -373,7 +397,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets product_code
      *
-     * @param string $product_code product_code
+     * @param string $product_code 销售产品码，商家和支付宝签约的产品码，为固定值QUICK_MSECURITY_PAY
      *
      * @return $this
      */
@@ -397,7 +421,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets qr_code
      *
-     * @param string $qr_code qr_code
+     * @param string $qr_code [ONLY IN RESPONSE] 二维码
      *
      * @return $this
      */
@@ -421,7 +445,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets qr_code_timeout_express
      *
-     * @param string $qr_code_timeout_express qr_code_timeout_express
+     * @param string $qr_code_timeout_express 支付场景。 条码支付，取值：bar_code； 声波支付，取值：wave_code
      *
      * @return $this
      */
@@ -445,7 +469,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets qr_link
      *
-     * @param string $qr_link qr_link
+     * @param string $qr_link [ONLY IN RESPONSE] 二维码图片的URL地址
      *
      * @return $this
      */
@@ -469,7 +493,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets query_options
      *
-     * @param string $query_options query_options
+     * @param string $query_options 该笔订单允许的最晚付款时间，逾期将关闭交易。取值范围：1m～15d。m-分钟，h-小时，d-天，1c-当天（1c-当天的情况下，无论交易何时创建，都在0点关闭）。 该参数数值不接受小数点， 如 1.5h，可转换为 90m。注：若为空，则默认为15d。
      *
      * @return $this
      */
@@ -493,7 +517,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets store_id
      *
-     * @param string $store_id store_id
+     * @param string $store_id 商户门店编号
      *
      * @return $this
      */
@@ -517,7 +541,7 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     /**
      * Sets terminal_id
      *
-     * @param string $terminal_id terminal_id
+     * @param string $terminal_id 商户机具终端编号
      *
      * @return $this
      */

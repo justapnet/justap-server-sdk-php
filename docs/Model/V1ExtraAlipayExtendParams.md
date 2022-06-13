@@ -10,6 +10,6 @@ Name | Type | Description | Notes
 **specified_seller_name** | **string** | 指定收款支付宝用户名 | 
 **sys_service_provider_id** | **string** | 系统商编号，该参数作为系统商返佣数据提取的依据，请填写系统商签约协议的PID | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

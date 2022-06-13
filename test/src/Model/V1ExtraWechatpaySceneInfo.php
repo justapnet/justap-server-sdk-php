@@ -58,6 +58,7 @@ class V1ExtraWechatpaySceneInfo implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'device_id' => 'string',
+        'h5_info' => '\Justapnet\Justap\Model\ExtraWechatpaySceneInfoH5Info',
         'payer_client_ip' => 'string',
         'store_info' => '\Justapnet\Justap\Model\ExtraWechatpaySceneInfoStoreInfo'
     ];
@@ -69,6 +70,7 @@ class V1ExtraWechatpaySceneInfo implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'device_id' => null,
+        'h5_info' => null,
         'payer_client_ip' => null,
         'store_info' => null
     ];
@@ -101,6 +103,7 @@ class V1ExtraWechatpaySceneInfo implements ModelInterface, ArrayAccess
      */
     protected static $attributeMap = [
         'device_id' => 'device_id',
+        'h5_info' => 'h5_info',
         'payer_client_ip' => 'payer_client_ip',
         'store_info' => 'store_info'
     ];
@@ -112,6 +115,7 @@ class V1ExtraWechatpaySceneInfo implements ModelInterface, ArrayAccess
      */
     protected static $setters = [
         'device_id' => 'setDeviceId',
+        'h5_info' => 'setH5Info',
         'payer_client_ip' => 'setPayerClientIp',
         'store_info' => 'setStoreInfo'
     ];
@@ -123,6 +127,7 @@ class V1ExtraWechatpaySceneInfo implements ModelInterface, ArrayAccess
      */
     protected static $getters = [
         'device_id' => 'getDeviceId',
+        'h5_info' => 'getH5Info',
         'payer_client_ip' => 'getPayerClientIp',
         'store_info' => 'getStoreInfo'
     ];
@@ -188,6 +193,7 @@ class V1ExtraWechatpaySceneInfo implements ModelInterface, ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['device_id'] = isset($data['device_id']) ? $data['device_id'] : null;
+        $this->container['h5_info'] = isset($data['h5_info']) ? $data['h5_info'] : null;
         $this->container['payer_client_ip'] = isset($data['payer_client_ip']) ? $data['payer_client_ip'] : null;
         $this->container['store_info'] = isset($data['store_info']) ? $data['store_info'] : null;
     }
@@ -236,6 +242,30 @@ class V1ExtraWechatpaySceneInfo implements ModelInterface, ArrayAccess
     public function setDeviceId($device_id)
     {
         $this->container['device_id'] = $device_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets h5_info
+     *
+     * @return \Justapnet\Justap\Model\ExtraWechatpaySceneInfoH5Info
+     */
+    public function getH5Info()
+    {
+        return $this->container['h5_info'];
+    }
+
+    /**
+     * Sets h5_info
+     *
+     * @param \Justapnet\Justap\Model\ExtraWechatpaySceneInfoH5Info $h5_info h5_info
+     *
+     * @return $this
+     */
+    public function setH5Info($h5_info)
+    {
+        $this->container['h5_info'] = $h5_info;
 
         return $this;
     }

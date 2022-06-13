@@ -82,22 +82,22 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'body' => null,
+        'body' => 'string',
         'business_params' => null,
-        'buyer_id' => null,
+        'buyer_id' => 'string',
         'discountable_amount' => 'double',
         'extend_params' => null,
         'logistics_detail' => null,
-        'operator_id' => null,
-        'product_code' => null,
+        'operator_id' => 'string',
+        'product_code' => 'string',
         'receiver_address_info' => null,
-        'seller_id' => null,
+        'seller_id' => 'string',
         'settle_info' => null,
-        'store_id' => null,
-        'terminal_id' => null,
-        'time_expire' => null,
-        'timeout_express' => null,
-        'trade_no' => null,
+        'store_id' => 'string',
+        'terminal_id' => 'string',
+        'time_expire' => 'string',
+        'timeout_express' => 'string',
+        'trade_no' => 'string',
         'undiscountable_amount' => 'double'
     ];
 
@@ -285,6 +285,36 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['body'] === null) {
+            $invalidProperties[] = "'body' can't be null";
+        }
+        if ($this->container['buyer_id'] === null) {
+            $invalidProperties[] = "'buyer_id' can't be null";
+        }
+        if ($this->container['operator_id'] === null) {
+            $invalidProperties[] = "'operator_id' can't be null";
+        }
+        if ($this->container['product_code'] === null) {
+            $invalidProperties[] = "'product_code' can't be null";
+        }
+        if ($this->container['seller_id'] === null) {
+            $invalidProperties[] = "'seller_id' can't be null";
+        }
+        if ($this->container['store_id'] === null) {
+            $invalidProperties[] = "'store_id' can't be null";
+        }
+        if ($this->container['terminal_id'] === null) {
+            $invalidProperties[] = "'terminal_id' can't be null";
+        }
+        if ($this->container['time_expire'] === null) {
+            $invalidProperties[] = "'time_expire' can't be null";
+        }
+        if ($this->container['timeout_express'] === null) {
+            $invalidProperties[] = "'timeout_express' can't be null";
+        }
+        if ($this->container['trade_no'] === null) {
+            $invalidProperties[] = "'trade_no' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -313,7 +343,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets body
      *
-     * @param string $body body
+     * @param string $body 商品描述
      *
      * @return $this
      */
@@ -337,7 +367,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets business_params
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayBusinessParams $business_params business_params
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayBusinessParams $business_params 业务扩展参数
      *
      * @return $this
      */
@@ -361,7 +391,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets buyer_id
      *
-     * @param string $buyer_id buyer_id
+     * @param string $buyer_id 买家的支付宝唯一用户号（2088开头的16位纯数字）
      *
      * @return $this
      */
@@ -385,7 +415,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets discountable_amount
      *
-     * @param double $discountable_amount discountable_amount
+     * @param double $discountable_amount 可打折金额. 参与优惠计算的金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000] 如果该值未传入，但传入了【订单总金额】，【不可打折金额】则该值默认为【订单总金额】-【不可打折金额】
      *
      * @return $this
      */
@@ -409,7 +439,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets extend_params
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtendParams $extend_params extend_params
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtendParams $extend_params 业务扩展参数
      *
      * @return $this
      */
@@ -433,7 +463,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets logistics_detail
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayLogisticsDetail $logistics_detail logistics_detail
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayLogisticsDetail $logistics_detail 物流信息
      *
      * @return $this
      */
@@ -457,7 +487,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets operator_id
      *
-     * @param string $operator_id operator_id
+     * @param string $operator_id 商户操作员编号
      *
      * @return $this
      */
@@ -481,7 +511,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets product_code
      *
-     * @param string $product_code product_code
+     * @param string $product_code 销售产品码，商家和支付宝签约的产品码，为固定值 FACE_TO_FACE_PAYMENT
      *
      * @return $this
      */
@@ -505,7 +535,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets receiver_address_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayReceiverAddressInfo $receiver_address_info receiver_address_info
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayReceiverAddressInfo $receiver_address_info 收货信息
      *
      * @return $this
      */
@@ -529,7 +559,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets seller_id
      *
-     * @param string $seller_id seller_id
+     * @param string $seller_id 卖家支付宝用户号
      *
      * @return $this
      */
@@ -553,7 +583,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets settle_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipaySettleInfo $settle_info settle_info
+     * @param \Justapnet\Justap\Model\V1ExtraAlipaySettleInfo $settle_info 结算信息
      *
      * @return $this
      */
@@ -577,7 +607,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets store_id
      *
-     * @param string $store_id store_id
+     * @param string $store_id 商户门店编号
      *
      * @return $this
      */
@@ -601,7 +631,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets terminal_id
      *
-     * @param string $terminal_id terminal_id
+     * @param string $terminal_id 商户机具终端编号
      *
      * @return $this
      */
@@ -625,7 +655,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets time_expire
      *
-     * @param string $time_expire time_expire
+     * @param string $time_expire 绝对超时时间，格式为yyyy-MM-dd HH:mm:ss
      *
      * @return $this
      */
@@ -649,7 +679,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets timeout_express
      *
-     * @param string $timeout_express timeout_express
+     * @param string $timeout_express 订单有效时间，该时间段内订单可以进行支付，结束后订单将关闭，天数为0表示永久有效
      *
      * @return $this
      */
@@ -673,7 +703,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets trade_no
      *
-     * @param string $trade_no trade_no
+     * @param string $trade_no [ONLY IN RESPONSE] 支付宝交易号
      *
      * @return $this
      */
@@ -697,7 +727,7 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     /**
      * Sets undiscountable_amount
      *
-     * @param double $undiscountable_amount undiscountable_amount
+     * @param double $undiscountable_amount 不可打折金额. 不参与优惠计算的金额，单位为元，精确到小数点后两位，取值范围[0.01,100000000] 如果该值未传入，但传入了【订单总金额】,【可打折金额】，则该值默认为【订单总金额】-【可打折金额】
      *
      * @return $this
      */

@@ -71,12 +71,12 @@ class V1ExtraWechatpayAppletConfig implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'app_id' => null,
-        'nonce_str' => null,
-        'package' => null,
-        'pay_sign' => null,
-        'sign_type' => null,
-        'time_stamp' => null
+        'app_id' => 'string',
+        'nonce_str' => 'string',
+        'package' => 'string',
+        'pay_sign' => 'string',
+        'sign_type' => 'string',
+        'time_stamp' => 'string'
     ];
 
     /**
@@ -219,6 +219,24 @@ class V1ExtraWechatpayAppletConfig implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['app_id'] === null) {
+            $invalidProperties[] = "'app_id' can't be null";
+        }
+        if ($this->container['nonce_str'] === null) {
+            $invalidProperties[] = "'nonce_str' can't be null";
+        }
+        if ($this->container['package'] === null) {
+            $invalidProperties[] = "'package' can't be null";
+        }
+        if ($this->container['pay_sign'] === null) {
+            $invalidProperties[] = "'pay_sign' can't be null";
+        }
+        if ($this->container['sign_type'] === null) {
+            $invalidProperties[] = "'sign_type' can't be null";
+        }
+        if ($this->container['time_stamp'] === null) {
+            $invalidProperties[] = "'time_stamp' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -247,7 +265,7 @@ class V1ExtraWechatpayAppletConfig implements ModelInterface, ArrayAccess
     /**
      * Sets app_id
      *
-     * @param string $app_id app_id
+     * @param string $app_id 小程序appid
      *
      * @return $this
      */
@@ -271,7 +289,7 @@ class V1ExtraWechatpayAppletConfig implements ModelInterface, ArrayAccess
     /**
      * Sets nonce_str
      *
-     * @param string $nonce_str nonce_str
+     * @param string $nonce_str 随机字符串
      *
      * @return $this
      */
@@ -295,7 +313,7 @@ class V1ExtraWechatpayAppletConfig implements ModelInterface, ArrayAccess
     /**
      * Sets package
      *
-     * @param string $package package
+     * @param string $package 扩展字段
      *
      * @return $this
      */
@@ -319,7 +337,7 @@ class V1ExtraWechatpayAppletConfig implements ModelInterface, ArrayAccess
     /**
      * Sets pay_sign
      *
-     * @param string $pay_sign pay_sign
+     * @param string $pay_sign 签名
      *
      * @return $this
      */
@@ -343,7 +361,7 @@ class V1ExtraWechatpayAppletConfig implements ModelInterface, ArrayAccess
     /**
      * Sets sign_type
      *
-     * @param string $sign_type sign_type
+     * @param string $sign_type 签名类型
      *
      * @return $this
      */
@@ -367,7 +385,7 @@ class V1ExtraWechatpayAppletConfig implements ModelInterface, ArrayAccess
     /**
      * Sets time_stamp
      *
-     * @param string $time_stamp time_stamp
+     * @param string $time_stamp 时间戳
      *
      * @return $this
      */

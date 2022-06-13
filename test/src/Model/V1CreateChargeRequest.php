@@ -557,7 +557,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
     /**
      * Sets merchant_trade_id
      *
-     * @param string $merchant_trade_id [REQUIRED] 客户系统的交易单号（订单号），必须在应用下唯一。长度不超过32字符
+     * @param string $merchant_trade_id [REQUIRED] 客户系统的交易单号（订单号），必须在应用下唯一。长度不超过30个字符
      *
      * @return $this
      */

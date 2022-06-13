@@ -71,12 +71,12 @@ class ExtraAlipayAgreementSignParamsPeriodRuleParams implements ModelInterface, 
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'execute_time' => null,
-        'period' => null,
-        'period_type' => null,
-        'single_amount' => null,
-        'total_amount' => null,
-        'total_payments' => null
+        'execute_time' => 'string',
+        'period' => 'string',
+        'period_type' => 'string',
+        'single_amount' => 'string',
+        'total_amount' => 'string',
+        'total_payments' => 'string'
     ];
 
     /**
@@ -219,6 +219,24 @@ class ExtraAlipayAgreementSignParamsPeriodRuleParams implements ModelInterface, 
     {
         $invalidProperties = [];
 
+        if ($this->container['execute_time'] === null) {
+            $invalidProperties[] = "'execute_time' can't be null";
+        }
+        if ($this->container['period'] === null) {
+            $invalidProperties[] = "'period' can't be null";
+        }
+        if ($this->container['period_type'] === null) {
+            $invalidProperties[] = "'period_type' can't be null";
+        }
+        if ($this->container['single_amount'] === null) {
+            $invalidProperties[] = "'single_amount' can't be null";
+        }
+        if ($this->container['total_amount'] === null) {
+            $invalidProperties[] = "'total_amount' can't be null";
+        }
+        if ($this->container['total_payments'] === null) {
+            $invalidProperties[] = "'total_payments' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -247,7 +265,7 @@ class ExtraAlipayAgreementSignParamsPeriodRuleParams implements ModelInterface, 
     /**
      * Sets execute_time
      *
-     * @param string $execute_time execute_time
+     * @param string $execute_time 扣款执行时间execute_time是周期扣款产品必填，枚举值为TIMING和FIXED
      *
      * @return $this
      */
@@ -271,7 +289,7 @@ class ExtraAlipayAgreementSignParamsPeriodRuleParams implements ModelInterface, 
     /**
      * Sets period
      *
-     * @param string $period period
+     * @param string $period 周期数period是周期扣款产品必填。与另一参数period_type组合使用确定扣款周期，例如period_type为DAY，period=90，则扣款周期为90天
      *
      * @return $this
      */
@@ -295,7 +313,7 @@ class ExtraAlipayAgreementSignParamsPeriodRuleParams implements ModelInterface, 
     /**
      * Sets period_type
      *
-     * @param string $period_type period_type
+     * @param string $period_type 周期类型period_type是周期扣款产品必填，枚举值为DAY和MONTH
      *
      * @return $this
      */
@@ -319,7 +337,7 @@ class ExtraAlipayAgreementSignParamsPeriodRuleParams implements ModelInterface, 
     /**
      * Sets single_amount
      *
-     * @param string $single_amount single_amount
+     * @param string $single_amount 单笔扣款金额single_amount是周期扣款产品必填，单位为元
      *
      * @return $this
      */
@@ -343,7 +361,7 @@ class ExtraAlipayAgreementSignParamsPeriodRuleParams implements ModelInterface, 
     /**
      * Sets total_amount
      *
-     * @param string $total_amount total_amount
+     * @param string $total_amount 扣款总金额total_amount是周期扣款产品必填，单位为元
      *
      * @return $this
      */
@@ -367,7 +385,7 @@ class ExtraAlipayAgreementSignParamsPeriodRuleParams implements ModelInterface, 
     /**
      * Sets total_payments
      *
-     * @param string $total_payments total_payments
+     * @param string $total_payments 扣款总笔数total_payments是周期扣款产品必填，单位为笔
      *
      * @return $this
      */

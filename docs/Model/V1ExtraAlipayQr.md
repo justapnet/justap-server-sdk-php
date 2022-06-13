@@ -15,6 +15,6 @@ Name | Type | Description | Notes
 **store_id** | **string** | 商户门店编号 | 
 **terminal_id** | **string** | 商户机具终端编号 | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

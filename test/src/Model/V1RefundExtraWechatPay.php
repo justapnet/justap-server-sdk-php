@@ -223,7 +223,7 @@ class V1RefundExtraWechatPay implements ModelInterface, ArrayAccess
     /**
      * Sets account
      *
-     * @param \Justapnet\Justap\Model\RefundExtraWechatPayAccount $account 订单金额信息
+     * @param \Justapnet\Justap\Model\RefundExtraWechatPayAccount $account 出资账户信息
      *
      * @return $this
      */

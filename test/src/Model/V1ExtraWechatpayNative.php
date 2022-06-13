@@ -76,13 +76,13 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'attach' => null,
         'detail' => null,
-        'goods_tag' => null,
-        'qr_code' => null,
-        'qr_link' => null,
+        'goods_tag' => 'string',
+        'qr_code' => 'string',
+        'qr_link' => 'string',
         'scene_info' => null,
         'settle_info' => null,
-        'time_expire' => null,
-        'time_start' => null
+        'time_expire' => 'string',
+        'time_start' => 'string'
     ];
 
     /**
@@ -237,6 +237,21 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['goods_tag'] === null) {
+            $invalidProperties[] = "'goods_tag' can't be null";
+        }
+        if ($this->container['qr_code'] === null) {
+            $invalidProperties[] = "'qr_code' can't be null";
+        }
+        if ($this->container['qr_link'] === null) {
+            $invalidProperties[] = "'qr_link' can't be null";
+        }
+        if ($this->container['time_expire'] === null) {
+            $invalidProperties[] = "'time_expire' can't be null";
+        }
+        if ($this->container['time_start'] === null) {
+            $invalidProperties[] = "'time_start' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -265,7 +280,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets attach
      *
-     * @param string $attach attach
+     * @param string $attach 元数据
      *
      * @return $this
      */
@@ -289,7 +304,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets detail
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpayDetail $detail detail
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpayDetail $detail 商品详情
      *
      * @return $this
      */
@@ -313,7 +328,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets goods_tag
      *
-     * @param string $goods_tag goods_tag
+     * @param string $goods_tag 订单优惠标记
      *
      * @return $this
      */
@@ -337,7 +352,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets qr_code
      *
-     * @param string $qr_code qr_code
+     * @param string $qr_code 二维码数据
      *
      * @return $this
      */
@@ -361,7 +376,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets qr_link
      *
-     * @param string $qr_link qr_link
+     * @param string $qr_link 二维码链接
      *
      * @return $this
      */
@@ -385,7 +400,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets scene_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySceneInfo $scene_info scene_info
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySceneInfo $scene_info 场景信息
      *
      * @return $this
      */
@@ -409,7 +424,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets settle_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySettleInfo $settle_info settle_info
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySettleInfo $settle_info 结算信息
      *
      * @return $this
      */
@@ -433,7 +448,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets time_expire
      *
-     * @param string $time_expire time_expire
+     * @param string $time_expire 交易过期时间
      *
      * @return $this
      */
@@ -457,7 +472,7 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     /**
      * Sets time_start
      *
-     * @param string $time_start time_start
+     * @param string $time_start 交易起始时间
      *
      * @return $this
      */

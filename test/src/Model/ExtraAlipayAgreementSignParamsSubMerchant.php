@@ -69,10 +69,10 @@ class ExtraAlipayAgreementSignParamsSubMerchant implements ModelInterface, Array
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'sub_merchant_id' => null,
-        'sub_merchant_name' => null,
-        'sub_merchant_service_description' => null,
-        'sub_merchant_service_name' => null
+        'sub_merchant_id' => 'string',
+        'sub_merchant_name' => 'string',
+        'sub_merchant_service_description' => 'string',
+        'sub_merchant_service_name' => 'string'
     ];
 
     /**
@@ -207,6 +207,18 @@ class ExtraAlipayAgreementSignParamsSubMerchant implements ModelInterface, Array
     {
         $invalidProperties = [];
 
+        if ($this->container['sub_merchant_id'] === null) {
+            $invalidProperties[] = "'sub_merchant_id' can't be null";
+        }
+        if ($this->container['sub_merchant_name'] === null) {
+            $invalidProperties[] = "'sub_merchant_name' can't be null";
+        }
+        if ($this->container['sub_merchant_service_description'] === null) {
+            $invalidProperties[] = "'sub_merchant_service_description' can't be null";
+        }
+        if ($this->container['sub_merchant_service_name'] === null) {
+            $invalidProperties[] = "'sub_merchant_service_name' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -235,7 +247,7 @@ class ExtraAlipayAgreementSignParamsSubMerchant implements ModelInterface, Array
     /**
      * Sets sub_merchant_id
      *
-     * @param string $sub_merchant_id sub_merchant_id
+     * @param string $sub_merchant_id 子商户id
      *
      * @return $this
      */
@@ -259,7 +271,7 @@ class ExtraAlipayAgreementSignParamsSubMerchant implements ModelInterface, Array
     /**
      * Sets sub_merchant_name
      *
-     * @param string $sub_merchant_name sub_merchant_name
+     * @param string $sub_merchant_name 子商户名称
      *
      * @return $this
      */
@@ -283,7 +295,7 @@ class ExtraAlipayAgreementSignParamsSubMerchant implements ModelInterface, Array
     /**
      * Sets sub_merchant_service_description
      *
-     * @param string $sub_merchant_service_description sub_merchant_service_description
+     * @param string $sub_merchant_service_description 子商户服务描述
      *
      * @return $this
      */
@@ -307,7 +319,7 @@ class ExtraAlipayAgreementSignParamsSubMerchant implements ModelInterface, Array
     /**
      * Sets sub_merchant_service_name
      *
-     * @param string $sub_merchant_service_name sub_merchant_service_name
+     * @param string $sub_merchant_service_name 子商户服务名称
      *
      * @return $this
      */

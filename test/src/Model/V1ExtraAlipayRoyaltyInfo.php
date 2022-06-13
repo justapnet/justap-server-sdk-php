@@ -68,7 +68,7 @@ class V1ExtraAlipayRoyaltyInfo implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'royalty_detail_infos' => null,
-        'royalty_type' => null
+        'royalty_type' => 'string'
     ];
 
     /**
@@ -195,6 +195,9 @@ class V1ExtraAlipayRoyaltyInfo implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['royalty_type'] === null) {
+            $invalidProperties[] = "'royalty_type' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -223,7 +226,7 @@ class V1ExtraAlipayRoyaltyInfo implements ModelInterface, ArrayAccess
     /**
      * Sets royalty_detail_infos
      *
-     * @param \Justapnet\Justap\Model\ExtraAlipayRoyaltyInfoRoyaltyDetailInfos $royalty_detail_infos royalty_detail_infos
+     * @param \Justapnet\Justap\Model\ExtraAlipayRoyaltyInfoRoyaltyDetailInfos $royalty_detail_infos 分账明细的信息，可以描述多条分账指令，json数组。
      *
      * @return $this
      */
@@ -247,7 +250,7 @@ class V1ExtraAlipayRoyaltyInfo implements ModelInterface, ArrayAccess
     /**
      * Sets royalty_type
      *
-     * @param string $royalty_type royalty_type
+     * @param string $royalty_type 周期类型period_type是周期扣款产品必填，枚举值为DAY和MONTH
      *
      * @return $this
      */

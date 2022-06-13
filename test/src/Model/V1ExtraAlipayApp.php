@@ -81,20 +81,20 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'agreement_sign_params' => null,
-        'credit_agreement_id' => null,
-        'credit_biz_order_id' => null,
-        'credit_pay_mode' => null,
-        'disable_pay_channels' => null,
-        'enable_pay_channels' => null,
+        'credit_agreement_id' => 'string',
+        'credit_biz_order_id' => 'string',
+        'credit_pay_mode' => 'string',
+        'disable_pay_channels' => 'string',
+        'enable_pay_channels' => 'string',
         'ext_user_info' => null,
         'extend_params' => null,
         'goods_detail' => null,
-        'goods_type' => null,
-        'merchant_trade_id' => null,
-        'pay_param' => null,
-        'product_code' => null,
-        'seller_id' => null,
-        'store_id' => null
+        'goods_type' => 'string',
+        'merchant_trade_id' => 'string',
+        'pay_param' => 'string',
+        'product_code' => 'string',
+        'seller_id' => 'string',
+        'store_id' => 'string'
     ];
 
     /**
@@ -273,6 +273,39 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['credit_agreement_id'] === null) {
+            $invalidProperties[] = "'credit_agreement_id' can't be null";
+        }
+        if ($this->container['credit_biz_order_id'] === null) {
+            $invalidProperties[] = "'credit_biz_order_id' can't be null";
+        }
+        if ($this->container['credit_pay_mode'] === null) {
+            $invalidProperties[] = "'credit_pay_mode' can't be null";
+        }
+        if ($this->container['disable_pay_channels'] === null) {
+            $invalidProperties[] = "'disable_pay_channels' can't be null";
+        }
+        if ($this->container['enable_pay_channels'] === null) {
+            $invalidProperties[] = "'enable_pay_channels' can't be null";
+        }
+        if ($this->container['goods_type'] === null) {
+            $invalidProperties[] = "'goods_type' can't be null";
+        }
+        if ($this->container['merchant_trade_id'] === null) {
+            $invalidProperties[] = "'merchant_trade_id' can't be null";
+        }
+        if ($this->container['pay_param'] === null) {
+            $invalidProperties[] = "'pay_param' can't be null";
+        }
+        if ($this->container['product_code'] === null) {
+            $invalidProperties[] = "'product_code' can't be null";
+        }
+        if ($this->container['seller_id'] === null) {
+            $invalidProperties[] = "'seller_id' can't be null";
+        }
+        if ($this->container['store_id'] === null) {
+            $invalidProperties[] = "'store_id' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -301,7 +334,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets agreement_sign_params
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams $agreement_sign_params agreement_sign_params
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams $agreement_sign_params 签约参数。如果希望在sdk中支付并签约，需要在这里传入签约信息。周期扣款场景 product_code 为 CYCLE_PAY_AUTH 时必填。
      *
      * @return $this
      */
@@ -325,7 +358,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets credit_agreement_id
      *
-     * @param string $credit_agreement_id credit_agreement_id
+     * @param string $credit_agreement_id [ONLY IN RESPONSE] 信用支付协议号
      *
      * @return $this
      */
@@ -349,7 +382,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets credit_biz_order_id
      *
-     * @param string $credit_biz_order_id credit_biz_order_id
+     * @param string $credit_biz_order_id [ONLY IN RESPONSE] 信用支付业务订单号
      *
      * @return $this
      */
@@ -373,7 +406,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets credit_pay_mode
      *
-     * @param string $credit_pay_mode credit_pay_mode
+     * @param string $credit_pay_mode [ONLY IN RESPONSE] 信用支付模式
      *
      * @return $this
      */
@@ -397,7 +430,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets disable_pay_channels
      *
-     * @param string $disable_pay_channels disable_pay_channels
+     * @param string $disable_pay_channels 禁用渠道
      *
      * @return $this
      */
@@ -421,7 +454,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets enable_pay_channels
      *
-     * @param string $enable_pay_channels enable_pay_channels
+     * @param string $enable_pay_channels 可用渠道
      *
      * @return $this
      */
@@ -445,7 +478,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets ext_user_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo $ext_user_info ext_user_info
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo $ext_user_info 外部指定买家
      *
      * @return $this
      */
@@ -469,7 +502,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets extend_params
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtendParams $extend_params extend_params
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtendParams $extend_params 业务扩展参数
      *
      * @return $this
      */
@@ -493,7 +526,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets goods_detail
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[] $goods_detail goods_detail
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[] $goods_detail 商品明细列表
      *
      * @return $this
      */
@@ -517,7 +550,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets goods_type
      *
-     * @param string $goods_type goods_type
+     * @param string $goods_type 商品类型
      *
      * @return $this
      */
@@ -541,7 +574,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets merchant_trade_id
      *
-     * @param string $merchant_trade_id merchant_trade_id
+     * @param string $merchant_trade_id [ONLY IN RESPONSE] 商户订单号
      *
      * @return $this
      */
@@ -565,7 +598,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets pay_param
      *
-     * @param string $pay_param pay_param
+     * @param string $pay_param [ONLY IN RESPONSE] App 用于拉起支付的请求字符串
      *
      * @return $this
      */
@@ -589,7 +622,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets product_code
      *
-     * @param string $product_code product_code
+     * @param string $product_code 销售产品码，商家和支付宝签约的产品码
      *
      * @return $this
      */
@@ -613,7 +646,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets seller_id
      *
-     * @param string $seller_id seller_id
+     * @param string $seller_id [ONLY IN RESPONSE] 支付宝卖家支付宝用户ID
      *
      * @return $this
      */
@@ -637,7 +670,7 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     /**
      * Sets store_id
      *
-     * @param string $store_id store_id
+     * @param string $store_id 商户门店编号
      *
      * @return $this
      */

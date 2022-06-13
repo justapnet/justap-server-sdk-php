@@ -75,16 +75,16 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'amount' => null,
-        'amount_percentage' => null,
-        'batch_no' => null,
-        'desc' => null,
-        'out_relation_id' => null,
-        'serial_no' => null,
-        'trans_in' => null,
-        'trans_in_type' => null,
-        'trans_out' => null,
-        'trans_out_type' => null
+        'amount' => 'string',
+        'amount_percentage' => 'string',
+        'batch_no' => 'string',
+        'desc' => 'string',
+        'out_relation_id' => 'string',
+        'serial_no' => 'string',
+        'trans_in' => 'string',
+        'trans_in_type' => 'string',
+        'trans_out' => 'string',
+        'trans_out_type' => 'string'
     ];
 
     /**
@@ -243,6 +243,36 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     {
         $invalidProperties = [];
 
+        if ($this->container['amount'] === null) {
+            $invalidProperties[] = "'amount' can't be null";
+        }
+        if ($this->container['amount_percentage'] === null) {
+            $invalidProperties[] = "'amount_percentage' can't be null";
+        }
+        if ($this->container['batch_no'] === null) {
+            $invalidProperties[] = "'batch_no' can't be null";
+        }
+        if ($this->container['desc'] === null) {
+            $invalidProperties[] = "'desc' can't be null";
+        }
+        if ($this->container['out_relation_id'] === null) {
+            $invalidProperties[] = "'out_relation_id' can't be null";
+        }
+        if ($this->container['serial_no'] === null) {
+            $invalidProperties[] = "'serial_no' can't be null";
+        }
+        if ($this->container['trans_in'] === null) {
+            $invalidProperties[] = "'trans_in' can't be null";
+        }
+        if ($this->container['trans_in_type'] === null) {
+            $invalidProperties[] = "'trans_in_type' can't be null";
+        }
+        if ($this->container['trans_out'] === null) {
+            $invalidProperties[] = "'trans_out' can't be null";
+        }
+        if ($this->container['trans_out_type'] === null) {
+            $invalidProperties[] = "'trans_out_type' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -271,7 +301,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets amount
      *
-     * @param string $amount amount
+     * @param string $amount 分账的金额，单位为元
      *
      * @return $this
      */
@@ -295,7 +325,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets amount_percentage
      *
-     * @param string $amount_percentage amount_percentage
+     * @param string $amount_percentage 分账的比例，值为20~100之间的整数，如：20，表示分账金额按20%来打分账
      *
      * @return $this
      */
@@ -319,7 +349,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets batch_no
      *
-     * @param string $batch_no batch_no
+     * @param string $batch_no 分账批次号，格式为：当天日期[yyyyMMdd] + 四位流水号，如：20120220-00001
      *
      * @return $this
      */
@@ -343,7 +373,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets desc
      *
-     * @param string $desc desc
+     * @param string $desc 分账描述信息
      *
      * @return $this
      */
@@ -367,7 +397,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets out_relation_id
      *
-     * @param string $out_relation_id out_relation_id
+     * @param string $out_relation_id 商户分账的外部关联号，用于关联到每一笔分账信息，商户可自定义，如一笔分账多笔，则需要为每一笔分账都保持唯一，如果为空，则有利于商户排查问题
      *
      * @return $this
      */
@@ -391,7 +421,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets serial_no
      *
-     * @param string $serial_no serial_no
+     * @param string $serial_no 分账序列号，表示分账执行的顺序，必须为正整数
      *
      * @return $this
      */
@@ -415,7 +445,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets trans_in
      *
-     * @param string $trans_in trans_in
+     * @param string $trans_in 如果转入账号类型为userId，本参数为接受分账金额的支付宝账号对应的支付宝唯一用户号。以2088开头的纯16位数字。 如果转入账号类型为bankIndex，本参数为28位的银行编号（商户和支付宝签约时确定）。如果转入账号类型为storeId，本参数为商户的门店ID。
      *
      * @return $this
      */
@@ -439,7 +469,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets trans_in_type
      *
-     * @param string $trans_in_type trans_in_type
+     * @param string $trans_in_type 接受分账金额的账户类型： userId：支付宝账号对应的支付宝唯一用户号。 bankIndex：分账到银行账户的银行编号。目前暂时只支持分账到一个银行编号。storeId：分账到门店对应的银行卡编号。默认值为userId。
      *
      * @return $this
      */
@@ -463,7 +493,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets trans_out
      *
-     * @param string $trans_out trans_out
+     * @param string $trans_out 如果转出账号类型为userId，本参数为要分账的支付宝账号对应的支付宝唯一用户号。以2088开头的纯16位数字。
      *
      * @return $this
      */
@@ -487,7 +517,7 @@ class ExtraAlipayRoyaltyInfoRoyaltyDetailInfos implements ModelInterface, ArrayA
     /**
      * Sets trans_out_type
      *
-     * @param string $trans_out_type trans_out_type
+     * @param string $trans_out_type 要分账的账户类型。目前只支持userId：支付宝账号对应的支付宝唯一用户号。默认值为userId。
      *
      * @return $this
      */

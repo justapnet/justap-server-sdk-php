@@ -77,14 +77,14 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'attach' => null,
         'detail' => null,
-        'goods_tag' => null,
+        'goods_tag' => 'string',
         'jsapi_config' => null,
         'payer' => null,
-        'prepay_id' => null,
+        'prepay_id' => 'string',
         'scene_info' => null,
         'settle_info' => null,
-        'time_expire' => null,
-        'time_start' => null
+        'time_expire' => 'string',
+        'time_start' => 'string'
     ];
 
     /**
@@ -243,6 +243,18 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['goods_tag'] === null) {
+            $invalidProperties[] = "'goods_tag' can't be null";
+        }
+        if ($this->container['prepay_id'] === null) {
+            $invalidProperties[] = "'prepay_id' can't be null";
+        }
+        if ($this->container['time_expire'] === null) {
+            $invalidProperties[] = "'time_expire' can't be null";
+        }
+        if ($this->container['time_start'] === null) {
+            $invalidProperties[] = "'time_start' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -271,7 +283,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets attach
      *
-     * @param string $attach attach
+     * @param string $attach 元数据
      *
      * @return $this
      */
@@ -295,7 +307,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets detail
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpayDetail $detail detail
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpayDetail $detail 商品详情
      *
      * @return $this
      */
@@ -319,7 +331,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets goods_tag
      *
-     * @param string $goods_tag goods_tag
+     * @param string $goods_tag 订单优惠标记
      *
      * @return $this
      */
@@ -343,7 +355,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets jsapi_config
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpayJsapiConfig $jsapi_config jsapi_config
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpayJsapiConfig $jsapi_config jsapi支付配置信息
      *
      * @return $this
      */
@@ -367,7 +379,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets payer
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpayPayer $payer payer
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpayPayer $payer 支付者信息
      *
      * @return $this
      */
@@ -391,7 +403,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets prepay_id
      *
-     * @param string $prepay_id prepay_id
+     * @param string $prepay_id 预支付交易会话标识
      *
      * @return $this
      */
@@ -415,7 +427,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets scene_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySceneInfo $scene_info scene_info
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySceneInfo $scene_info 场景信息
      *
      * @return $this
      */
@@ -439,7 +451,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets settle_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySettleInfo $settle_info settle_info
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySettleInfo $settle_info 结算信息
      *
      * @return $this
      */
@@ -463,7 +475,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets time_expire
      *
-     * @param string $time_expire time_expire
+     * @param string $time_expire 交易结束时间
      *
      * @return $this
      */
@@ -487,7 +499,7 @@ class V1ExtraWechatpayJsapi implements ModelInterface, ArrayAccess
     /**
      * Sets time_start
      *
-     * @param string $time_start time_start
+     * @param string $time_start 交易起始时间
      *
      * @return $this
      */

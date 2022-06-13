@@ -58,21 +58,21 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'agreement_sign_params' => '\Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams',
-        'business_params' => 'int',
+        'business_params' => 'float',
         'disable_pay_channels' => 'string',
         'enable_pay_channels' => 'string',
         'ext_user_info' => '\Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo',
         'extend_params' => '\Justapnet\Justap\Model\V1ExtraAlipayExtendParams',
         'goods_detail' => '\Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[]',
         'goods_type' => 'string',
-        'integration_type' => 'int',
+        'integration_type' => 'float',
         'invoice_info' => '\Justapnet\Justap\Model\V1ExtraAlipayInvoiceInfo',
         'merchant_trade_id' => 'string',
         'pay_url' => 'string',
         'promo_params' => 'string',
         'qr_pay_mode' => 'string',
-        'qrcode_width' => 'int',
-        'request_from_url' => 'int',
+        'qrcode_width' => 'float',
+        'request_from_url' => 'float',
         'royalty_info' => '\Justapnet\Justap\Model\V1ExtraAlipayRoyaltyInfo',
         'seller_id' => 'string',
         'settle_info' => '\Justapnet\Justap\Model\V1ExtraAlipaySettleInfo',
@@ -89,24 +89,24 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'agreement_sign_params' => null,
         'business_params' => 'int32',
-        'disable_pay_channels' => null,
-        'enable_pay_channels' => null,
+        'disable_pay_channels' => 'string',
+        'enable_pay_channels' => 'string',
         'ext_user_info' => null,
         'extend_params' => null,
         'goods_detail' => null,
-        'goods_type' => null,
+        'goods_type' => 'string',
         'integration_type' => 'int32',
         'invoice_info' => null,
-        'merchant_trade_id' => null,
-        'pay_url' => null,
-        'promo_params' => null,
-        'qr_pay_mode' => null,
+        'merchant_trade_id' => 'string',
+        'pay_url' => 'string',
+        'promo_params' => 'string',
+        'qr_pay_mode' => 'string',
         'qrcode_width' => 'int32',
         'request_from_url' => 'int32',
         'royalty_info' => null,
-        'seller_id' => null,
+        'seller_id' => 'string',
         'settle_info' => null,
-        'store_id' => null,
+        'store_id' => 'string',
         'sub_merchant' => null,
         'time_expire' => 'int32'
     ];
@@ -315,6 +315,45 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['business_params'] === null) {
+            $invalidProperties[] = "'business_params' can't be null";
+        }
+        if ($this->container['disable_pay_channels'] === null) {
+            $invalidProperties[] = "'disable_pay_channels' can't be null";
+        }
+        if ($this->container['enable_pay_channels'] === null) {
+            $invalidProperties[] = "'enable_pay_channels' can't be null";
+        }
+        if ($this->container['goods_type'] === null) {
+            $invalidProperties[] = "'goods_type' can't be null";
+        }
+        if ($this->container['integration_type'] === null) {
+            $invalidProperties[] = "'integration_type' can't be null";
+        }
+        if ($this->container['merchant_trade_id'] === null) {
+            $invalidProperties[] = "'merchant_trade_id' can't be null";
+        }
+        if ($this->container['pay_url'] === null) {
+            $invalidProperties[] = "'pay_url' can't be null";
+        }
+        if ($this->container['promo_params'] === null) {
+            $invalidProperties[] = "'promo_params' can't be null";
+        }
+        if ($this->container['qr_pay_mode'] === null) {
+            $invalidProperties[] = "'qr_pay_mode' can't be null";
+        }
+        if ($this->container['qrcode_width'] === null) {
+            $invalidProperties[] = "'qrcode_width' can't be null";
+        }
+        if ($this->container['request_from_url'] === null) {
+            $invalidProperties[] = "'request_from_url' can't be null";
+        }
+        if ($this->container['seller_id'] === null) {
+            $invalidProperties[] = "'seller_id' can't be null";
+        }
+        if ($this->container['store_id'] === null) {
+            $invalidProperties[] = "'store_id' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -343,7 +382,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets agreement_sign_params
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams $agreement_sign_params agreement_sign_params
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams $agreement_sign_params 签约参数。如果希望在sdk中支付并签约，需要在这里传入签约信息。周期扣款场景 product_code 为 CYCLE_PAY_AUTH 时必填。
      *
      * @return $this
      */
@@ -357,7 +396,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Gets business_params
      *
-     * @return int
+     * @return float
      */
     public function getBusinessParams()
     {
@@ -367,7 +406,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets business_params
      *
-     * @param int $business_params business_params
+     * @param float $business_params 业务扩展参数
      *
      * @return $this
      */
@@ -391,7 +430,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets disable_pay_channels
      *
-     * @param string $disable_pay_channels disable_pay_channels
+     * @param string $disable_pay_channels 禁用渠道
      *
      * @return $this
      */
@@ -415,7 +454,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets enable_pay_channels
      *
-     * @param string $enable_pay_channels enable_pay_channels
+     * @param string $enable_pay_channels 可用渠道
      *
      * @return $this
      */
@@ -439,7 +478,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets ext_user_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo $ext_user_info ext_user_info
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo $ext_user_info 支付宝用户信息
      *
      * @return $this
      */
@@ -463,7 +502,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets extend_params
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtendParams $extend_params extend_params
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtendParams $extend_params 业务扩展参数
      *
      * @return $this
      */
@@ -487,7 +526,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets goods_detail
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[] $goods_detail goods_detail
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[] $goods_detail 商品明细列表
      *
      * @return $this
      */
@@ -511,7 +550,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets goods_type
      *
-     * @param string $goods_type goods_type
+     * @param string $goods_type 商品类型
      *
      * @return $this
      */
@@ -525,7 +564,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Gets integration_type
      *
-     * @return int
+     * @return float
      */
     public function getIntegrationType()
     {
@@ -535,7 +574,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets integration_type
      *
-     * @param int $integration_type integration_type
+     * @param float $integration_type 支付宝用户ID
      *
      * @return $this
      */
@@ -559,7 +598,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets invoice_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayInvoiceInfo $invoice_info invoice_info
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayInvoiceInfo $invoice_info 发票信息
      *
      * @return $this
      */
@@ -583,7 +622,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets merchant_trade_id
      *
-     * @param string $merchant_trade_id merchant_trade_id
+     * @param string $merchant_trade_id [ONLY IN RESPONSE] 商户订单号
      *
      * @return $this
      */
@@ -607,7 +646,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets pay_url
      *
-     * @param string $pay_url pay_url
+     * @param string $pay_url [ONLY IN RESPONSE] 支付链接
      *
      * @return $this
      */
@@ -631,7 +670,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets promo_params
      *
-     * @param string $promo_params promo_params
+     * @param string $promo_params 优惠参数
      *
      * @return $this
      */
@@ -655,7 +694,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets qr_pay_mode
      *
-     * @param string $qr_pay_mode qr_pay_mode
+     * @param string $qr_pay_mode 扫码支付模式
      *
      * @return $this
      */
@@ -669,7 +708,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Gets qrcode_width
      *
-     * @return int
+     * @return float
      */
     public function getQrcodeWidth()
     {
@@ -679,7 +718,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets qrcode_width
      *
-     * @param int $qrcode_width qrcode_width
+     * @param float $qrcode_width 二维码宽度
      *
      * @return $this
      */
@@ -693,7 +732,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Gets request_from_url
      *
-     * @return int
+     * @return float
      */
     public function getRequestFromUrl()
     {
@@ -703,7 +742,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets request_from_url
      *
-     * @param int $request_from_url request_from_url
+     * @param float $request_from_url 请求来源地址
      *
      * @return $this
      */
@@ -727,7 +766,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets royalty_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayRoyaltyInfo $royalty_info royalty_info
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayRoyaltyInfo $royalty_info 分账类型卖家的分账类型，目前只支持传入ROYALTY（普通分账类型）。
      *
      * @return $this
      */
@@ -751,7 +790,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets seller_id
      *
-     * @param string $seller_id seller_id
+     * @param string $seller_id [ONLY IN RESPONSE] 收款支付宝用户ID
      *
      * @return $this
      */
@@ -775,7 +814,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets settle_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipaySettleInfo $settle_info settle_info
+     * @param \Justapnet\Justap\Model\V1ExtraAlipaySettleInfo $settle_info 结算信息
      *
      * @return $this
      */
@@ -799,7 +838,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets store_id
      *
-     * @param string $store_id store_id
+     * @param string $store_id 商户门店编号
      *
      * @return $this
      */
@@ -823,7 +862,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets sub_merchant
      *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipaySubMerchant $sub_merchant sub_merchant
+     * @param \Justapnet\Justap\Model\V1ExtraAlipaySubMerchant $sub_merchant 二级商户信息
      *
      * @return $this
      */
@@ -847,7 +886,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     /**
      * Sets time_expire
      *
-     * @param int $time_expire time_expire
+     * @param int $time_expire 订单失效时间
      *
      * @return $this
      */

@@ -74,12 +74,12 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'access_params' => null,
-        'external_agreement_no' => null,
-        'external_logon_id' => null,
+        'external_agreement_no' => 'string',
+        'external_logon_id' => 'string',
         'period_rule_params' => null,
-        'personal_product_code' => null,
-        'sign_notify_url' => null,
-        'sign_scene' => null,
+        'personal_product_code' => 'string',
+        'sign_notify_url' => 'string',
+        'sign_scene' => 'string',
         'sub_merchant' => null
     ];
 
@@ -231,6 +231,21 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['external_agreement_no'] === null) {
+            $invalidProperties[] = "'external_agreement_no' can't be null";
+        }
+        if ($this->container['external_logon_id'] === null) {
+            $invalidProperties[] = "'external_logon_id' can't be null";
+        }
+        if ($this->container['personal_product_code'] === null) {
+            $invalidProperties[] = "'personal_product_code' can't be null";
+        }
+        if ($this->container['sign_notify_url'] === null) {
+            $invalidProperties[] = "'sign_notify_url' can't be null";
+        }
+        if ($this->container['sign_scene'] === null) {
+            $invalidProperties[] = "'sign_scene' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -259,7 +274,7 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     /**
      * Sets access_params
      *
-     * @param \Justapnet\Justap\Model\ExtraAlipayAgreementSignParamsAccessParams $access_params access_params
+     * @param \Justapnet\Justap\Model\ExtraAlipayAgreementSignParamsAccessParams $access_params 请按当前接入的方式进行填充，且输入值必须为文档中的参数取值范围
      *
      * @return $this
      */
@@ -283,7 +298,7 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     /**
      * Sets external_agreement_no
      *
-     * @param string $external_agreement_no external_agreement_no
+     * @param string $external_agreement_no 外部协议号
      *
      * @return $this
      */
@@ -307,7 +322,7 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     /**
      * Sets external_logon_id
      *
-     * @param string $external_logon_id external_logon_id
+     * @param string $external_logon_id 外部用户唯一标识
      *
      * @return $this
      */
@@ -331,7 +346,7 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     /**
      * Sets period_rule_params
      *
-     * @param \Justapnet\Justap\Model\ExtraAlipayAgreementSignParamsPeriodRuleParams $period_rule_params period_rule_params
+     * @param \Justapnet\Justap\Model\ExtraAlipayAgreementSignParamsPeriodRuleParams $period_rule_params 周期管控规则参数period_rule_params，在签约周期扣款产品（如CYCLE_PAY_AUTH_P）时必传，在签约其他产品时无需传入。 周期扣款产品，会按照这里传入的参数提示用户，并对发起扣款的时间、金额、次数等做相应限制。
      *
      * @return $this
      */
@@ -355,7 +370,7 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     /**
      * Sets personal_product_code
      *
-     * @param string $personal_product_code personal_product_code
+     * @param string $personal_product_code 个人签约产品码
      *
      * @return $this
      */
@@ -379,7 +394,7 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     /**
      * Sets sign_notify_url
      *
-     * @param string $sign_notify_url sign_notify_url
+     * @param string $sign_notify_url 签约回调地址
      *
      * @return $this
      */
@@ -403,7 +418,7 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     /**
      * Sets sign_scene
      *
-     * @param string $sign_scene sign_scene
+     * @param string $sign_scene 签约场景
      *
      * @return $this
      */
@@ -427,7 +442,7 @@ class V1ExtraAlipayAgreementSignParams implements ModelInterface, ArrayAccess
     /**
      * Sets sub_merchant
      *
-     * @param \Justapnet\Justap\Model\ExtraAlipayAgreementSignParamsSubMerchant $sub_merchant sub_merchant
+     * @param \Justapnet\Justap\Model\ExtraAlipayAgreementSignParamsSubMerchant $sub_merchant 此参数用于传递子商户信息，无特殊需求时不用关注。目前商户代扣、海外代扣、淘旅行信用住产品支持传入该参数（在销售方案中“是否允许自定义子商户信息”需要选是）。
      *
      * @return $this
      */

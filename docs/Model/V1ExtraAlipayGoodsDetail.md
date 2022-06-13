@@ -13,6 +13,6 @@ Name | Type | Description | Notes
 **quantity** | **float** | 商品数量 | 
 **show_url** | **string** | 商品显示链接 | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 

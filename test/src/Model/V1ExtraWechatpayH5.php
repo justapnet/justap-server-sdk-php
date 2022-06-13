@@ -79,16 +79,16 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'attach' => null,
         'detail' => null,
-        'goods_tag' => null,
-        'pay_sign' => null,
-        'pay_url' => null,
-        'prepay_id' => null,
+        'goods_tag' => 'string',
+        'pay_sign' => 'string',
+        'pay_url' => 'string',
+        'prepay_id' => 'string',
         'scene_info' => null,
         'settle_info' => null,
-        'time_expire' => null,
-        'time_start' => null,
-        'wap_name' => null,
-        'wap_url' => null
+        'time_expire' => 'string',
+        'time_start' => 'string',
+        'wap_name' => 'string',
+        'wap_url' => 'string'
     ];
 
     /**
@@ -255,6 +255,30 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['goods_tag'] === null) {
+            $invalidProperties[] = "'goods_tag' can't be null";
+        }
+        if ($this->container['pay_sign'] === null) {
+            $invalidProperties[] = "'pay_sign' can't be null";
+        }
+        if ($this->container['pay_url'] === null) {
+            $invalidProperties[] = "'pay_url' can't be null";
+        }
+        if ($this->container['prepay_id'] === null) {
+            $invalidProperties[] = "'prepay_id' can't be null";
+        }
+        if ($this->container['time_expire'] === null) {
+            $invalidProperties[] = "'time_expire' can't be null";
+        }
+        if ($this->container['time_start'] === null) {
+            $invalidProperties[] = "'time_start' can't be null";
+        }
+        if ($this->container['wap_name'] === null) {
+            $invalidProperties[] = "'wap_name' can't be null";
+        }
+        if ($this->container['wap_url'] === null) {
+            $invalidProperties[] = "'wap_url' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -283,7 +307,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets attach
      *
-     * @param string $attach attach
+     * @param string $attach 元数据
      *
      * @return $this
      */
@@ -307,7 +331,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets detail
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpayDetail $detail detail
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpayDetail $detail 商品详情
      *
      * @return $this
      */
@@ -331,7 +355,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets goods_tag
      *
-     * @param string $goods_tag goods_tag
+     * @param string $goods_tag 订单优惠标记
      *
      * @return $this
      */
@@ -355,7 +379,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets pay_sign
      *
-     * @param string $pay_sign pay_sign
+     * @param string $pay_sign 支付签名
      *
      * @return $this
      */
@@ -379,7 +403,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets pay_url
      *
-     * @param string $pay_url pay_url
+     * @param string $pay_url 支付链接
      *
      * @return $this
      */
@@ -403,7 +427,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets prepay_id
      *
-     * @param string $prepay_id prepay_id
+     * @param string $prepay_id 预支付交易会话标识
      *
      * @return $this
      */
@@ -427,7 +451,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets scene_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySceneInfo $scene_info scene_info
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySceneInfo $scene_info 场景信息
      *
      * @return $this
      */
@@ -451,7 +475,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets settle_info
      *
-     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySettleInfo $settle_info settle_info
+     * @param \Justapnet\Justap\Model\V1ExtraWechatpaySettleInfo $settle_info 结算信息
      *
      * @return $this
      */
@@ -475,7 +499,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets time_expire
      *
-     * @param string $time_expire time_expire
+     * @param string $time_expire 交易结束时间
      *
      * @return $this
      */
@@ -499,7 +523,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets time_start
      *
-     * @param string $time_start time_start
+     * @param string $time_start 交易起始时间
      *
      * @return $this
      */
@@ -523,7 +547,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets wap_name
      *
-     * @param string $wap_name wap_name
+     * @param string $wap_name WAP网站名
      *
      * @return $this
      */
@@ -547,7 +571,7 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     /**
      * Sets wap_url
      *
-     * @param string $wap_url wap_url
+     * @param string $wap_url WAP网站URL
      *
      * @return $this
      */

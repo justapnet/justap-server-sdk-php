@@ -226,7 +226,7 @@ class V1RefundResponse implements ModelInterface, ArrayAccess
     /**
      * Sets data
      *
-     * @param \Justapnet\Justap\Model\V1Refund $data data
+     * @param \Justapnet\Justap\Model\V1Refund $data Refund 对象
      *
      * @return $this
      */

@@ -10,6 +10,6 @@ Name | Type | Description | Notes
 **total_amount** | **string** | 扣款总金额total_amount是周期扣款产品必填，单位为元 | 
 **total_payments** | **string** | 扣款总笔数total_payments是周期扣款产品必填，单位为笔 | 
 
-[[Back to Model list]](../../README.md#documentation-for-models) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to README]](../../README.md)
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
 
