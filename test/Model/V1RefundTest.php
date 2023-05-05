@@ -105,6 +105,13 @@ class V1RefundTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "created"
+     */
+    public function testPropertyCreated()
+    {
+    }
+
+    /**
      * Test attribute "created_at"
      */
     public function testPropertyCreatedAt()
@@ -164,6 +171,13 @@ class V1RefundTest extends \PHPUnit_Framework_TestCase
      * Test attribute "status"
      */
     public function testPropertyStatus()
+    {
+    }
+
+    /**
+     * Test attribute "succeed_ts"
+     */
+    public function testPropertySucceedTs()
     {
     }
 

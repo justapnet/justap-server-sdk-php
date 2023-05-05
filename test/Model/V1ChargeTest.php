@@ -161,6 +161,13 @@ class V1ChargeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "closed_ts"
+     */
+    public function testPropertyClosedTs()
+    {
+    }
+
+    /**
      * Test attribute "created_at"
      */
     public function testPropertyCreatedAt()
@@ -185,6 +192,13 @@ class V1ChargeTest extends \PHPUnit_Framework_TestCase
      * Test attribute "description"
      */
     public function testPropertyDescription()
+    {
+    }
+
+    /**
+     * Test attribute "expired_ts"
+     */
+    public function testPropertyExpiredTs()
     {
     }
 
@@ -231,6 +245,13 @@ class V1ChargeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "object"
+     */
+    public function testPropertyObject()
+    {
+    }
+
+    /**
      * Test attribute "paid"
      */
     public function testPropertyPaid()
@@ -241,6 +262,13 @@ class V1ChargeTest extends \PHPUnit_Framework_TestCase
      * Test attribute "paid_at"
      */
     public function testPropertyPaidAt()
+    {
+    }
+
+    /**
+     * Test attribute "paid_ts"
+     */
+    public function testPropertyPaidTs()
     {
     }
 

@@ -219,24 +219,6 @@ class RefundExtraWechatPayGoodsDetailItem implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['goods_name'] === null) {
-            $invalidProperties[] = "'goods_name' can't be null";
-        }
-        if ($this->container['merchant_goods_id'] === null) {
-            $invalidProperties[] = "'merchant_goods_id' can't be null";
-        }
-        if ($this->container['refund_amount'] === null) {
-            $invalidProperties[] = "'refund_amount' can't be null";
-        }
-        if ($this->container['refund_quantity'] === null) {
-            $invalidProperties[] = "'refund_quantity' can't be null";
-        }
-        if ($this->container['unit_price'] === null) {
-            $invalidProperties[] = "'unit_price' can't be null";
-        }
-        if ($this->container['wechatpay_goods_id'] === null) {
-            $invalidProperties[] = "'wechatpay_goods_id' can't be null";
-        }
         return $invalidProperties;
     }
 

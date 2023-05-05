@@ -77,13 +77,6 @@ class V1ExtraAlipayAppTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "agreement_sign_params"
-     */
-    public function testPropertyAgreementSignParams()
-    {
-    }
-
-    /**
      * Test attribute "credit_agreement_id"
      */
     public function testPropertyCreditAgreementId()

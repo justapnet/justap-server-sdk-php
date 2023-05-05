@@ -57,7 +57,6 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'agreement_sign_params' => '\Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams',
         'credit_agreement_id' => 'string',
         'credit_biz_order_id' => 'string',
         'credit_pay_mode' => 'string',
@@ -80,7 +79,6 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'agreement_sign_params' => null,
         'credit_agreement_id' => 'string',
         'credit_biz_order_id' => 'string',
         'credit_pay_mode' => 'string',
@@ -124,7 +122,6 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'agreement_sign_params' => 'agreement_sign_params',
         'credit_agreement_id' => 'credit_agreement_id',
         'credit_biz_order_id' => 'credit_biz_order_id',
         'credit_pay_mode' => 'credit_pay_mode',
@@ -147,7 +144,6 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'agreement_sign_params' => 'setAgreementSignParams',
         'credit_agreement_id' => 'setCreditAgreementId',
         'credit_biz_order_id' => 'setCreditBizOrderId',
         'credit_pay_mode' => 'setCreditPayMode',
@@ -170,7 +166,6 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'agreement_sign_params' => 'getAgreementSignParams',
         'credit_agreement_id' => 'getCreditAgreementId',
         'credit_biz_order_id' => 'getCreditBizOrderId',
         'credit_pay_mode' => 'getCreditPayMode',
@@ -247,7 +242,6 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['agreement_sign_params'] = isset($data['agreement_sign_params']) ? $data['agreement_sign_params'] : null;
         $this->container['credit_agreement_id'] = isset($data['credit_agreement_id']) ? $data['credit_agreement_id'] : null;
         $this->container['credit_biz_order_id'] = isset($data['credit_biz_order_id']) ? $data['credit_biz_order_id'] : null;
         $this->container['credit_pay_mode'] = isset($data['credit_pay_mode']) ? $data['credit_pay_mode'] : null;
@@ -273,39 +267,6 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['credit_agreement_id'] === null) {
-            $invalidProperties[] = "'credit_agreement_id' can't be null";
-        }
-        if ($this->container['credit_biz_order_id'] === null) {
-            $invalidProperties[] = "'credit_biz_order_id' can't be null";
-        }
-        if ($this->container['credit_pay_mode'] === null) {
-            $invalidProperties[] = "'credit_pay_mode' can't be null";
-        }
-        if ($this->container['disable_pay_channels'] === null) {
-            $invalidProperties[] = "'disable_pay_channels' can't be null";
-        }
-        if ($this->container['enable_pay_channels'] === null) {
-            $invalidProperties[] = "'enable_pay_channels' can't be null";
-        }
-        if ($this->container['goods_type'] === null) {
-            $invalidProperties[] = "'goods_type' can't be null";
-        }
-        if ($this->container['merchant_trade_id'] === null) {
-            $invalidProperties[] = "'merchant_trade_id' can't be null";
-        }
-        if ($this->container['pay_param'] === null) {
-            $invalidProperties[] = "'pay_param' can't be null";
-        }
-        if ($this->container['product_code'] === null) {
-            $invalidProperties[] = "'product_code' can't be null";
-        }
-        if ($this->container['seller_id'] === null) {
-            $invalidProperties[] = "'seller_id' can't be null";
-        }
-        if ($this->container['store_id'] === null) {
-            $invalidProperties[] = "'store_id' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -320,30 +281,6 @@ class V1ExtraAlipayApp implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
-
-    /**
-     * Gets agreement_sign_params
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams
-     */
-    public function getAgreementSignParams()
-    {
-        return $this->container['agreement_sign_params'];
-    }
-
-    /**
-     * Sets agreement_sign_params
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams $agreement_sign_params 签约参数。如果希望在sdk中支付并签约，需要在这里传入签约信息。周期扣款场景 product_code 为 CYCLE_PAY_AUTH 时必填。
-     *
-     * @return $this
-     */
-    public function setAgreementSignParams($agreement_sign_params)
-    {
-        $this->container['agreement_sign_params'] = $agreement_sign_params;
-
-        return $this;
-    }
 
     /**
      * Gets credit_agreement_id

@@ -285,36 +285,6 @@ class V1ExtraAlipayLite implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['body'] === null) {
-            $invalidProperties[] = "'body' can't be null";
-        }
-        if ($this->container['buyer_id'] === null) {
-            $invalidProperties[] = "'buyer_id' can't be null";
-        }
-        if ($this->container['operator_id'] === null) {
-            $invalidProperties[] = "'operator_id' can't be null";
-        }
-        if ($this->container['product_code'] === null) {
-            $invalidProperties[] = "'product_code' can't be null";
-        }
-        if ($this->container['seller_id'] === null) {
-            $invalidProperties[] = "'seller_id' can't be null";
-        }
-        if ($this->container['store_id'] === null) {
-            $invalidProperties[] = "'store_id' can't be null";
-        }
-        if ($this->container['terminal_id'] === null) {
-            $invalidProperties[] = "'terminal_id' can't be null";
-        }
-        if ($this->container['time_expire'] === null) {
-            $invalidProperties[] = "'time_expire' can't be null";
-        }
-        if ($this->container['timeout_express'] === null) {
-            $invalidProperties[] = "'timeout_express' can't be null";
-        }
-        if ($this->container['trade_no'] === null) {
-            $invalidProperties[] = "'trade_no' can't be null";
-        }
         return $invalidProperties;
     }
 

@@ -72,72 +72,142 @@ class DefaultApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test case for tradeServiceCharges
+     * Test case for chargeServiceCharges
      *
      * 创建 Charge 对象.
      *
      */
-    public function testTradeServiceCharges()
+    public function testChargeServiceCharges()
     {
     }
 
     /**
-     * Test case for tradeServiceQueryCharge
+     * Test case for chargeServiceCharges2
+     *
+     * 创建 Charge 对象.
+     *
+     */
+    public function testChargeServiceCharges2()
+    {
+    }
+
+    /**
+     * Test case for chargeServiceQueryCharge
      *
      * 查询 Charge 对象.
      *
      */
-    public function testTradeServiceQueryCharge()
+    public function testChargeServiceQueryCharge()
     {
     }
 
     /**
-     * Test case for tradeServiceQueryChargeList
+     * Test case for chargeServiceQueryCharge2
+     *
+     * 查询 Charge 对象.
+     *
+     */
+    public function testChargeServiceQueryCharge2()
+    {
+    }
+
+    /**
+     * Test case for chargeServiceQueryChargeList
      *
      * 查询 Charge 对象列表.
      *
      */
-    public function testTradeServiceQueryChargeList()
+    public function testChargeServiceQueryChargeList()
     {
     }
 
     /**
-     * Test case for tradeServiceQueryRefund
+     * Test case for chargeServiceQueryChargeList2
      *
-     * 查询 Refund 对象.
+     * 查询 Charge 对象列表.
      *
      */
-    public function testTradeServiceQueryRefund()
+    public function testChargeServiceQueryChargeList2()
     {
     }
 
     /**
-     * Test case for tradeServiceQueryRefundList
-     *
-     * 查询 Refund 对象列表.
-     *
-     */
-    public function testTradeServiceQueryRefundList()
-    {
-    }
-
-    /**
-     * Test case for tradeServiceRefunds
-     *
-     * 创建 Refund 对象.
-     *
-     */
-    public function testTradeServiceRefunds()
-    {
-    }
-
-    /**
-     * Test case for tradeServiceReverseCharge
+     * Test case for chargeServiceReverseCharge
      *
      * 撤销 Charge 对象.
      *
      */
-    public function testTradeServiceReverseCharge()
+    public function testChargeServiceReverseCharge()
+    {
+    }
+
+    /**
+     * Test case for chargeServiceReverseCharge2
+     *
+     * 撤销 Charge 对象.
+     *
+     */
+    public function testChargeServiceReverseCharge2()
+    {
+    }
+
+    /**
+     * Test case for refundServiceQueryRefund
+     *
+     * 查询 Refund 对象.
+     *
+     */
+    public function testRefundServiceQueryRefund()
+    {
+    }
+
+    /**
+     * Test case for refundServiceQueryRefund2
+     *
+     * 查询 Refund 对象.
+     *
+     */
+    public function testRefundServiceQueryRefund2()
+    {
+    }
+
+    /**
+     * Test case for refundServiceQueryRefundList
+     *
+     * 查询 Refund 对象列表.
+     *
+     */
+    public function testRefundServiceQueryRefundList()
+    {
+    }
+
+    /**
+     * Test case for refundServiceQueryRefundList2
+     *
+     * 查询 Refund 对象列表.
+     *
+     */
+    public function testRefundServiceQueryRefundList2()
+    {
+    }
+
+    /**
+     * Test case for refundServiceRefunds
+     *
+     * 创建 Refund 对象.
+     *
+     */
+    public function testRefundServiceRefunds()
+    {
+    }
+
+    /**
+     * Test case for refundServiceRefunds2
+     *
+     * 创建 Refund 对象.
+     *
+     */
+    public function testRefundServiceRefunds2()
     {
     }
 }

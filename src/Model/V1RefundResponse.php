@@ -195,9 +195,6 @@ class V1RefundResponse implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['object'] === null) {
-            $invalidProperties[] = "'object' can't be null";
-        }
         return $invalidProperties;
     }
 

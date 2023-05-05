@@ -77,13 +77,6 @@ class V1ExtraAlipayPageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "agreement_sign_params"
-     */
-    public function testPropertyAgreementSignParams()
-    {
-    }
-
-    /**
      * Test attribute "business_params"
      */
     public function testPropertyBusinessParams()
@@ -101,13 +94,6 @@ class V1ExtraAlipayPageTest extends \PHPUnit_Framework_TestCase
      * Test attribute "enable_pay_channels"
      */
     public function testPropertyEnablePayChannels()
-    {
-    }
-
-    /**
-     * Test attribute "ext_user_info"
-     */
-    public function testPropertyExtUserInfo()
     {
     }
 
@@ -189,23 +175,9 @@ class V1ExtraAlipayPageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "royalty_info"
-     */
-    public function testPropertyRoyaltyInfo()
-    {
-    }
-
-    /**
      * Test attribute "seller_id"
      */
     public function testPropertySellerId()
-    {
-    }
-
-    /**
-     * Test attribute "settle_info"
-     */
-    public function testPropertySettleInfo()
     {
     }
 

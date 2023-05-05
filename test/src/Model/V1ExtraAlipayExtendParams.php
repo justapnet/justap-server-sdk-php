@@ -219,24 +219,6 @@ class V1ExtraAlipayExtendParams implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['card_type'] === null) {
-            $invalidProperties[] = "'card_type' can't be null";
-        }
-        if ($this->container['hb_fq_num'] === null) {
-            $invalidProperties[] = "'hb_fq_num' can't be null";
-        }
-        if ($this->container['hb_fq_seller_percent'] === null) {
-            $invalidProperties[] = "'hb_fq_seller_percent' can't be null";
-        }
-        if ($this->container['industry_reflux_info'] === null) {
-            $invalidProperties[] = "'industry_reflux_info' can't be null";
-        }
-        if ($this->container['specified_seller_name'] === null) {
-            $invalidProperties[] = "'specified_seller_name' can't be null";
-        }
-        if ($this->container['sys_service_provider_id'] === null) {
-            $invalidProperties[] = "'sys_service_provider_id' can't be null";
-        }
         return $invalidProperties;
     }
 

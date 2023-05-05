@@ -71,7 +71,7 @@ class V1ChargeListResponse implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'data' => null,
         'has_more' => null,
-        'object' => 'string'
+        'object' => null
     ];
 
     /**
@@ -190,7 +190,7 @@ class V1ChargeListResponse implements ModelInterface, ArrayAccess
     {
         $this->container['data'] = isset($data['data']) ? $data['data'] : null;
         $this->container['has_more'] = isset($data['has_more']) ? $data['has_more'] : false;
-        $this->container['object'] = isset($data['object']) ? $data['object'] : 'Charge';
+        $this->container['object'] = isset($data['object']) ? $data['object'] : null;
     }
 
     /**
@@ -202,12 +202,6 @@ class V1ChargeListResponse implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['has_more'] === null) {
-            $invalidProperties[] = "'has_more' can't be null";
-        }
-        if ($this->container['object'] === null) {
-            $invalidProperties[] = "'object' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -284,7 +278,7 @@ class V1ChargeListResponse implements ModelInterface, ArrayAccess
     /**
      * Sets object
      *
-     * @param string $object 对象类型
+     * @param string $object 返回对象的类型，此值为 ChargeList
      *
      * @return $this
      */

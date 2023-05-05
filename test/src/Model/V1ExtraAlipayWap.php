@@ -61,7 +61,6 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
         'business_params' => 'string',
         'disable_pay_channels' => 'string',
         'enable_pay_channels' => 'string',
-        'ext_user_info' => '\Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo',
         'extend_params' => '\Justapnet\Justap\Model\V1ExtraAlipayExtendParams',
         'fund_bill_list' => 'string[]',
         'goods_detail' => '\Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[]',
@@ -87,7 +86,6 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
         'business_params' => 'string',
         'disable_pay_channels' => 'string',
         'enable_pay_channels' => 'string',
-        'ext_user_info' => null,
         'extend_params' => null,
         'fund_bill_list' => null,
         'goods_detail' => null,
@@ -134,7 +132,6 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
         'business_params' => 'business_params',
         'disable_pay_channels' => 'disable_pay_channels',
         'enable_pay_channels' => 'enable_pay_channels',
-        'ext_user_info' => 'ext_user_info',
         'extend_params' => 'extend_params',
         'fund_bill_list' => 'fund_bill_list',
         'goods_detail' => 'goods_detail',
@@ -160,7 +157,6 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
         'business_params' => 'setBusinessParams',
         'disable_pay_channels' => 'setDisablePayChannels',
         'enable_pay_channels' => 'setEnablePayChannels',
-        'ext_user_info' => 'setExtUserInfo',
         'extend_params' => 'setExtendParams',
         'fund_bill_list' => 'setFundBillList',
         'goods_detail' => 'setGoodsDetail',
@@ -186,7 +182,6 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
         'business_params' => 'getBusinessParams',
         'disable_pay_channels' => 'getDisablePayChannels',
         'enable_pay_channels' => 'getEnablePayChannels',
-        'ext_user_info' => 'getExtUserInfo',
         'extend_params' => 'getExtendParams',
         'fund_bill_list' => 'getFundBillList',
         'goods_detail' => 'getGoodsDetail',
@@ -266,7 +261,6 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
         $this->container['business_params'] = isset($data['business_params']) ? $data['business_params'] : null;
         $this->container['disable_pay_channels'] = isset($data['disable_pay_channels']) ? $data['disable_pay_channels'] : null;
         $this->container['enable_pay_channels'] = isset($data['enable_pay_channels']) ? $data['enable_pay_channels'] : null;
-        $this->container['ext_user_info'] = isset($data['ext_user_info']) ? $data['ext_user_info'] : null;
         $this->container['extend_params'] = isset($data['extend_params']) ? $data['extend_params'] : null;
         $this->container['fund_bill_list'] = isset($data['fund_bill_list']) ? $data['fund_bill_list'] : null;
         $this->container['goods_detail'] = isset($data['goods_detail']) ? $data['goods_detail'] : null;
@@ -291,45 +285,6 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['auth_token'] === null) {
-            $invalidProperties[] = "'auth_token' can't be null";
-        }
-        if ($this->container['business_params'] === null) {
-            $invalidProperties[] = "'business_params' can't be null";
-        }
-        if ($this->container['disable_pay_channels'] === null) {
-            $invalidProperties[] = "'disable_pay_channels' can't be null";
-        }
-        if ($this->container['enable_pay_channels'] === null) {
-            $invalidProperties[] = "'enable_pay_channels' can't be null";
-        }
-        if ($this->container['goods_type'] === null) {
-            $invalidProperties[] = "'goods_type' can't be null";
-        }
-        if ($this->container['merchant_trade_id'] === null) {
-            $invalidProperties[] = "'merchant_trade_id' can't be null";
-        }
-        if ($this->container['pay_url'] === null) {
-            $invalidProperties[] = "'pay_url' can't be null";
-        }
-        if ($this->container['product_code'] === null) {
-            $invalidProperties[] = "'product_code' can't be null";
-        }
-        if ($this->container['promo_params'] === null) {
-            $invalidProperties[] = "'promo_params' can't be null";
-        }
-        if ($this->container['quit_url'] === null) {
-            $invalidProperties[] = "'quit_url' can't be null";
-        }
-        if ($this->container['return_url'] === null) {
-            $invalidProperties[] = "'return_url' can't be null";
-        }
-        if ($this->container['seller_id'] === null) {
-            $invalidProperties[] = "'seller_id' can't be null";
-        }
-        if ($this->container['store_id'] === null) {
-            $invalidProperties[] = "'store_id' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -437,30 +392,6 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     public function setEnablePayChannels($enable_pay_channels)
     {
         $this->container['enable_pay_channels'] = $enable_pay_channels;
-
-        return $this;
-    }
-
-    /**
-     * Gets ext_user_info
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo
-     */
-    public function getExtUserInfo()
-    {
-        return $this->container['ext_user_info'];
-    }
-
-    /**
-     * Sets ext_user_info
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo $ext_user_info 支付宝用户信息
-     *
-     * @return $this
-     */
-    public function setExtUserInfo($ext_user_info)
-    {
-        $this->container['ext_user_info'] = $ext_user_info;
 
         return $this;
     }

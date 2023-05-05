@@ -62,6 +62,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'amount' => 'float',
         'charge_id' => 'string',
         'charge_merchant_trade_id' => 'string',
+        'created' => 'float',
         'created_at' => '\DateTime',
         'description' => 'string',
         'failure_code' => 'string',
@@ -71,6 +72,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'refund_id' => 'string',
         'refund_no' => 'string',
         'status' => 'string',
+        'succeed_ts' => 'float',
         'success_at' => '\DateTime',
         'transaction_no' => 'string'
     ];
@@ -85,6 +87,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'amount' => 'float',
         'charge_id' => 'string',
         'charge_merchant_trade_id' => 'string',
+        'created' => 'int64',
         'created_at' => 'date-time',
         'description' => 'string',
         'failure_code' => 'string',
@@ -94,6 +97,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'refund_id' => 'string',
         'refund_no' => 'string',
         'status' => 'string',
+        'succeed_ts' => 'int64',
         'success_at' => 'date-time',
         'transaction_no' => 'string'
     ];
@@ -129,6 +133,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'amount' => 'amount',
         'charge_id' => 'charge_id',
         'charge_merchant_trade_id' => 'charge_merchant_trade_id',
+        'created' => 'created',
         'created_at' => 'created_at',
         'description' => 'description',
         'failure_code' => 'failure_code',
@@ -138,6 +143,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'refund_id' => 'refund_id',
         'refund_no' => 'refund_no',
         'status' => 'status',
+        'succeed_ts' => 'succeed_ts',
         'success_at' => 'success_at',
         'transaction_no' => 'transaction_no'
     ];
@@ -152,6 +158,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'amount' => 'setAmount',
         'charge_id' => 'setChargeId',
         'charge_merchant_trade_id' => 'setChargeMerchantTradeId',
+        'created' => 'setCreated',
         'created_at' => 'setCreatedAt',
         'description' => 'setDescription',
         'failure_code' => 'setFailureCode',
@@ -161,6 +168,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'refund_id' => 'setRefundId',
         'refund_no' => 'setRefundNo',
         'status' => 'setStatus',
+        'succeed_ts' => 'setSucceedTs',
         'success_at' => 'setSuccessAt',
         'transaction_no' => 'setTransactionNo'
     ];
@@ -175,6 +183,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'amount' => 'getAmount',
         'charge_id' => 'getChargeId',
         'charge_merchant_trade_id' => 'getChargeMerchantTradeId',
+        'created' => 'getCreated',
         'created_at' => 'getCreatedAt',
         'description' => 'getDescription',
         'failure_code' => 'getFailureCode',
@@ -184,6 +193,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         'refund_id' => 'getRefundId',
         'refund_no' => 'getRefundNo',
         'status' => 'getStatus',
+        'succeed_ts' => 'getSucceedTs',
         'success_at' => 'getSuccessAt',
         'transaction_no' => 'getTransactionNo'
     ];
@@ -252,6 +262,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         $this->container['amount'] = isset($data['amount']) ? $data['amount'] : null;
         $this->container['charge_id'] = isset($data['charge_id']) ? $data['charge_id'] : null;
         $this->container['charge_merchant_trade_id'] = isset($data['charge_merchant_trade_id']) ? $data['charge_merchant_trade_id'] : null;
+        $this->container['created'] = isset($data['created']) ? $data['created'] : null;
         $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
         $this->container['description'] = isset($data['description']) ? $data['description'] : null;
         $this->container['failure_code'] = isset($data['failure_code']) ? $data['failure_code'] : null;
@@ -261,6 +272,7 @@ class V1Refund implements ModelInterface, ArrayAccess
         $this->container['refund_id'] = isset($data['refund_id']) ? $data['refund_id'] : null;
         $this->container['refund_no'] = isset($data['refund_no']) ? $data['refund_no'] : null;
         $this->container['status'] = isset($data['status']) ? $data['status'] : null;
+        $this->container['succeed_ts'] = isset($data['succeed_ts']) ? $data['succeed_ts'] : null;
         $this->container['success_at'] = isset($data['success_at']) ? $data['success_at'] : null;
         $this->container['transaction_no'] = isset($data['transaction_no']) ? $data['transaction_no'] : null;
     }
@@ -274,39 +286,6 @@ class V1Refund implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['amount'] === null) {
-            $invalidProperties[] = "'amount' can't be null";
-        }
-        if ($this->container['charge_id'] === null) {
-            $invalidProperties[] = "'charge_id' can't be null";
-        }
-        if ($this->container['charge_merchant_trade_id'] === null) {
-            $invalidProperties[] = "'charge_merchant_trade_id' can't be null";
-        }
-        if ($this->container['description'] === null) {
-            $invalidProperties[] = "'description' can't be null";
-        }
-        if ($this->container['failure_code'] === null) {
-            $invalidProperties[] = "'failure_code' can't be null";
-        }
-        if ($this->container['failure_msg'] === null) {
-            $invalidProperties[] = "'failure_msg' can't be null";
-        }
-        if ($this->container['is_success'] === null) {
-            $invalidProperties[] = "'is_success' can't be null";
-        }
-        if ($this->container['refund_id'] === null) {
-            $invalidProperties[] = "'refund_id' can't be null";
-        }
-        if ($this->container['refund_no'] === null) {
-            $invalidProperties[] = "'refund_no' can't be null";
-        }
-        if ($this->container['status'] === null) {
-            $invalidProperties[] = "'status' can't be null";
-        }
-        if ($this->container['transaction_no'] === null) {
-            $invalidProperties[] = "'transaction_no' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -414,6 +393,30 @@ class V1Refund implements ModelInterface, ArrayAccess
     public function setChargeMerchantTradeId($charge_merchant_trade_id)
     {
         $this->container['charge_merchant_trade_id'] = $charge_merchant_trade_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets created
+     *
+     * @return float
+     */
+    public function getCreated()
+    {
+        return $this->container['created'];
+    }
+
+    /**
+     * Sets created
+     *
+     * @param float $created 退款创建时间
+     *
+     * @return $this
+     */
+    public function setCreated($created)
+    {
+        $this->container['created'] = $created;
 
         return $this;
     }
@@ -630,6 +633,30 @@ class V1Refund implements ModelInterface, ArrayAccess
     public function setStatus($status)
     {
         $this->container['status'] = $status;
+
+        return $this;
+    }
+
+    /**
+     * Gets succeed_ts
+     *
+     * @return float
+     */
+    public function getSucceedTs()
+    {
+        return $this->container['succeed_ts'];
+    }
+
+    /**
+     * Sets succeed_ts
+     *
+     * @param float $succeed_ts 退款成功时间
+     *
+     * @return $this
+     */
+    public function setSucceedTs($succeed_ts)
+    {
+        $this->container['succeed_ts'] = $succeed_ts;
 
         return $this;
     }

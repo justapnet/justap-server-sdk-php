@@ -237,33 +237,6 @@ class V1ExtraAlipayGoodsDetail implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['alipay_goods_id'] === null) {
-            $invalidProperties[] = "'alipay_goods_id' can't be null";
-        }
-        if ($this->container['body'] === null) {
-            $invalidProperties[] = "'body' can't be null";
-        }
-        if ($this->container['categories_tree'] === null) {
-            $invalidProperties[] = "'categories_tree' can't be null";
-        }
-        if ($this->container['goods_category'] === null) {
-            $invalidProperties[] = "'goods_category' can't be null";
-        }
-        if ($this->container['goods_id'] === null) {
-            $invalidProperties[] = "'goods_id' can't be null";
-        }
-        if ($this->container['goods_name'] === null) {
-            $invalidProperties[] = "'goods_name' can't be null";
-        }
-        if ($this->container['price'] === null) {
-            $invalidProperties[] = "'price' can't be null";
-        }
-        if ($this->container['quantity'] === null) {
-            $invalidProperties[] = "'quantity' can't be null";
-        }
-        if ($this->container['show_url'] === null) {
-            $invalidProperties[] = "'show_url' can't be null";
-        }
         return $invalidProperties;
     }
 

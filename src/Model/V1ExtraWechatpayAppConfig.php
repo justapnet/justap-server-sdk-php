@@ -225,27 +225,6 @@ class V1ExtraWechatpayAppConfig implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['appid'] === null) {
-            $invalidProperties[] = "'appid' can't be null";
-        }
-        if ($this->container['noncestr'] === null) {
-            $invalidProperties[] = "'noncestr' can't be null";
-        }
-        if ($this->container['package'] === null) {
-            $invalidProperties[] = "'package' can't be null";
-        }
-        if ($this->container['partnerid'] === null) {
-            $invalidProperties[] = "'partnerid' can't be null";
-        }
-        if ($this->container['prepayid'] === null) {
-            $invalidProperties[] = "'prepayid' can't be null";
-        }
-        if ($this->container['sign'] === null) {
-            $invalidProperties[] = "'sign' can't be null";
-        }
-        if ($this->container['timestamp'] === null) {
-            $invalidProperties[] = "'timestamp' can't be null";
-        }
         return $invalidProperties;
     }
 

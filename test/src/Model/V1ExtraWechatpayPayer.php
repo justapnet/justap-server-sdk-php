@@ -67,8 +67,8 @@ class V1ExtraWechatpayPayer implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'appid' => null,
-        'openid' => null
+        'appid' => 'string',
+        'openid' => 'string'
     ];
 
     /**
@@ -223,7 +223,7 @@ class V1ExtraWechatpayPayer implements ModelInterface, ArrayAccess
     /**
      * Sets appid
      *
-     * @param string $appid appid
+     * @param string $appid 应用下的 appid，必需和 Openid 一致
      *
      * @return $this
      */
@@ -247,7 +247,7 @@ class V1ExtraWechatpayPayer implements ModelInterface, ArrayAccess
     /**
      * Sets openid
      *
-     * @param string $openid openid
+     * @param string $openid 下单前需获取到用户的 Openid。必需和 appid 一致
      *
      * @return $this
      */

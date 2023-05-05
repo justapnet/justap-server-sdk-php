@@ -255,30 +255,6 @@ class V1ExtraWechatpayH5 implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['goods_tag'] === null) {
-            $invalidProperties[] = "'goods_tag' can't be null";
-        }
-        if ($this->container['pay_sign'] === null) {
-            $invalidProperties[] = "'pay_sign' can't be null";
-        }
-        if ($this->container['pay_url'] === null) {
-            $invalidProperties[] = "'pay_url' can't be null";
-        }
-        if ($this->container['prepay_id'] === null) {
-            $invalidProperties[] = "'prepay_id' can't be null";
-        }
-        if ($this->container['time_expire'] === null) {
-            $invalidProperties[] = "'time_expire' can't be null";
-        }
-        if ($this->container['time_start'] === null) {
-            $invalidProperties[] = "'time_start' can't be null";
-        }
-        if ($this->container['wap_name'] === null) {
-            $invalidProperties[] = "'wap_name' can't be null";
-        }
-        if ($this->container['wap_url'] === null) {
-            $invalidProperties[] = "'wap_url' can't be null";
-        }
         return $invalidProperties;
     }
 

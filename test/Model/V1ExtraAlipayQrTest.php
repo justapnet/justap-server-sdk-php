@@ -133,13 +133,6 @@ class V1ExtraAlipayQrTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "query_options"
-     */
-    public function testPropertyQueryOptions()
-    {
-    }
-
-    /**
      * Test attribute "store_id"
      */
     public function testPropertyStoreId()

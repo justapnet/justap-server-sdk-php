@@ -62,7 +62,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
         'app_id' => 'string',
         'body' => 'string',
         'callback_url' => 'string',
-        'channel' => '\Justapnet\Justap\Model\V1Channel',
+        'channel' => '\Justapnet\Justap\Model\Tradev1Channel',
         'client_ip' => 'string',
         'currency' => 'string',
         'description' => 'string',
@@ -274,45 +274,6 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['amount'] === null) {
-            $invalidProperties[] = "'amount' can't be null";
-        }
-        if ($this->container['app_id'] === null) {
-            $invalidProperties[] = "'app_id' can't be null";
-        }
-        if ($this->container['body'] === null) {
-            $invalidProperties[] = "'body' can't be null";
-        }
-        if ($this->container['callback_url'] === null) {
-            $invalidProperties[] = "'callback_url' can't be null";
-        }
-        if ($this->container['channel'] === null) {
-            $invalidProperties[] = "'channel' can't be null";
-        }
-        if ($this->container['client_ip'] === null) {
-            $invalidProperties[] = "'client_ip' can't be null";
-        }
-        if ($this->container['currency'] === null) {
-            $invalidProperties[] = "'currency' can't be null";
-        }
-        if ($this->container['description'] === null) {
-            $invalidProperties[] = "'description' can't be null";
-        }
-        if ($this->container['merchant_trade_id'] === null) {
-            $invalidProperties[] = "'merchant_trade_id' can't be null";
-        }
-        if ($this->container['notification_area'] === null) {
-            $invalidProperties[] = "'notification_area' can't be null";
-        }
-        if ($this->container['notify_url'] === null) {
-            $invalidProperties[] = "'notify_url' can't be null";
-        }
-        if ($this->container['subject'] === null) {
-            $invalidProperties[] = "'subject' can't be null";
-        }
-        if ($this->container['ttl'] === null) {
-            $invalidProperties[] = "'ttl' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -427,7 +388,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
     /**
      * Gets channel
      *
-     * @return \Justapnet\Justap\Model\V1Channel
+     * @return \Justapnet\Justap\Model\Tradev1Channel
      */
     public function getChannel()
     {
@@ -437,7 +398,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
     /**
      * Sets channel
      *
-     * @param \Justapnet\Justap\Model\V1Channel $channel [REQUIRED] 渠道名称
+     * @param \Justapnet\Justap\Model\Tradev1Channel $channel [REQUIRED] 渠道名称
      *
      * @return $this
      */

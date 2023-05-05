@@ -105,13 +105,6 @@ class V1ExtraAlipayWapTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "ext_user_info"
-     */
-    public function testPropertyExtUserInfo()
-    {
-    }
-
-    /**
      * Test attribute "extend_params"
      */
     public function testPropertyExtendParams()

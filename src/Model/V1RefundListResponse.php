@@ -194,7 +194,7 @@ class V1RefundListResponse implements ModelInterface, ArrayAccess
     {
         $this->container['data'] = isset($data['data']) ? $data['data'] : null;
         $this->container['has_more'] = isset($data['has_more']) ? $data['has_more'] : false;
-        $this->container['object'] = isset($data['object']) ? $data['object'] : 'Refund';
+        $this->container['object'] = isset($data['object']) ? $data['object'] : 'RefundList';
         $this->container['total'] = isset($data['total']) ? $data['total'] : 0;
     }
 
@@ -207,15 +207,6 @@ class V1RefundListResponse implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['has_more'] === null) {
-            $invalidProperties[] = "'has_more' can't be null";
-        }
-        if ($this->container['object'] === null) {
-            $invalidProperties[] = "'object' can't be null";
-        }
-        if ($this->container['total'] === null) {
-            $invalidProperties[] = "'total' can't be null";
-        }
         return $invalidProperties;
     }
 

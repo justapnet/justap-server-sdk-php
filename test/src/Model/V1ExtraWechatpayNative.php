@@ -237,21 +237,6 @@ class V1ExtraWechatpayNative implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['goods_tag'] === null) {
-            $invalidProperties[] = "'goods_tag' can't be null";
-        }
-        if ($this->container['qr_code'] === null) {
-            $invalidProperties[] = "'qr_code' can't be null";
-        }
-        if ($this->container['qr_link'] === null) {
-            $invalidProperties[] = "'qr_link' can't be null";
-        }
-        if ($this->container['time_expire'] === null) {
-            $invalidProperties[] = "'time_expire' can't be null";
-        }
-        if ($this->container['time_start'] === null) {
-            $invalidProperties[] = "'time_start' can't be null";
-        }
         return $invalidProperties;
     }
 

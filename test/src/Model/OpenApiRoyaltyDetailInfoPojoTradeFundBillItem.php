@@ -207,18 +207,6 @@ class OpenApiRoyaltyDetailInfoPojoTradeFundBillItem implements ModelInterface, A
     {
         $invalidProperties = [];
 
-        if ($this->container['amount'] === null) {
-            $invalidProperties[] = "'amount' can't be null";
-        }
-        if ($this->container['fund_channel'] === null) {
-            $invalidProperties[] = "'fund_channel' can't be null";
-        }
-        if ($this->container['fund_type'] === null) {
-            $invalidProperties[] = "'fund_type' can't be null";
-        }
-        if ($this->container['real_amount'] === null) {
-            $invalidProperties[] = "'real_amount' can't be null";
-        }
         return $invalidProperties;
     }
 

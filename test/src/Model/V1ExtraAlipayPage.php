@@ -57,11 +57,9 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'agreement_sign_params' => '\Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams',
         'business_params' => 'float',
         'disable_pay_channels' => 'string',
         'enable_pay_channels' => 'string',
-        'ext_user_info' => '\Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo',
         'extend_params' => '\Justapnet\Justap\Model\V1ExtraAlipayExtendParams',
         'goods_detail' => '\Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[]',
         'goods_type' => 'string',
@@ -73,9 +71,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
         'qr_pay_mode' => 'string',
         'qrcode_width' => 'float',
         'request_from_url' => 'float',
-        'royalty_info' => '\Justapnet\Justap\Model\V1ExtraAlipayRoyaltyInfo',
         'seller_id' => 'string',
-        'settle_info' => '\Justapnet\Justap\Model\V1ExtraAlipaySettleInfo',
         'store_id' => 'string',
         'sub_merchant' => '\Justapnet\Justap\Model\V1ExtraAlipaySubMerchant',
         'time_expire' => 'int'
@@ -87,11 +83,9 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'agreement_sign_params' => null,
         'business_params' => 'int32',
         'disable_pay_channels' => 'string',
         'enable_pay_channels' => 'string',
-        'ext_user_info' => null,
         'extend_params' => null,
         'goods_detail' => null,
         'goods_type' => 'string',
@@ -103,9 +97,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
         'qr_pay_mode' => 'string',
         'qrcode_width' => 'int32',
         'request_from_url' => 'int32',
-        'royalty_info' => null,
         'seller_id' => 'string',
-        'settle_info' => null,
         'store_id' => 'string',
         'sub_merchant' => null,
         'time_expire' => 'int32'
@@ -138,11 +130,9 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'agreement_sign_params' => 'agreement_sign_params',
         'business_params' => 'business_params',
         'disable_pay_channels' => 'disable_pay_channels',
         'enable_pay_channels' => 'enable_pay_channels',
-        'ext_user_info' => 'ext_user_info',
         'extend_params' => 'extend_params',
         'goods_detail' => 'goods_detail',
         'goods_type' => 'goods_type',
@@ -154,9 +144,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
         'qr_pay_mode' => 'qr_pay_mode',
         'qrcode_width' => 'qrcode_width',
         'request_from_url' => 'request_from_url',
-        'royalty_info' => 'royalty_info',
         'seller_id' => 'seller_id',
-        'settle_info' => 'settle_info',
         'store_id' => 'store_id',
         'sub_merchant' => 'sub_merchant',
         'time_expire' => 'time_expire'
@@ -168,11 +156,9 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'agreement_sign_params' => 'setAgreementSignParams',
         'business_params' => 'setBusinessParams',
         'disable_pay_channels' => 'setDisablePayChannels',
         'enable_pay_channels' => 'setEnablePayChannels',
-        'ext_user_info' => 'setExtUserInfo',
         'extend_params' => 'setExtendParams',
         'goods_detail' => 'setGoodsDetail',
         'goods_type' => 'setGoodsType',
@@ -184,9 +170,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
         'qr_pay_mode' => 'setQrPayMode',
         'qrcode_width' => 'setQrcodeWidth',
         'request_from_url' => 'setRequestFromUrl',
-        'royalty_info' => 'setRoyaltyInfo',
         'seller_id' => 'setSellerId',
-        'settle_info' => 'setSettleInfo',
         'store_id' => 'setStoreId',
         'sub_merchant' => 'setSubMerchant',
         'time_expire' => 'setTimeExpire'
@@ -198,11 +182,9 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'agreement_sign_params' => 'getAgreementSignParams',
         'business_params' => 'getBusinessParams',
         'disable_pay_channels' => 'getDisablePayChannels',
         'enable_pay_channels' => 'getEnablePayChannels',
-        'ext_user_info' => 'getExtUserInfo',
         'extend_params' => 'getExtendParams',
         'goods_detail' => 'getGoodsDetail',
         'goods_type' => 'getGoodsType',
@@ -214,9 +196,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
         'qr_pay_mode' => 'getQrPayMode',
         'qrcode_width' => 'getQrcodeWidth',
         'request_from_url' => 'getRequestFromUrl',
-        'royalty_info' => 'getRoyaltyInfo',
         'seller_id' => 'getSellerId',
-        'settle_info' => 'getSettleInfo',
         'store_id' => 'getStoreId',
         'sub_merchant' => 'getSubMerchant',
         'time_expire' => 'getTimeExpire'
@@ -282,11 +262,9 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['agreement_sign_params'] = isset($data['agreement_sign_params']) ? $data['agreement_sign_params'] : null;
         $this->container['business_params'] = isset($data['business_params']) ? $data['business_params'] : null;
         $this->container['disable_pay_channels'] = isset($data['disable_pay_channels']) ? $data['disable_pay_channels'] : null;
         $this->container['enable_pay_channels'] = isset($data['enable_pay_channels']) ? $data['enable_pay_channels'] : null;
-        $this->container['ext_user_info'] = isset($data['ext_user_info']) ? $data['ext_user_info'] : null;
         $this->container['extend_params'] = isset($data['extend_params']) ? $data['extend_params'] : null;
         $this->container['goods_detail'] = isset($data['goods_detail']) ? $data['goods_detail'] : null;
         $this->container['goods_type'] = isset($data['goods_type']) ? $data['goods_type'] : null;
@@ -298,9 +276,7 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
         $this->container['qr_pay_mode'] = isset($data['qr_pay_mode']) ? $data['qr_pay_mode'] : null;
         $this->container['qrcode_width'] = isset($data['qrcode_width']) ? $data['qrcode_width'] : null;
         $this->container['request_from_url'] = isset($data['request_from_url']) ? $data['request_from_url'] : null;
-        $this->container['royalty_info'] = isset($data['royalty_info']) ? $data['royalty_info'] : null;
         $this->container['seller_id'] = isset($data['seller_id']) ? $data['seller_id'] : null;
-        $this->container['settle_info'] = isset($data['settle_info']) ? $data['settle_info'] : null;
         $this->container['store_id'] = isset($data['store_id']) ? $data['store_id'] : null;
         $this->container['sub_merchant'] = isset($data['sub_merchant']) ? $data['sub_merchant'] : null;
         $this->container['time_expire'] = isset($data['time_expire']) ? $data['time_expire'] : null;
@@ -315,45 +291,6 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['business_params'] === null) {
-            $invalidProperties[] = "'business_params' can't be null";
-        }
-        if ($this->container['disable_pay_channels'] === null) {
-            $invalidProperties[] = "'disable_pay_channels' can't be null";
-        }
-        if ($this->container['enable_pay_channels'] === null) {
-            $invalidProperties[] = "'enable_pay_channels' can't be null";
-        }
-        if ($this->container['goods_type'] === null) {
-            $invalidProperties[] = "'goods_type' can't be null";
-        }
-        if ($this->container['integration_type'] === null) {
-            $invalidProperties[] = "'integration_type' can't be null";
-        }
-        if ($this->container['merchant_trade_id'] === null) {
-            $invalidProperties[] = "'merchant_trade_id' can't be null";
-        }
-        if ($this->container['pay_url'] === null) {
-            $invalidProperties[] = "'pay_url' can't be null";
-        }
-        if ($this->container['promo_params'] === null) {
-            $invalidProperties[] = "'promo_params' can't be null";
-        }
-        if ($this->container['qr_pay_mode'] === null) {
-            $invalidProperties[] = "'qr_pay_mode' can't be null";
-        }
-        if ($this->container['qrcode_width'] === null) {
-            $invalidProperties[] = "'qrcode_width' can't be null";
-        }
-        if ($this->container['request_from_url'] === null) {
-            $invalidProperties[] = "'request_from_url' can't be null";
-        }
-        if ($this->container['seller_id'] === null) {
-            $invalidProperties[] = "'seller_id' can't be null";
-        }
-        if ($this->container['store_id'] === null) {
-            $invalidProperties[] = "'store_id' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -368,30 +305,6 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
-
-    /**
-     * Gets agreement_sign_params
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams
-     */
-    public function getAgreementSignParams()
-    {
-        return $this->container['agreement_sign_params'];
-    }
-
-    /**
-     * Sets agreement_sign_params
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayAgreementSignParams $agreement_sign_params 签约参数。如果希望在sdk中支付并签约，需要在这里传入签约信息。周期扣款场景 product_code 为 CYCLE_PAY_AUTH 时必填。
-     *
-     * @return $this
-     */
-    public function setAgreementSignParams($agreement_sign_params)
-    {
-        $this->container['agreement_sign_params'] = $agreement_sign_params;
-
-        return $this;
-    }
 
     /**
      * Gets business_params
@@ -461,30 +374,6 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     public function setEnablePayChannels($enable_pay_channels)
     {
         $this->container['enable_pay_channels'] = $enable_pay_channels;
-
-        return $this;
-    }
-
-    /**
-     * Gets ext_user_info
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo
-     */
-    public function getExtUserInfo()
-    {
-        return $this->container['ext_user_info'];
-    }
-
-    /**
-     * Sets ext_user_info
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayExtUserInfo $ext_user_info 支付宝用户信息
-     *
-     * @return $this
-     */
-    public function setExtUserInfo($ext_user_info)
-    {
-        $this->container['ext_user_info'] = $ext_user_info;
 
         return $this;
     }
@@ -754,30 +643,6 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets royalty_info
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipayRoyaltyInfo
-     */
-    public function getRoyaltyInfo()
-    {
-        return $this->container['royalty_info'];
-    }
-
-    /**
-     * Sets royalty_info
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayRoyaltyInfo $royalty_info 分账类型卖家的分账类型，目前只支持传入ROYALTY（普通分账类型）。
-     *
-     * @return $this
-     */
-    public function setRoyaltyInfo($royalty_info)
-    {
-        $this->container['royalty_info'] = $royalty_info;
-
-        return $this;
-    }
-
-    /**
      * Gets seller_id
      *
      * @return string
@@ -797,30 +662,6 @@ class V1ExtraAlipayPage implements ModelInterface, ArrayAccess
     public function setSellerId($seller_id)
     {
         $this->container['seller_id'] = $seller_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets settle_info
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipaySettleInfo
-     */
-    public function getSettleInfo()
-    {
-        return $this->container['settle_info'];
-    }
-
-    /**
-     * Sets settle_info
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipaySettleInfo $settle_info 结算信息
-     *
-     * @return $this
-     */
-    public function setSettleInfo($settle_info)
-    {
-        $this->container['settle_info'] = $settle_info;
 
         return $this;
     }

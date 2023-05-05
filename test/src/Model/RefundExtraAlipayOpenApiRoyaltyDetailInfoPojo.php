@@ -279,51 +279,6 @@ class RefundExtraAlipayOpenApiRoyaltyDetailInfoPojo implements ModelInterface, A
     {
         $invalidProperties = [];
 
-        if ($this->container['amount'] === null) {
-            $invalidProperties[] = "'amount' can't be null";
-        }
-        if ($this->container['buyer_logon_id'] === null) {
-            $invalidProperties[] = "'buyer_logon_id' can't be null";
-        }
-        if ($this->container['buyer_user_id'] === null) {
-            $invalidProperties[] = "'buyer_user_id' can't be null";
-        }
-        if ($this->container['desc'] === null) {
-            $invalidProperties[] = "'desc' can't be null";
-        }
-        if ($this->container['fund_change'] === null) {
-            $invalidProperties[] = "'fund_change' can't be null";
-        }
-        if ($this->container['refund_fee'] === null) {
-            $invalidProperties[] = "'refund_fee' can't be null";
-        }
-        if ($this->container['royalty_scene'] === null) {
-            $invalidProperties[] = "'royalty_scene' can't be null";
-        }
-        if ($this->container['royalty_type'] === null) {
-            $invalidProperties[] = "'royalty_type' can't be null";
-        }
-        if ($this->container['send_back_fee'] === null) {
-            $invalidProperties[] = "'send_back_fee' can't be null";
-        }
-        if ($this->container['store_name'] === null) {
-            $invalidProperties[] = "'store_name' can't be null";
-        }
-        if ($this->container['trans_in'] === null) {
-            $invalidProperties[] = "'trans_in' can't be null";
-        }
-        if ($this->container['trans_in_name'] === null) {
-            $invalidProperties[] = "'trans_in_name' can't be null";
-        }
-        if ($this->container['trans_in_type'] === null) {
-            $invalidProperties[] = "'trans_in_type' can't be null";
-        }
-        if ($this->container['trans_out'] === null) {
-            $invalidProperties[] = "'trans_out' can't be null";
-        }
-        if ($this->container['trans_out_type'] === null) {
-            $invalidProperties[] = "'trans_out_type' can't be null";
-        }
         return $invalidProperties;
     }
 

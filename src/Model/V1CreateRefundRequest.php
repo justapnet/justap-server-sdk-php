@@ -226,21 +226,6 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['amount'] === null) {
-            $invalidProperties[] = "'amount' can't be null";
-        }
-        if ($this->container['app_id'] === null) {
-            $invalidProperties[] = "'app_id' can't be null";
-        }
-        if ($this->container['charge_id'] === null) {
-            $invalidProperties[] = "'charge_id' can't be null";
-        }
-        if ($this->container['description'] === null) {
-            $invalidProperties[] = "'description' can't be null";
-        }
-        if ($this->container['merchant_refund_id'] === null) {
-            $invalidProperties[] = "'merchant_refund_id' can't be null";
-        }
         return $invalidProperties;
     }
 

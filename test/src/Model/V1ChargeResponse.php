@@ -196,9 +196,6 @@ class V1ChargeResponse implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['object'] === null) {
-            $invalidProperties[] = "'object' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -251,7 +248,7 @@ class V1ChargeResponse implements ModelInterface, ArrayAccess
     /**
      * Sets object
      *
-     * @param string $object 对象类型
+     * @param string $object 支付凭据 charge 对象
      *
      * @return $this
      */

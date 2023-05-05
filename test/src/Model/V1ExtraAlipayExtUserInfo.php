@@ -225,27 +225,6 @@ class V1ExtraAlipayExtUserInfo implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['cert_no'] === null) {
-            $invalidProperties[] = "'cert_no' can't be null";
-        }
-        if ($this->container['cert_type'] === null) {
-            $invalidProperties[] = "'cert_type' can't be null";
-        }
-        if ($this->container['fix_buyer'] === null) {
-            $invalidProperties[] = "'fix_buyer' can't be null";
-        }
-        if ($this->container['min_age'] === null) {
-            $invalidProperties[] = "'min_age' can't be null";
-        }
-        if ($this->container['mobile'] === null) {
-            $invalidProperties[] = "'mobile' can't be null";
-        }
-        if ($this->container['name'] === null) {
-            $invalidProperties[] = "'name' can't be null";
-        }
-        if ($this->container['need_check_info'] === null) {
-            $invalidProperties[] = "'need_check_info' can't be null";
-        }
         return $invalidProperties;
     }
 

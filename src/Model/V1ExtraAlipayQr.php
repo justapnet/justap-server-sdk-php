@@ -65,7 +65,6 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
         'qr_code' => 'string',
         'qr_code_timeout_express' => 'string',
         'qr_link' => 'string',
-        'query_options' => 'string',
         'store_id' => 'string',
         'terminal_id' => 'string'
     ];
@@ -84,7 +83,6 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
         'qr_code' => 'string',
         'qr_code_timeout_express' => 'string',
         'qr_link' => 'string',
-        'query_options' => null,
         'store_id' => 'string',
         'terminal_id' => 'string'
     ];
@@ -124,7 +122,6 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
         'qr_code' => 'qr_code',
         'qr_code_timeout_express' => 'qr_code_timeout_express',
         'qr_link' => 'qr_link',
-        'query_options' => 'query_options',
         'store_id' => 'store_id',
         'terminal_id' => 'terminal_id'
     ];
@@ -143,7 +140,6 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
         'qr_code' => 'setQrCode',
         'qr_code_timeout_express' => 'setQrCodeTimeoutExpress',
         'qr_link' => 'setQrLink',
-        'query_options' => 'setQueryOptions',
         'store_id' => 'setStoreId',
         'terminal_id' => 'setTerminalId'
     ];
@@ -162,7 +158,6 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
         'qr_code' => 'getQrCode',
         'qr_code_timeout_express' => 'getQrCodeTimeoutExpress',
         'qr_link' => 'getQrLink',
-        'query_options' => 'getQueryOptions',
         'store_id' => 'getStoreId',
         'terminal_id' => 'getTerminalId'
     ];
@@ -235,7 +230,6 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
         $this->container['qr_code'] = isset($data['qr_code']) ? $data['qr_code'] : null;
         $this->container['qr_code_timeout_express'] = isset($data['qr_code_timeout_express']) ? $data['qr_code_timeout_express'] : null;
         $this->container['qr_link'] = isset($data['qr_link']) ? $data['qr_link'] : null;
-        $this->container['query_options'] = isset($data['query_options']) ? $data['query_options'] : null;
         $this->container['store_id'] = isset($data['store_id']) ? $data['store_id'] : null;
         $this->container['terminal_id'] = isset($data['terminal_id']) ? $data['terminal_id'] : null;
     }
@@ -249,30 +243,6 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['buyer_id'] === null) {
-            $invalidProperties[] = "'buyer_id' can't be null";
-        }
-        if ($this->container['operator_id'] === null) {
-            $invalidProperties[] = "'operator_id' can't be null";
-        }
-        if ($this->container['product_code'] === null) {
-            $invalidProperties[] = "'product_code' can't be null";
-        }
-        if ($this->container['qr_code'] === null) {
-            $invalidProperties[] = "'qr_code' can't be null";
-        }
-        if ($this->container['qr_code_timeout_express'] === null) {
-            $invalidProperties[] = "'qr_code_timeout_express' can't be null";
-        }
-        if ($this->container['qr_link'] === null) {
-            $invalidProperties[] = "'qr_link' can't be null";
-        }
-        if ($this->container['store_id'] === null) {
-            $invalidProperties[] = "'store_id' can't be null";
-        }
-        if ($this->container['terminal_id'] === null) {
-            $invalidProperties[] = "'terminal_id' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -476,30 +446,6 @@ class V1ExtraAlipayQr implements ModelInterface, ArrayAccess
     public function setQrLink($qr_link)
     {
         $this->container['qr_link'] = $qr_link;
-
-        return $this;
-    }
-
-    /**
-     * Gets query_options
-     *
-     * @return string
-     */
-    public function getQueryOptions()
-    {
-        return $this->container['query_options'];
-    }
-
-    /**
-     * Sets query_options
-     *
-     * @param string $query_options 该笔订单允许的最晚付款时间，逾期将关闭交易。取值范围：1m～15d。m-分钟，h-小时，d-天，1c-当天（1c-当天的情况下，无论交易何时创建，都在0点关闭）。 该参数数值不接受小数点， 如 1.5h，可转换为 90m。注：若为空，则默认为15d。
-     *
-     * @return $this
-     */
-    public function setQueryOptions($query_options)
-    {
-        $this->container['query_options'] = $query_options;
 
         return $this;
     }

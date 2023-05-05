@@ -84,13 +84,6 @@ class V1ExtraAlipayScanTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "agreement_params"
-     */
-    public function testPropertyAgreementParams()
-    {
-    }
-
-    /**
      * Test attribute "auth_code"
      */
     public function testPropertyAuthCode()
@@ -203,13 +196,6 @@ class V1ExtraAlipayScanTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "mdiscount_amount"
-     */
-    public function testPropertyMdiscountAmount()
-    {
-    }
-
-    /**
      * Test attribute "operator_id"
      */
     public function testPropertyOperatorId()
@@ -266,13 +252,6 @@ class V1ExtraAlipayScanTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "settle_info"
-     */
-    public function testPropertySettleInfo()
-    {
-    }
-
-    /**
      * Test attribute "store_id"
      */
     public function testPropertyStoreId()
@@ -287,13 +266,6 @@ class V1ExtraAlipayScanTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "sub_merchant"
-     */
-    public function testPropertySubMerchant()
-    {
-    }
-
-    /**
      * Test attribute "terminal_id"
      */
     public function testPropertyTerminalId()
@@ -304,13 +276,6 @@ class V1ExtraAlipayScanTest extends \PHPUnit_Framework_TestCase
      * Test attribute "total_amount"
      */
     public function testPropertyTotalAmount()
-    {
-    }
-
-    /**
-     * Test attribute "undiscountable_amount"
-     */
-    public function testPropertyUndiscountableAmount()
     {
     }
 

@@ -195,12 +195,6 @@ class V1ExtraAlipaySubMerchant implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['merchant_id'] === null) {
-            $invalidProperties[] = "'merchant_id' can't be null";
-        }
-        if ($this->container['merchant_type'] === null) {
-            $invalidProperties[] = "'merchant_type' can't be null";
-        }
         return $invalidProperties;
     }
 

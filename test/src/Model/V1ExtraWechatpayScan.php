@@ -297,48 +297,6 @@ class V1ExtraWechatpayScan implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['auth_code'] === null) {
-            $invalidProperties[] = "'auth_code' can't be null";
-        }
-        if ($this->container['bank_type'] === null) {
-            $invalidProperties[] = "'bank_type' can't be null";
-        }
-        if ($this->container['cash_fee'] === null) {
-            $invalidProperties[] = "'cash_fee' can't be null";
-        }
-        if ($this->container['cash_fee_type'] === null) {
-            $invalidProperties[] = "'cash_fee_type' can't be null";
-        }
-        if ($this->container['fee_type'] === null) {
-            $invalidProperties[] = "'fee_type' can't be null";
-        }
-        if ($this->container['goods_tag'] === null) {
-            $invalidProperties[] = "'goods_tag' can't be null";
-        }
-        if ($this->container['is_subscribe'] === null) {
-            $invalidProperties[] = "'is_subscribe' can't be null";
-        }
-        if ($this->container['settlement_total_fee'] === null) {
-            $invalidProperties[] = "'settlement_total_fee' can't be null";
-        }
-        if ($this->container['spbill_create_ip'] === null) {
-            $invalidProperties[] = "'spbill_create_ip' can't be null";
-        }
-        if ($this->container['sub_is_subscribe'] === null) {
-            $invalidProperties[] = "'sub_is_subscribe' can't be null";
-        }
-        if ($this->container['sub_openid'] === null) {
-            $invalidProperties[] = "'sub_openid' can't be null";
-        }
-        if ($this->container['time_end'] === null) {
-            $invalidProperties[] = "'time_end' can't be null";
-        }
-        if ($this->container['time_expire'] === null) {
-            $invalidProperties[] = "'time_expire' can't be null";
-        }
-        if ($this->container['time_start'] === null) {
-            $invalidProperties[] = "'time_start' can't be null";
-        }
         return $invalidProperties;
     }
 

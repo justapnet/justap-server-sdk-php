@@ -58,7 +58,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
       */
     protected static $swaggerTypes = [
         'advance_payment_type' => 'string',
-        'agreement_params' => '\Justapnet\Justap\Model\V1ExtraAlipayAgreementParams',
         'auth_code' => 'string',
         'auth_confirm_mode' => 'string',
         'auth_no' => 'string',
@@ -75,7 +74,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'goods_detail' => '\Justapnet\Justap\Model\V1ExtraAlipayGoodsDetail[]',
         'invoice_amount' => 'double',
         'is_async_pay' => '\Justapnet\Justap\Model\V1ExtraAlipayPayParams',
-        'mdiscount_amount' => 'double',
         'operator_id' => 'string',
         'pay_params' => 'string',
         'point_amount' => 'double',
@@ -84,13 +82,10 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'receipt_amount' => 'double',
         'request_org_pid' => 'string',
         'scene' => 'string',
-        'settle_info' => '\Justapnet\Justap\Model\V1ExtraAlipaySettleInfo',
         'store_id' => 'string',
         'store_name' => 'string',
-        'sub_merchant' => '\Justapnet\Justap\Model\V1ExtraAlipaySubMerchant',
         'terminal_id' => 'string',
         'total_amount' => 'double',
-        'undiscountable_amount' => 'double',
         'voucher_detail_list' => '\Justapnet\Justap\Model\V1ExtraAlipayVoucherDetailList'
     ];
 
@@ -101,7 +96,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
       */
     protected static $swaggerFormats = [
         'advance_payment_type' => 'string',
-        'agreement_params' => null,
         'auth_code' => 'string',
         'auth_confirm_mode' => 'string',
         'auth_no' => 'string',
@@ -118,7 +112,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'goods_detail' => null,
         'invoice_amount' => 'double',
         'is_async_pay' => null,
-        'mdiscount_amount' => 'double',
         'operator_id' => 'string',
         'pay_params' => 'string',
         'point_amount' => 'double',
@@ -127,13 +120,10 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'receipt_amount' => 'double',
         'request_org_pid' => 'string',
         'scene' => 'string',
-        'settle_info' => null,
         'store_id' => 'string',
         'store_name' => 'string',
-        'sub_merchant' => null,
         'terminal_id' => 'string',
         'total_amount' => 'double',
-        'undiscountable_amount' => 'double',
         'voucher_detail_list' => null
     ];
 
@@ -165,7 +155,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
      */
     protected static $attributeMap = [
         'advance_payment_type' => 'advance_payment_type',
-        'agreement_params' => 'agreement_params',
         'auth_code' => 'auth_code',
         'auth_confirm_mode' => 'auth_confirm_mode',
         'auth_no' => 'auth_no',
@@ -182,7 +171,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'goods_detail' => 'goods_detail',
         'invoice_amount' => 'invoice_amount',
         'is_async_pay' => 'is_async_pay',
-        'mdiscount_amount' => 'mdiscount_amount',
         'operator_id' => 'operator_id',
         'pay_params' => 'pay_params',
         'point_amount' => 'point_amount',
@@ -191,13 +179,10 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'receipt_amount' => 'receipt_amount',
         'request_org_pid' => 'request_org_pid',
         'scene' => 'scene',
-        'settle_info' => 'settle_info',
         'store_id' => 'store_id',
         'store_name' => 'store_name',
-        'sub_merchant' => 'sub_merchant',
         'terminal_id' => 'terminal_id',
         'total_amount' => 'total_amount',
-        'undiscountable_amount' => 'undiscountable_amount',
         'voucher_detail_list' => 'voucher_detail_list'
     ];
 
@@ -208,7 +193,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
      */
     protected static $setters = [
         'advance_payment_type' => 'setAdvancePaymentType',
-        'agreement_params' => 'setAgreementParams',
         'auth_code' => 'setAuthCode',
         'auth_confirm_mode' => 'setAuthConfirmMode',
         'auth_no' => 'setAuthNo',
@@ -225,7 +209,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'goods_detail' => 'setGoodsDetail',
         'invoice_amount' => 'setInvoiceAmount',
         'is_async_pay' => 'setIsAsyncPay',
-        'mdiscount_amount' => 'setMdiscountAmount',
         'operator_id' => 'setOperatorId',
         'pay_params' => 'setPayParams',
         'point_amount' => 'setPointAmount',
@@ -234,13 +217,10 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'receipt_amount' => 'setReceiptAmount',
         'request_org_pid' => 'setRequestOrgPid',
         'scene' => 'setScene',
-        'settle_info' => 'setSettleInfo',
         'store_id' => 'setStoreId',
         'store_name' => 'setStoreName',
-        'sub_merchant' => 'setSubMerchant',
         'terminal_id' => 'setTerminalId',
         'total_amount' => 'setTotalAmount',
-        'undiscountable_amount' => 'setUndiscountableAmount',
         'voucher_detail_list' => 'setVoucherDetailList'
     ];
 
@@ -251,7 +231,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
      */
     protected static $getters = [
         'advance_payment_type' => 'getAdvancePaymentType',
-        'agreement_params' => 'getAgreementParams',
         'auth_code' => 'getAuthCode',
         'auth_confirm_mode' => 'getAuthConfirmMode',
         'auth_no' => 'getAuthNo',
@@ -268,7 +247,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'goods_detail' => 'getGoodsDetail',
         'invoice_amount' => 'getInvoiceAmount',
         'is_async_pay' => 'getIsAsyncPay',
-        'mdiscount_amount' => 'getMdiscountAmount',
         'operator_id' => 'getOperatorId',
         'pay_params' => 'getPayParams',
         'point_amount' => 'getPointAmount',
@@ -277,13 +255,10 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         'receipt_amount' => 'getReceiptAmount',
         'request_org_pid' => 'getRequestOrgPid',
         'scene' => 'getScene',
-        'settle_info' => 'getSettleInfo',
         'store_id' => 'getStoreId',
         'store_name' => 'getStoreName',
-        'sub_merchant' => 'getSubMerchant',
         'terminal_id' => 'getTerminalId',
         'total_amount' => 'getTotalAmount',
-        'undiscountable_amount' => 'getUndiscountableAmount',
         'voucher_detail_list' => 'getVoucherDetailList'
     ];
 
@@ -348,7 +323,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
     public function __construct(array $data = null)
     {
         $this->container['advance_payment_type'] = isset($data['advance_payment_type']) ? $data['advance_payment_type'] : null;
-        $this->container['agreement_params'] = isset($data['agreement_params']) ? $data['agreement_params'] : null;
         $this->container['auth_code'] = isset($data['auth_code']) ? $data['auth_code'] : null;
         $this->container['auth_confirm_mode'] = isset($data['auth_confirm_mode']) ? $data['auth_confirm_mode'] : null;
         $this->container['auth_no'] = isset($data['auth_no']) ? $data['auth_no'] : null;
@@ -365,7 +339,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         $this->container['goods_detail'] = isset($data['goods_detail']) ? $data['goods_detail'] : null;
         $this->container['invoice_amount'] = isset($data['invoice_amount']) ? $data['invoice_amount'] : null;
         $this->container['is_async_pay'] = isset($data['is_async_pay']) ? $data['is_async_pay'] : null;
-        $this->container['mdiscount_amount'] = isset($data['mdiscount_amount']) ? $data['mdiscount_amount'] : null;
         $this->container['operator_id'] = isset($data['operator_id']) ? $data['operator_id'] : null;
         $this->container['pay_params'] = isset($data['pay_params']) ? $data['pay_params'] : null;
         $this->container['point_amount'] = isset($data['point_amount']) ? $data['point_amount'] : null;
@@ -374,13 +347,10 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
         $this->container['receipt_amount'] = isset($data['receipt_amount']) ? $data['receipt_amount'] : null;
         $this->container['request_org_pid'] = isset($data['request_org_pid']) ? $data['request_org_pid'] : null;
         $this->container['scene'] = isset($data['scene']) ? $data['scene'] : null;
-        $this->container['settle_info'] = isset($data['settle_info']) ? $data['settle_info'] : null;
         $this->container['store_id'] = isset($data['store_id']) ? $data['store_id'] : null;
         $this->container['store_name'] = isset($data['store_name']) ? $data['store_name'] : null;
-        $this->container['sub_merchant'] = isset($data['sub_merchant']) ? $data['sub_merchant'] : null;
         $this->container['terminal_id'] = isset($data['terminal_id']) ? $data['terminal_id'] : null;
         $this->container['total_amount'] = isset($data['total_amount']) ? $data['total_amount'] : null;
-        $this->container['undiscountable_amount'] = isset($data['undiscountable_amount']) ? $data['undiscountable_amount'] : null;
         $this->container['voucher_detail_list'] = isset($data['voucher_detail_list']) ? $data['voucher_detail_list'] : null;
     }
 
@@ -393,87 +363,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['advance_payment_type'] === null) {
-            $invalidProperties[] = "'advance_payment_type' can't be null";
-        }
-        if ($this->container['auth_code'] === null) {
-            $invalidProperties[] = "'auth_code' can't be null";
-        }
-        if ($this->container['auth_confirm_mode'] === null) {
-            $invalidProperties[] = "'auth_confirm_mode' can't be null";
-        }
-        if ($this->container['auth_no'] === null) {
-            $invalidProperties[] = "'auth_no' can't be null";
-        }
-        if ($this->container['buyer_id'] === null) {
-            $invalidProperties[] = "'buyer_id' can't be null";
-        }
-        if ($this->container['buyer_logon_id'] === null) {
-            $invalidProperties[] = "'buyer_logon_id' can't be null";
-        }
-        if ($this->container['buyer_pay_amount'] === null) {
-            $invalidProperties[] = "'buyer_pay_amount' can't be null";
-        }
-        if ($this->container['buyer_user_id'] === null) {
-            $invalidProperties[] = "'buyer_user_id' can't be null";
-        }
-        if ($this->container['discount_amount'] === null) {
-            $invalidProperties[] = "'discount_amount' can't be null";
-        }
-        if ($this->container['discount_goods_detail'] === null) {
-            $invalidProperties[] = "'discount_goods_detail' can't be null";
-        }
-        if ($this->container['discountable_amount'] === null) {
-            $invalidProperties[] = "'discountable_amount' can't be null";
-        }
-        if ($this->container['gmt_payment'] === null) {
-            $invalidProperties[] = "'gmt_payment' can't be null";
-        }
-        if ($this->container['invoice_amount'] === null) {
-            $invalidProperties[] = "'invoice_amount' can't be null";
-        }
-        if ($this->container['mdiscount_amount'] === null) {
-            $invalidProperties[] = "'mdiscount_amount' can't be null";
-        }
-        if ($this->container['operator_id'] === null) {
-            $invalidProperties[] = "'operator_id' can't be null";
-        }
-        if ($this->container['pay_params'] === null) {
-            $invalidProperties[] = "'pay_params' can't be null";
-        }
-        if ($this->container['point_amount'] === null) {
-            $invalidProperties[] = "'point_amount' can't be null";
-        }
-        if ($this->container['product_code'] === null) {
-            $invalidProperties[] = "'product_code' can't be null";
-        }
-        if ($this->container['query_options'] === null) {
-            $invalidProperties[] = "'query_options' can't be null";
-        }
-        if ($this->container['receipt_amount'] === null) {
-            $invalidProperties[] = "'receipt_amount' can't be null";
-        }
-        if ($this->container['request_org_pid'] === null) {
-            $invalidProperties[] = "'request_org_pid' can't be null";
-        }
-        if ($this->container['scene'] === null) {
-            $invalidProperties[] = "'scene' can't be null";
-        }
-        if ($this->container['store_id'] === null) {
-            $invalidProperties[] = "'store_id' can't be null";
-        }
-        if ($this->container['store_name'] === null) {
-            $invalidProperties[] = "'store_name' can't be null";
-        }
-        if ($this->container['terminal_id'] === null) {
-            $invalidProperties[] = "'terminal_id' can't be null";
-        }
-        if ($this->container['total_amount'] === null) {
-            $invalidProperties[] = "'total_amount' can't be null";
-        }
-        if ($this->container['undiscountable_amount'] === null) {
-            $invalidProperties[] = "'undiscountable_amount' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -509,30 +398,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
     public function setAdvancePaymentType($advance_payment_type)
     {
         $this->container['advance_payment_type'] = $advance_payment_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets agreement_params
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipayAgreementParams
-     */
-    public function getAgreementParams()
-    {
-        return $this->container['agreement_params'];
-    }
-
-    /**
-     * Sets agreement_params
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipayAgreementParams $agreement_params 协议参数
-     *
-     * @return $this
-     */
-    public function setAgreementParams($agreement_params)
-    {
-        $this->container['agreement_params'] = $agreement_params;
 
         return $this;
     }
@@ -922,30 +787,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets mdiscount_amount
-     *
-     * @return double
-     */
-    public function getMdiscountAmount()
-    {
-        return $this->container['mdiscount_amount'];
-    }
-
-    /**
-     * Sets mdiscount_amount
-     *
-     * @param double $mdiscount_amount [ONLY IN RESPONSE] 平台优惠金额
-     *
-     * @return $this
-     */
-    public function setMdiscountAmount($mdiscount_amount)
-    {
-        $this->container['mdiscount_amount'] = $mdiscount_amount;
-
-        return $this;
-    }
-
-    /**
      * Gets operator_id
      *
      * @return string
@@ -1138,30 +979,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets settle_info
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipaySettleInfo
-     */
-    public function getSettleInfo()
-    {
-        return $this->container['settle_info'];
-    }
-
-    /**
-     * Sets settle_info
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipaySettleInfo $settle_info 结算信息
-     *
-     * @return $this
-     */
-    public function setSettleInfo($settle_info)
-    {
-        $this->container['settle_info'] = $settle_info;
-
-        return $this;
-    }
-
-    /**
      * Gets store_id
      *
      * @return string
@@ -1210,30 +1027,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets sub_merchant
-     *
-     * @return \Justapnet\Justap\Model\V1ExtraAlipaySubMerchant
-     */
-    public function getSubMerchant()
-    {
-        return $this->container['sub_merchant'];
-    }
-
-    /**
-     * Sets sub_merchant
-     *
-     * @param \Justapnet\Justap\Model\V1ExtraAlipaySubMerchant $sub_merchant 子商户信息
-     *
-     * @return $this
-     */
-    public function setSubMerchant($sub_merchant)
-    {
-        $this->container['sub_merchant'] = $sub_merchant;
-
-        return $this;
-    }
-
-    /**
      * Gets terminal_id
      *
      * @return string
@@ -1277,30 +1070,6 @@ class V1ExtraAlipayScan implements ModelInterface, ArrayAccess
     public function setTotalAmount($total_amount)
     {
         $this->container['total_amount'] = $total_amount;
-
-        return $this;
-    }
-
-    /**
-     * Gets undiscountable_amount
-     *
-     * @return double
-     */
-    public function getUndiscountableAmount()
-    {
-        return $this->container['undiscountable_amount'];
-    }
-
-    /**
-     * Sets undiscountable_amount
-     *
-     * @param double $undiscountable_amount 不可打折金额
-     *
-     * @return $this
-     */
-    public function setUndiscountableAmount($undiscountable_amount)
-    {
-        $this->container['undiscountable_amount'] = $undiscountable_amount;
 
         return $this;
     }

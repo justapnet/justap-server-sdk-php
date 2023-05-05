@@ -64,23 +64,27 @@ class V1Charge implements ModelInterface, ArrayAccess
         'amount_settle' => 'double',
         'app_id' => 'string',
         'body' => 'string',
-        'channel' => '\Justapnet\Justap\Model\V1Channel',
+        'channel' => '\Justapnet\Justap\Model\Tradev1Channel',
         'charge_id' => 'string',
         'client_ip' => 'string',
         'closed' => 'bool',
         'closed_at' => '\DateTime',
+        'closed_ts' => 'string',
         'created_at' => '\DateTime',
         'credential' => '\Justapnet\Justap\Model\ProtobufAny',
         'currency' => 'string',
         'description' => 'string',
+        'expired_ts' => 'string',
         'extra' => '\Justapnet\Justap\Model\V1ChargeExtra',
         'failure_code' => 'string',
         'failure_msg' => 'string',
         'live_mode' => 'bool',
         'merchant_trade_id' => 'string',
         'metadata' => 'map[string,string]',
+        'object' => 'string',
         'paid' => 'bool',
         'paid_at' => '\DateTime',
+        'paid_ts' => 'string',
         'refunded' => 'bool',
         'refunds' => '\Justapnet\Justap\Model\V1Refund[]',
         'reversed' => 'bool',
@@ -109,18 +113,22 @@ class V1Charge implements ModelInterface, ArrayAccess
         'client_ip' => 'string',
         'closed' => 'boolean',
         'closed_at' => 'date-time',
+        'closed_ts' => 'int64',
         'created_at' => 'date-time',
         'credential' => null,
         'currency' => 'string',
         'description' => 'string',
+        'expired_ts' => 'int64',
         'extra' => null,
         'failure_code' => 'string',
         'failure_msg' => 'string',
         'live_mode' => null,
         'merchant_trade_id' => 'string',
         'metadata' => null,
+        'object' => 'string',
         'paid' => null,
         'paid_at' => 'date-time',
+        'paid_ts' => 'int64',
         'refunded' => null,
         'refunds' => null,
         'reversed' => null,
@@ -170,18 +178,22 @@ class V1Charge implements ModelInterface, ArrayAccess
         'client_ip' => 'client_ip',
         'closed' => 'closed',
         'closed_at' => 'closed_at',
+        'closed_ts' => 'closed_ts',
         'created_at' => 'created_at',
         'credential' => 'credential',
         'currency' => 'currency',
         'description' => 'description',
+        'expired_ts' => 'expired_ts',
         'extra' => 'extra',
         'failure_code' => 'failure_code',
         'failure_msg' => 'failure_msg',
         'live_mode' => 'live_mode',
         'merchant_trade_id' => 'merchant_trade_id',
         'metadata' => 'metadata',
+        'object' => 'object',
         'paid' => 'paid',
         'paid_at' => 'paid_at',
+        'paid_ts' => 'paid_ts',
         'refunded' => 'refunded',
         'refunds' => 'refunds',
         'reversed' => 'reversed',
@@ -210,18 +222,22 @@ class V1Charge implements ModelInterface, ArrayAccess
         'client_ip' => 'setClientIp',
         'closed' => 'setClosed',
         'closed_at' => 'setClosedAt',
+        'closed_ts' => 'setClosedTs',
         'created_at' => 'setCreatedAt',
         'credential' => 'setCredential',
         'currency' => 'setCurrency',
         'description' => 'setDescription',
+        'expired_ts' => 'setExpiredTs',
         'extra' => 'setExtra',
         'failure_code' => 'setFailureCode',
         'failure_msg' => 'setFailureMsg',
         'live_mode' => 'setLiveMode',
         'merchant_trade_id' => 'setMerchantTradeId',
         'metadata' => 'setMetadata',
+        'object' => 'setObject',
         'paid' => 'setPaid',
         'paid_at' => 'setPaidAt',
+        'paid_ts' => 'setPaidTs',
         'refunded' => 'setRefunded',
         'refunds' => 'setRefunds',
         'reversed' => 'setReversed',
@@ -250,18 +266,22 @@ class V1Charge implements ModelInterface, ArrayAccess
         'client_ip' => 'getClientIp',
         'closed' => 'getClosed',
         'closed_at' => 'getClosedAt',
+        'closed_ts' => 'getClosedTs',
         'created_at' => 'getCreatedAt',
         'credential' => 'getCredential',
         'currency' => 'getCurrency',
         'description' => 'getDescription',
+        'expired_ts' => 'getExpiredTs',
         'extra' => 'getExtra',
         'failure_code' => 'getFailureCode',
         'failure_msg' => 'getFailureMsg',
         'live_mode' => 'getLiveMode',
         'merchant_trade_id' => 'getMerchantTradeId',
         'metadata' => 'getMetadata',
+        'object' => 'getObject',
         'paid' => 'getPaid',
         'paid_at' => 'getPaidAt',
+        'paid_ts' => 'getPaidTs',
         'refunded' => 'getRefunded',
         'refunds' => 'getRefunds',
         'reversed' => 'getReversed',
@@ -344,18 +364,22 @@ class V1Charge implements ModelInterface, ArrayAccess
         $this->container['client_ip'] = isset($data['client_ip']) ? $data['client_ip'] : null;
         $this->container['closed'] = isset($data['closed']) ? $data['closed'] : false;
         $this->container['closed_at'] = isset($data['closed_at']) ? $data['closed_at'] : null;
+        $this->container['closed_ts'] = isset($data['closed_ts']) ? $data['closed_ts'] : null;
         $this->container['created_at'] = isset($data['created_at']) ? $data['created_at'] : null;
         $this->container['credential'] = isset($data['credential']) ? $data['credential'] : null;
         $this->container['currency'] = isset($data['currency']) ? $data['currency'] : null;
         $this->container['description'] = isset($data['description']) ? $data['description'] : null;
+        $this->container['expired_ts'] = isset($data['expired_ts']) ? $data['expired_ts'] : null;
         $this->container['extra'] = isset($data['extra']) ? $data['extra'] : null;
         $this->container['failure_code'] = isset($data['failure_code']) ? $data['failure_code'] : null;
         $this->container['failure_msg'] = isset($data['failure_msg']) ? $data['failure_msg'] : null;
         $this->container['live_mode'] = isset($data['live_mode']) ? $data['live_mode'] : false;
         $this->container['merchant_trade_id'] = isset($data['merchant_trade_id']) ? $data['merchant_trade_id'] : null;
         $this->container['metadata'] = isset($data['metadata']) ? $data['metadata'] : null;
+        $this->container['object'] = isset($data['object']) ? $data['object'] : 'Charge';
         $this->container['paid'] = isset($data['paid']) ? $data['paid'] : false;
         $this->container['paid_at'] = isset($data['paid_at']) ? $data['paid_at'] : null;
+        $this->container['paid_ts'] = isset($data['paid_ts']) ? $data['paid_ts'] : null;
         $this->container['refunded'] = isset($data['refunded']) ? $data['refunded'] : false;
         $this->container['refunds'] = isset($data['refunds']) ? $data['refunds'] : null;
         $this->container['reversed'] = isset($data['reversed']) ? $data['reversed'] : false;
@@ -375,75 +399,6 @@ class V1Charge implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['amount'] === null) {
-            $invalidProperties[] = "'amount' can't be null";
-        }
-        if ($this->container['amount_fee'] === null) {
-            $invalidProperties[] = "'amount_fee' can't be null";
-        }
-        if ($this->container['amount_refund'] === null) {
-            $invalidProperties[] = "'amount_refund' can't be null";
-        }
-        if ($this->container['amount_royalty'] === null) {
-            $invalidProperties[] = "'amount_royalty' can't be null";
-        }
-        if ($this->container['amount_settle'] === null) {
-            $invalidProperties[] = "'amount_settle' can't be null";
-        }
-        if ($this->container['app_id'] === null) {
-            $invalidProperties[] = "'app_id' can't be null";
-        }
-        if ($this->container['body'] === null) {
-            $invalidProperties[] = "'body' can't be null";
-        }
-        if ($this->container['channel'] === null) {
-            $invalidProperties[] = "'channel' can't be null";
-        }
-        if ($this->container['charge_id'] === null) {
-            $invalidProperties[] = "'charge_id' can't be null";
-        }
-        if ($this->container['client_ip'] === null) {
-            $invalidProperties[] = "'client_ip' can't be null";
-        }
-        if ($this->container['closed'] === null) {
-            $invalidProperties[] = "'closed' can't be null";
-        }
-        if ($this->container['currency'] === null) {
-            $invalidProperties[] = "'currency' can't be null";
-        }
-        if ($this->container['description'] === null) {
-            $invalidProperties[] = "'description' can't be null";
-        }
-        if ($this->container['failure_code'] === null) {
-            $invalidProperties[] = "'failure_code' can't be null";
-        }
-        if ($this->container['failure_msg'] === null) {
-            $invalidProperties[] = "'failure_msg' can't be null";
-        }
-        if ($this->container['live_mode'] === null) {
-            $invalidProperties[] = "'live_mode' can't be null";
-        }
-        if ($this->container['merchant_trade_id'] === null) {
-            $invalidProperties[] = "'merchant_trade_id' can't be null";
-        }
-        if ($this->container['paid'] === null) {
-            $invalidProperties[] = "'paid' can't be null";
-        }
-        if ($this->container['refunded'] === null) {
-            $invalidProperties[] = "'refunded' can't be null";
-        }
-        if ($this->container['reversed'] === null) {
-            $invalidProperties[] = "'reversed' can't be null";
-        }
-        if ($this->container['subject'] === null) {
-            $invalidProperties[] = "'subject' can't be null";
-        }
-        if ($this->container['transaction_no'] === null) {
-            $invalidProperties[] = "'transaction_no' can't be null";
-        }
-        if ($this->container['ttl'] === null) {
-            $invalidProperties[] = "'ttl' can't be null";
-        }
         return $invalidProperties;
     }
 
@@ -630,7 +585,7 @@ class V1Charge implements ModelInterface, ArrayAccess
     /**
      * Gets channel
      *
-     * @return \Justapnet\Justap\Model\V1Channel
+     * @return \Justapnet\Justap\Model\Tradev1Channel
      */
     public function getChannel()
     {
@@ -640,7 +595,7 @@ class V1Charge implements ModelInterface, ArrayAccess
     /**
      * Sets channel
      *
-     * @param \Justapnet\Justap\Model\V1Channel $channel 支付渠道
+     * @param \Justapnet\Justap\Model\Tradev1Channel $channel 支付渠道
      *
      * @return $this
      */
@@ -748,6 +703,30 @@ class V1Charge implements ModelInterface, ArrayAccess
     }
 
     /**
+     * Gets closed_ts
+     *
+     * @return string
+     */
+    public function getClosedTs()
+    {
+        return $this->container['closed_ts'];
+    }
+
+    /**
+     * Sets closed_ts
+     *
+     * @param string $closed_ts 关闭时间戳
+     *
+     * @return $this
+     */
+    public function setClosedTs($closed_ts)
+    {
+        $this->container['closed_ts'] = $closed_ts;
+
+        return $this;
+    }
+
+    /**
      * Gets created_at
      *
      * @return \DateTime
@@ -839,6 +818,30 @@ class V1Charge implements ModelInterface, ArrayAccess
     public function setDescription($description)
     {
         $this->container['description'] = $description;
+
+        return $this;
+    }
+
+    /**
+     * Gets expired_ts
+     *
+     * @return string
+     */
+    public function getExpiredTs()
+    {
+        return $this->container['expired_ts'];
+    }
+
+    /**
+     * Sets expired_ts
+     *
+     * @param string $expired_ts 订单过期时间戳
+     *
+     * @return $this
+     */
+    public function setExpiredTs($expired_ts)
+    {
+        $this->container['expired_ts'] = $expired_ts;
 
         return $this;
     }
@@ -988,6 +991,30 @@ class V1Charge implements ModelInterface, ArrayAccess
     }
 
     /**
+     * Gets object
+     *
+     * @return string
+     */
+    public function getObject()
+    {
+        return $this->container['object'];
+    }
+
+    /**
+     * Sets object
+     *
+     * @param string $object 对象类型
+     *
+     * @return $this
+     */
+    public function setObject($object)
+    {
+        $this->container['object'] = $object;
+
+        return $this;
+    }
+
+    /**
      * Gets paid
      *
      * @return bool
@@ -1031,6 +1058,30 @@ class V1Charge implements ModelInterface, ArrayAccess
     public function setPaidAt($paid_at)
     {
         $this->container['paid_at'] = $paid_at;
+
+        return $this;
+    }
+
+    /**
+     * Gets paid_ts
+     *
+     * @return string
+     */
+    public function getPaidTs()
+    {
+        return $this->container['paid_ts'];
+    }
+
+    /**
+     * Sets paid_ts
+     *
+     * @param string $paid_ts 支付时间戳
+     *
+     * @return $this
+     */
+    public function setPaidTs($paid_ts)
+    {
+        $this->container['paid_ts'] = $paid_ts;
 
         return $this;
     }
