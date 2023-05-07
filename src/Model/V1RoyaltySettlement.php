@@ -71,7 +71,7 @@ class V1RoyaltySettlement implements ModelInterface, ArrayAccess
         'id' => 'string',
         'livemode' => 'bool',
         'metadata' => 'map[string,string]',
-        'method' => '\Justapnet\Justap\Model\V1RoyaltyMethod',
+        'method' => '\Justapnet\Justap\Model\Tradev1RoyaltyMethod',
         'object' => 'string',
         'operation_url' => 'string',
         'source' => '\Justapnet\Justap\Model\V1RoyaltySettlementSource',
@@ -663,7 +663,7 @@ class V1RoyaltySettlement implements ModelInterface, ArrayAccess
     /**
      * Gets method
      *
-     * @return \Justapnet\Justap\Model\V1RoyaltyMethod
+     * @return \Justapnet\Justap\Model\Tradev1RoyaltyMethod
      */
     public function getMethod()
     {
@@ -673,7 +673,7 @@ class V1RoyaltySettlement implements ModelInterface, ArrayAccess
     /**
      * Sets method
      *
-     * @param \Justapnet\Justap\Model\V1RoyaltyMethod $method method
+     * @param \Justapnet\Justap\Model\Tradev1RoyaltyMethod $method method
      *
      * @return $this
      */

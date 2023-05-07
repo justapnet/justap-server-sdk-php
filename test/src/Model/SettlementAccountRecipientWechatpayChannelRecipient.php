@@ -59,6 +59,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
     protected static $swaggerTypes = [
         'account' => 'string',
         'account_type' => '\Justapnet\Justap\Model\SettlementAccountRecipientAccountType',
+        'app_id' => 'string',
         'force_check' => 'bool',
         'name' => 'string',
         'type' => '\Justapnet\Justap\Model\SettlementAccountRecipientRecipientType'
@@ -72,6 +73,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
     protected static $swaggerFormats = [
         'account' => 'string',
         'account_type' => null,
+        'app_id' => 'string',
         'force_check' => 'boolean',
         'name' => 'string',
         'type' => null
@@ -106,6 +108,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
     protected static $attributeMap = [
         'account' => 'account',
         'account_type' => 'account_type',
+        'app_id' => 'app_id',
         'force_check' => 'force_check',
         'name' => 'name',
         'type' => 'type'
@@ -119,6 +122,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
     protected static $setters = [
         'account' => 'setAccount',
         'account_type' => 'setAccountType',
+        'app_id' => 'setAppId',
         'force_check' => 'setForceCheck',
         'name' => 'setName',
         'type' => 'setType'
@@ -132,6 +136,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
     protected static $getters = [
         'account' => 'getAccount',
         'account_type' => 'getAccountType',
+        'app_id' => 'getAppId',
         'force_check' => 'getForceCheck',
         'name' => 'getName',
         'type' => 'getType'
@@ -199,6 +204,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
     {
         $this->container['account'] = isset($data['account']) ? $data['account'] : null;
         $this->container['account_type'] = isset($data['account_type']) ? $data['account_type'] : null;
+        $this->container['app_id'] = isset($data['app_id']) ? $data['app_id'] : null;
         $this->container['force_check'] = isset($data['force_check']) ? $data['force_check'] : false;
         $this->container['name'] = isset($data['name']) ? $data['name'] : null;
         $this->container['type'] = isset($data['type']) ? $data['type'] : null;
@@ -272,6 +278,30 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
     public function setAccountType($account_type)
     {
         $this->container['account_type'] = $account_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets app_id
+     *
+     * @return string
+     */
+    public function getAppId()
+    {
+        return $this->container['app_id'];
+    }
+
+    /**
+     * Sets app_id
+     *
+     * @param string $app_id 微信支付分账接收方 openid 所对应的公众号 ID
+     *
+     * @return $this
+     */
+    public function setAppId($app_id)
+    {
+        $this->container['app_id'] = $app_id;
 
         return $this;
     }

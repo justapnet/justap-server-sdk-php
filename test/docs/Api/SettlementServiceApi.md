@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **settlementServiceCreateSettlementAccount**
-> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceCreateSettlementAccount($app_id, $user_id, $customer_id, $channel, $recipient_wechatpay_channel_recipient_account, $recipient_wechatpay_channel_recipient_name, $recipient_wechatpay_channel_recipient_force_check, $recipient_wechatpay_channel_recipient_type, $recipient_wechatpay_channel_recipient_account_type, $recipient_alipay_channel_recipient_account, $recipient_alipay_channel_recipient_name, $recipient_alipay_channel_recipient_type, $recipient_alipay_channel_recipient_account_type, $recipient_bank_channel_recipient_account, $recipient_bank_channel_recipient_name, $recipient_bank_channel_recipient_type, $recipient_bank_channel_recipient_bank_name, $recipient_bank_channel_recipient_bank_branch, $recipient_bank_channel_recipient_bank_province, $recipient_bank_channel_recipient_bank_city)
+> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceCreateSettlementAccount($app_id, $user_id, $customer_id, $channel, $recipient_wechatpay_channel_recipient_account, $recipient_wechatpay_channel_recipient_name, $recipient_wechatpay_channel_recipient_force_check, $recipient_wechatpay_channel_recipient_type, $recipient_wechatpay_channel_recipient_account_type, $recipient_wechatpay_channel_recipient_app_id, $recipient_alipay_channel_recipient_account, $recipient_alipay_channel_recipient_name, $recipient_alipay_channel_recipient_type, $recipient_alipay_channel_recipient_account_type, $recipient_bank_channel_recipient_account, $recipient_bank_channel_recipient_name, $recipient_bank_channel_recipient_type, $recipient_bank_channel_recipient_bank_name, $recipient_bank_channel_recipient_bank_branch, $recipient_bank_channel_recipient_bank_province, $recipient_bank_channel_recipient_bank_city)
 
 创建 SettlementAccount 对象
 
@@ -42,6 +42,7 @@ $recipient_wechatpay_channel_recipient_name = "recipient_wechatpay_channel_recip
 $recipient_wechatpay_channel_recipient_force_check = false; // bool | 是否强制校验收款人姓名
 $recipient_wechatpay_channel_recipient_type = "TYPE_UNSET"; // string | 微信支付分账接收方类型
 $recipient_wechatpay_channel_recipient_account_type = "ACCOUNT_TYPE_UNSET"; // string | 微信支付分账接收方账户类型   - ACCOUNT_TYPE_UNSET: 未设置  - MERCHANT_ID: 分账到微信商户号  - OPENID: 分账到个人微信号（父公众号的openid，或服务商的openid））  - SUB_OPENID: 分账到个人微信号，子账号的  - LOGIN_NAME: 分账到微信登录号
+$recipient_wechatpay_channel_recipient_app_id = "recipient_wechatpay_channel_recipient_app_id_example"; // string | 微信支付分账接收方 openid 所对应的公众号 ID
 $recipient_alipay_channel_recipient_account = "recipient_alipay_channel_recipient_account_example"; // string | 支付宝账号，账号ID或者登录邮箱
 $recipient_alipay_channel_recipient_name = "recipient_alipay_channel_recipient_name_example"; // string | 支付宝账号真实姓名
 $recipient_alipay_channel_recipient_type = "TYPE_UNSET"; // string | 支付宝账号类型
@@ -55,7 +56,7 @@ $recipient_bank_channel_recipient_bank_province = "recipient_bank_channel_recipi
 $recipient_bank_channel_recipient_bank_city = "recipient_bank_channel_recipient_bank_city_example"; // string | 银行卡开户城市
 
 try {
-    $result = $apiInstance->settlementServiceCreateSettlementAccount($app_id, $user_id, $customer_id, $channel, $recipient_wechatpay_channel_recipient_account, $recipient_wechatpay_channel_recipient_name, $recipient_wechatpay_channel_recipient_force_check, $recipient_wechatpay_channel_recipient_type, $recipient_wechatpay_channel_recipient_account_type, $recipient_alipay_channel_recipient_account, $recipient_alipay_channel_recipient_name, $recipient_alipay_channel_recipient_type, $recipient_alipay_channel_recipient_account_type, $recipient_bank_channel_recipient_account, $recipient_bank_channel_recipient_name, $recipient_bank_channel_recipient_type, $recipient_bank_channel_recipient_bank_name, $recipient_bank_channel_recipient_bank_branch, $recipient_bank_channel_recipient_bank_province, $recipient_bank_channel_recipient_bank_city);
+    $result = $apiInstance->settlementServiceCreateSettlementAccount($app_id, $user_id, $customer_id, $channel, $recipient_wechatpay_channel_recipient_account, $recipient_wechatpay_channel_recipient_name, $recipient_wechatpay_channel_recipient_force_check, $recipient_wechatpay_channel_recipient_type, $recipient_wechatpay_channel_recipient_account_type, $recipient_wechatpay_channel_recipient_app_id, $recipient_alipay_channel_recipient_account, $recipient_alipay_channel_recipient_name, $recipient_alipay_channel_recipient_type, $recipient_alipay_channel_recipient_account_type, $recipient_bank_channel_recipient_account, $recipient_bank_channel_recipient_name, $recipient_bank_channel_recipient_type, $recipient_bank_channel_recipient_bank_name, $recipient_bank_channel_recipient_bank_branch, $recipient_bank_channel_recipient_bank_province, $recipient_bank_channel_recipient_bank_city);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling SettlementServiceApi->settlementServiceCreateSettlementAccount: ', $e->getMessage(), PHP_EOL;
@@ -76,6 +77,7 @@ Name | Type | Description  | Notes
  **recipient_wechatpay_channel_recipient_force_check** | **bool**| 是否强制校验收款人姓名 | [optional] [default to false]
  **recipient_wechatpay_channel_recipient_type** | **string**| 微信支付分账接收方类型 | [optional] [default to TYPE_UNSET]
  **recipient_wechatpay_channel_recipient_account_type** | **string**| 微信支付分账接收方账户类型   - ACCOUNT_TYPE_UNSET: 未设置  - MERCHANT_ID: 分账到微信商户号  - OPENID: 分账到个人微信号（父公众号的openid，或服务商的openid））  - SUB_OPENID: 分账到个人微信号，子账号的  - LOGIN_NAME: 分账到微信登录号 | [optional] [default to ACCOUNT_TYPE_UNSET]
+ **recipient_wechatpay_channel_recipient_app_id** | **string**| 微信支付分账接收方 openid 所对应的公众号 ID | [optional]
  **recipient_alipay_channel_recipient_account** | **string**| 支付宝账号，账号ID或者登录邮箱 | [optional]
  **recipient_alipay_channel_recipient_name** | **string**| 支付宝账号真实姓名 | [optional]
  **recipient_alipay_channel_recipient_type** | **string**| 支付宝账号类型 | [optional] [default to TYPE_UNSET]
@@ -232,7 +234,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **settlementServiceRetrieveSettlementAccount**
-> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceRetrieveSettlementAccount($id, $app_id, $object, $data_id, $data_app_id, $data_user_id, $data_channel, $data_recipient_wechatpay_channel_recipient_account, $data_recipient_wechatpay_channel_recipient_name, $data_recipient_wechatpay_channel_recipient_force_check, $data_recipient_wechatpay_channel_recipient_type, $data_recipient_wechatpay_channel_recipient_account_type, $data_recipient_alipay_channel_recipient_account, $data_recipient_alipay_channel_recipient_name, $data_recipient_alipay_channel_recipient_type, $data_recipient_alipay_channel_recipient_account_type, $data_recipient_bank_channel_recipient_account, $data_recipient_bank_channel_recipient_name, $data_recipient_bank_channel_recipient_type, $data_recipient_bank_channel_recipient_bank_name, $data_recipient_bank_channel_recipient_bank_branch, $data_recipient_bank_channel_recipient_bank_province, $data_recipient_bank_channel_recipient_bank_city, $data_created, $data_updated, $data_object)
+> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceRetrieveSettlementAccount($id, $app_id, $object, $data_id, $data_app_id, $data_user_id, $data_channel, $data_recipient_wechatpay_channel_recipient_account, $data_recipient_wechatpay_channel_recipient_name, $data_recipient_wechatpay_channel_recipient_force_check, $data_recipient_wechatpay_channel_recipient_type, $data_recipient_wechatpay_channel_recipient_account_type, $data_recipient_wechatpay_channel_recipient_app_id, $data_recipient_alipay_channel_recipient_account, $data_recipient_alipay_channel_recipient_name, $data_recipient_alipay_channel_recipient_type, $data_recipient_alipay_channel_recipient_account_type, $data_recipient_bank_channel_recipient_account, $data_recipient_bank_channel_recipient_name, $data_recipient_bank_channel_recipient_type, $data_recipient_bank_channel_recipient_bank_name, $data_recipient_bank_channel_recipient_bank_branch, $data_recipient_bank_channel_recipient_bank_province, $data_recipient_bank_channel_recipient_bank_city, $data_created, $data_updated, $data_object)
 
 查询 SettlementAccount 对象
 
@@ -264,6 +266,7 @@ $data_recipient_wechatpay_channel_recipient_name = "data_recipient_wechatpay_cha
 $data_recipient_wechatpay_channel_recipient_force_check = false; // bool | 是否强制校验收款人姓名
 $data_recipient_wechatpay_channel_recipient_type = "TYPE_UNSET"; // string | 微信支付分账接收方类型
 $data_recipient_wechatpay_channel_recipient_account_type = "ACCOUNT_TYPE_UNSET"; // string | 微信支付分账接收方账户类型   - ACCOUNT_TYPE_UNSET: 未设置  - MERCHANT_ID: 分账到微信商户号  - OPENID: 分账到个人微信号（父公众号的openid，或服务商的openid））  - SUB_OPENID: 分账到个人微信号，子账号的  - LOGIN_NAME: 分账到微信登录号
+$data_recipient_wechatpay_channel_recipient_app_id = "data_recipient_wechatpay_channel_recipient_app_id_example"; // string | 微信支付分账接收方 openid 所对应的公众号 ID
 $data_recipient_alipay_channel_recipient_account = "data_recipient_alipay_channel_recipient_account_example"; // string | 支付宝账号，账号ID或者登录邮箱
 $data_recipient_alipay_channel_recipient_name = "data_recipient_alipay_channel_recipient_name_example"; // string | 支付宝账号真实姓名
 $data_recipient_alipay_channel_recipient_type = "TYPE_UNSET"; // string | 支付宝账号类型
@@ -280,7 +283,7 @@ $data_updated = 0; // int | 分账接收方的更新时间
 $data_object = "Recipient"; // string | 对象类型
 
 try {
-    $result = $apiInstance->settlementServiceRetrieveSettlementAccount($id, $app_id, $object, $data_id, $data_app_id, $data_user_id, $data_channel, $data_recipient_wechatpay_channel_recipient_account, $data_recipient_wechatpay_channel_recipient_name, $data_recipient_wechatpay_channel_recipient_force_check, $data_recipient_wechatpay_channel_recipient_type, $data_recipient_wechatpay_channel_recipient_account_type, $data_recipient_alipay_channel_recipient_account, $data_recipient_alipay_channel_recipient_name, $data_recipient_alipay_channel_recipient_type, $data_recipient_alipay_channel_recipient_account_type, $data_recipient_bank_channel_recipient_account, $data_recipient_bank_channel_recipient_name, $data_recipient_bank_channel_recipient_type, $data_recipient_bank_channel_recipient_bank_name, $data_recipient_bank_channel_recipient_bank_branch, $data_recipient_bank_channel_recipient_bank_province, $data_recipient_bank_channel_recipient_bank_city, $data_created, $data_updated, $data_object);
+    $result = $apiInstance->settlementServiceRetrieveSettlementAccount($id, $app_id, $object, $data_id, $data_app_id, $data_user_id, $data_channel, $data_recipient_wechatpay_channel_recipient_account, $data_recipient_wechatpay_channel_recipient_name, $data_recipient_wechatpay_channel_recipient_force_check, $data_recipient_wechatpay_channel_recipient_type, $data_recipient_wechatpay_channel_recipient_account_type, $data_recipient_wechatpay_channel_recipient_app_id, $data_recipient_alipay_channel_recipient_account, $data_recipient_alipay_channel_recipient_name, $data_recipient_alipay_channel_recipient_type, $data_recipient_alipay_channel_recipient_account_type, $data_recipient_bank_channel_recipient_account, $data_recipient_bank_channel_recipient_name, $data_recipient_bank_channel_recipient_type, $data_recipient_bank_channel_recipient_bank_name, $data_recipient_bank_channel_recipient_bank_branch, $data_recipient_bank_channel_recipient_bank_province, $data_recipient_bank_channel_recipient_bank_city, $data_created, $data_updated, $data_object);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling SettlementServiceApi->settlementServiceRetrieveSettlementAccount: ', $e->getMessage(), PHP_EOL;
@@ -304,6 +307,7 @@ Name | Type | Description  | Notes
  **data_recipient_wechatpay_channel_recipient_force_check** | **bool**| 是否强制校验收款人姓名 | [optional] [default to false]
  **data_recipient_wechatpay_channel_recipient_type** | **string**| 微信支付分账接收方类型 | [optional] [default to TYPE_UNSET]
  **data_recipient_wechatpay_channel_recipient_account_type** | **string**| 微信支付分账接收方账户类型   - ACCOUNT_TYPE_UNSET: 未设置  - MERCHANT_ID: 分账到微信商户号  - OPENID: 分账到个人微信号（父公众号的openid，或服务商的openid））  - SUB_OPENID: 分账到个人微信号，子账号的  - LOGIN_NAME: 分账到微信登录号 | [optional] [default to ACCOUNT_TYPE_UNSET]
+ **data_recipient_wechatpay_channel_recipient_app_id** | **string**| 微信支付分账接收方 openid 所对应的公众号 ID | [optional]
  **data_recipient_alipay_channel_recipient_account** | **string**| 支付宝账号，账号ID或者登录邮箱 | [optional]
  **data_recipient_alipay_channel_recipient_name** | **string**| 支付宝账号真实姓名 | [optional]
  **data_recipient_alipay_channel_recipient_type** | **string**| 支付宝账号类型 | [optional] [default to TYPE_UNSET]
@@ -390,7 +394,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **settlementServiceUpdateSettlementAccount**
-> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceUpdateSettlementAccount($id, $customer_id, $user_id, $channel, $recipient_wechatpay_channel_recipient_account, $recipient_wechatpay_channel_recipient_name, $recipient_wechatpay_channel_recipient_force_check, $recipient_wechatpay_channel_recipient_type, $recipient_wechatpay_channel_recipient_account_type, $recipient_alipay_channel_recipient_account, $recipient_alipay_channel_recipient_name, $recipient_alipay_channel_recipient_type, $recipient_alipay_channel_recipient_account_type, $recipient_bank_channel_recipient_account, $recipient_bank_channel_recipient_name, $recipient_bank_channel_recipient_type, $recipient_bank_channel_recipient_bank_name, $recipient_bank_channel_recipient_bank_branch, $recipient_bank_channel_recipient_bank_province, $recipient_bank_channel_recipient_bank_city)
+> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceUpdateSettlementAccount($id, $customer_id, $user_id, $channel, $recipient_wechatpay_channel_recipient_account, $recipient_wechatpay_channel_recipient_name, $recipient_wechatpay_channel_recipient_force_check, $recipient_wechatpay_channel_recipient_type, $recipient_wechatpay_channel_recipient_account_type, $recipient_wechatpay_channel_recipient_app_id, $recipient_alipay_channel_recipient_account, $recipient_alipay_channel_recipient_name, $recipient_alipay_channel_recipient_type, $recipient_alipay_channel_recipient_account_type, $recipient_bank_channel_recipient_account, $recipient_bank_channel_recipient_name, $recipient_bank_channel_recipient_type, $recipient_bank_channel_recipient_bank_name, $recipient_bank_channel_recipient_bank_branch, $recipient_bank_channel_recipient_bank_province, $recipient_bank_channel_recipient_bank_city)
 
 更新 SettlementAccount 对象
 
@@ -419,6 +423,7 @@ $recipient_wechatpay_channel_recipient_name = "recipient_wechatpay_channel_recip
 $recipient_wechatpay_channel_recipient_force_check = false; // bool | 是否强制校验收款人姓名
 $recipient_wechatpay_channel_recipient_type = "TYPE_UNSET"; // string | 微信支付分账接收方类型
 $recipient_wechatpay_channel_recipient_account_type = "ACCOUNT_TYPE_UNSET"; // string | 微信支付分账接收方账户类型   - ACCOUNT_TYPE_UNSET: 未设置  - MERCHANT_ID: 分账到微信商户号  - OPENID: 分账到个人微信号（父公众号的openid，或服务商的openid））  - SUB_OPENID: 分账到个人微信号，子账号的  - LOGIN_NAME: 分账到微信登录号
+$recipient_wechatpay_channel_recipient_app_id = "recipient_wechatpay_channel_recipient_app_id_example"; // string | 微信支付分账接收方 openid 所对应的公众号 ID
 $recipient_alipay_channel_recipient_account = "recipient_alipay_channel_recipient_account_example"; // string | 支付宝账号，账号ID或者登录邮箱
 $recipient_alipay_channel_recipient_name = "recipient_alipay_channel_recipient_name_example"; // string | 支付宝账号真实姓名
 $recipient_alipay_channel_recipient_type = "TYPE_UNSET"; // string | 支付宝账号类型
@@ -432,7 +437,7 @@ $recipient_bank_channel_recipient_bank_province = "recipient_bank_channel_recipi
 $recipient_bank_channel_recipient_bank_city = "recipient_bank_channel_recipient_bank_city_example"; // string | 银行卡开户城市
 
 try {
-    $result = $apiInstance->settlementServiceUpdateSettlementAccount($id, $customer_id, $user_id, $channel, $recipient_wechatpay_channel_recipient_account, $recipient_wechatpay_channel_recipient_name, $recipient_wechatpay_channel_recipient_force_check, $recipient_wechatpay_channel_recipient_type, $recipient_wechatpay_channel_recipient_account_type, $recipient_alipay_channel_recipient_account, $recipient_alipay_channel_recipient_name, $recipient_alipay_channel_recipient_type, $recipient_alipay_channel_recipient_account_type, $recipient_bank_channel_recipient_account, $recipient_bank_channel_recipient_name, $recipient_bank_channel_recipient_type, $recipient_bank_channel_recipient_bank_name, $recipient_bank_channel_recipient_bank_branch, $recipient_bank_channel_recipient_bank_province, $recipient_bank_channel_recipient_bank_city);
+    $result = $apiInstance->settlementServiceUpdateSettlementAccount($id, $customer_id, $user_id, $channel, $recipient_wechatpay_channel_recipient_account, $recipient_wechatpay_channel_recipient_name, $recipient_wechatpay_channel_recipient_force_check, $recipient_wechatpay_channel_recipient_type, $recipient_wechatpay_channel_recipient_account_type, $recipient_wechatpay_channel_recipient_app_id, $recipient_alipay_channel_recipient_account, $recipient_alipay_channel_recipient_name, $recipient_alipay_channel_recipient_type, $recipient_alipay_channel_recipient_account_type, $recipient_bank_channel_recipient_account, $recipient_bank_channel_recipient_name, $recipient_bank_channel_recipient_type, $recipient_bank_channel_recipient_bank_name, $recipient_bank_channel_recipient_bank_branch, $recipient_bank_channel_recipient_bank_province, $recipient_bank_channel_recipient_bank_city);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling SettlementServiceApi->settlementServiceUpdateSettlementAccount: ', $e->getMessage(), PHP_EOL;
@@ -453,6 +458,7 @@ Name | Type | Description  | Notes
  **recipient_wechatpay_channel_recipient_force_check** | **bool**| 是否强制校验收款人姓名 | [optional] [default to false]
  **recipient_wechatpay_channel_recipient_type** | **string**| 微信支付分账接收方类型 | [optional] [default to TYPE_UNSET]
  **recipient_wechatpay_channel_recipient_account_type** | **string**| 微信支付分账接收方账户类型   - ACCOUNT_TYPE_UNSET: 未设置  - MERCHANT_ID: 分账到微信商户号  - OPENID: 分账到个人微信号（父公众号的openid，或服务商的openid））  - SUB_OPENID: 分账到个人微信号，子账号的  - LOGIN_NAME: 分账到微信登录号 | [optional] [default to ACCOUNT_TYPE_UNSET]
+ **recipient_wechatpay_channel_recipient_app_id** | **string**| 微信支付分账接收方 openid 所对应的公众号 ID | [optional]
  **recipient_alipay_channel_recipient_account** | **string**| 支付宝账号，账号ID或者登录邮箱 | [optional]
  **recipient_alipay_channel_recipient_name** | **string**| 支付宝账号真实姓名 | [optional]
  **recipient_alipay_channel_recipient_type** | **string**| 支付宝账号类型 | [optional] [default to TYPE_UNSET]

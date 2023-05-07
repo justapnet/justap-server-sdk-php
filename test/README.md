@@ -143,6 +143,10 @@ Class | Method | HTTP request | Description
  - [SettlementAccountRecipientRecipientType](docs/Model/SettlementAccountRecipientRecipientType.md)
  - [SettlementAccountRecipientWechatpayChannelRecipient](docs/Model/SettlementAccountRecipientWechatpayChannelRecipient.md)
  - [Tradev1Channel](docs/Model/Tradev1Channel.md)
+ - [Tradev1RoyaltyMethod](docs/Model/Tradev1RoyaltyMethod.md)
+ - [V1AcquirerCreateRoyaltyResponse](docs/Model/V1AcquirerCreateRoyaltyResponse.md)
+ - [V1AcquirerQueryRoyaltyResponse](docs/Model/V1AcquirerQueryRoyaltyResponse.md)
+ - [V1AcquirerRoyaltyNotifyResponse](docs/Model/V1AcquirerRoyaltyNotifyResponse.md)
  - [V1AlipayCallbackResponse](docs/Model/V1AlipayCallbackResponse.md)
  - [V1AlipayNotifyResponse](docs/Model/V1AlipayNotifyResponse.md)
  - [V1CallbackRoutingResponse](docs/Model/V1CallbackRoutingResponse.md)
@@ -215,9 +219,9 @@ Class | Method | HTTP request | Description
  - [V1RefundRoutingResponse](docs/Model/V1RefundRoutingResponse.md)
  - [V1Royalty](docs/Model/V1Royalty.md)
  - [V1RoyaltyListResponse](docs/Model/V1RoyaltyListResponse.md)
- - [V1RoyaltyMethod](docs/Model/V1RoyaltyMethod.md)
  - [V1RoyaltyMode](docs/Model/V1RoyaltyMode.md)
  - [V1RoyaltyResponse](docs/Model/V1RoyaltyResponse.md)
+ - [V1RoyaltyRoutingRequestRoyaltyMethod](docs/Model/V1RoyaltyRoutingRequestRoyaltyMethod.md)
  - [V1RoyaltyRoutingResponse](docs/Model/V1RoyaltyRoutingResponse.md)
  - [V1RoyaltySettlement](docs/Model/V1RoyaltySettlement.md)
  - [V1RoyaltySettlementListResponse](docs/Model/V1RoyaltySettlementListResponse.md)
@@ -241,9 +245,6 @@ Class | Method | HTTP request | Description
  - [V1UserResponse](docs/Model/V1UserResponse.md)
  - [V1WechatpayCallbackResponse](docs/Model/V1WechatpayCallbackResponse.md)
  - [V1WechatpayNotifyResponse](docs/Model/V1WechatpayNotifyResponse.md)
- - [V1WechatpayV3PartnerNotifyResponse](docs/Model/V1WechatpayV3PartnerNotifyResponse.md)
- - [V1WechatpayV3PartnerQueryRoyaltyResponse](docs/Model/V1WechatpayV3PartnerQueryRoyaltyResponse.md)
- - [V1WechatpayV3PartnerRoyaltyResponse](docs/Model/V1WechatpayV3PartnerRoyaltyResponse.md)
 
 
 ## Documentation For Authorization

@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **id** | **string** |  | [optional] 
 **livemode** | **bool** |  | [optional] 
 **metadata** | **map[string,string]** |  | [optional] 
-**method** | [**\Justapnet\Justap\Model\V1RoyaltyMethod**](V1RoyaltyMethod.md) |  | [optional] 
+**method** | [**\Justapnet\Justap\Model\Tradev1RoyaltyMethod**](Tradev1RoyaltyMethod.md) |  | [optional] 
 **object** | **string** | 对象类型 | [optional] [default to 'Royalty']
 **order_id** | **string** |  | [optional] 
 **payer_app_id** | **string** |  | [optional] 

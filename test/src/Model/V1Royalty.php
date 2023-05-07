@@ -64,7 +64,7 @@ class V1Royalty implements ModelInterface, ArrayAccess
         'id' => 'string',
         'livemode' => 'bool',
         'metadata' => 'map[string,string]',
-        'method' => '\Justapnet\Justap\Model\V1RoyaltyMethod',
+        'method' => '\Justapnet\Justap\Model\Tradev1RoyaltyMethod',
         'object' => 'string',
         'order_id' => 'string',
         'payer_app_id' => 'string',
@@ -477,7 +477,7 @@ class V1Royalty implements ModelInterface, ArrayAccess
     /**
      * Gets method
      *
-     * @return \Justapnet\Justap\Model\V1RoyaltyMethod
+     * @return \Justapnet\Justap\Model\Tradev1RoyaltyMethod
      */
     public function getMethod()
     {
@@ -487,7 +487,7 @@ class V1Royalty implements ModelInterface, ArrayAccess
     /**
      * Sets method
      *
-     * @param \Justapnet\Justap\Model\V1RoyaltyMethod $method method
+     * @param \Justapnet\Justap\Model\Tradev1RoyaltyMethod $method method
      *
      * @return $this
      */

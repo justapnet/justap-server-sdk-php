@@ -1,6 +1,6 @@
 <?php
 /**
- * SettlementAccountRecipientWechatpayChannelRecipient
+ * V1AcquirerRoyaltyNotifyResponse
  *
  * PHP version 5
  *
@@ -33,14 +33,14 @@ use \ArrayAccess;
 use \Justapnet\Justap\ObjectSerializer;
 
 /**
- * SettlementAccountRecipientWechatpayChannelRecipient Class Doc Comment
+ * V1AcquirerRoyaltyNotifyResponse Class Doc Comment
  *
  * @category Class
  * @package  Justapnet\Justap
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterface, ArrayAccess
+class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
       *
       * @var string
       */
-    protected static $swaggerModelName = 'SettlementAccountRecipientWechatpayChannelRecipient';
+    protected static $swaggerModelName = 'v1AcquirerRoyaltyNotifyResponse';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -57,12 +57,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'account' => 'string',
-        'account_type' => '\Justapnet\Justap\Model\SettlementAccountRecipientAccountType',
-        'app_id' => 'string',
-        'force_check' => 'bool',
-        'name' => 'string',
-        'type' => '\Justapnet\Justap\Model\SettlementAccountRecipientRecipientType'
+        
     ];
 
     /**
@@ -71,12 +66,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'account' => 'string',
-        'account_type' => null,
-        'app_id' => 'string',
-        'force_check' => 'boolean',
-        'name' => 'string',
-        'type' => null
+        
     ];
 
     /**
@@ -106,12 +96,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
      * @var string[]
      */
     protected static $attributeMap = [
-        'account' => 'account',
-        'account_type' => 'account_type',
-        'app_id' => 'app_id',
-        'force_check' => 'force_check',
-        'name' => 'name',
-        'type' => 'type'
+        
     ];
 
     /**
@@ -120,12 +105,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
      * @var string[]
      */
     protected static $setters = [
-        'account' => 'setAccount',
-        'account_type' => 'setAccountType',
-        'app_id' => 'setAppId',
-        'force_check' => 'setForceCheck',
-        'name' => 'setName',
-        'type' => 'setType'
+        
     ];
 
     /**
@@ -134,12 +114,7 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
      * @var string[]
      */
     protected static $getters = [
-        'account' => 'getAccount',
-        'account_type' => 'getAccountType',
-        'app_id' => 'getAppId',
-        'force_check' => 'getForceCheck',
-        'name' => 'getName',
-        'type' => 'getType'
+        
     ];
 
     /**
@@ -202,12 +177,6 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
      */
     public function __construct(array $data = null)
     {
-        $this->container['account'] = isset($data['account']) ? $data['account'] : null;
-        $this->container['account_type'] = isset($data['account_type']) ? $data['account_type'] : null;
-        $this->container['app_id'] = isset($data['app_id']) ? $data['app_id'] : null;
-        $this->container['force_check'] = isset($data['force_check']) ? $data['force_check'] : false;
-        $this->container['name'] = isset($data['name']) ? $data['name'] : null;
-        $this->container['type'] = isset($data['type']) ? $data['type'] : null;
     }
 
     /**
@@ -233,150 +202,6 @@ class SettlementAccountRecipientWechatpayChannelRecipient implements ModelInterf
         return count($this->listInvalidProperties()) === 0;
     }
 
-
-    /**
-     * Gets account
-     *
-     * @return string
-     */
-    public function getAccount()
-    {
-        return $this->container['account'];
-    }
-
-    /**
-     * Sets account
-     *
-     * @param string $account 微信支付分账接收方账户，OPENID或者商户号
-     *
-     * @return $this
-     */
-    public function setAccount($account)
-    {
-        $this->container['account'] = $account;
-
-        return $this;
-    }
-
-    /**
-     * Gets account_type
-     *
-     * @return \Justapnet\Justap\Model\SettlementAccountRecipientAccountType
-     */
-    public function getAccountType()
-    {
-        return $this->container['account_type'];
-    }
-
-    /**
-     * Sets account_type
-     *
-     * @param \Justapnet\Justap\Model\SettlementAccountRecipientAccountType $account_type 微信支付分账接收方账户类型
-     *
-     * @return $this
-     */
-    public function setAccountType($account_type)
-    {
-        $this->container['account_type'] = $account_type;
-
-        return $this;
-    }
-
-    /**
-     * Gets app_id
-     *
-     * @return string
-     */
-    public function getAppId()
-    {
-        return $this->container['app_id'];
-    }
-
-    /**
-     * Sets app_id
-     *
-     * @param string $app_id 微信支付分账接收方 openid 所对应的公众号 ID
-     *
-     * @return $this
-     */
-    public function setAppId($app_id)
-    {
-        $this->container['app_id'] = $app_id;
-
-        return $this;
-    }
-
-    /**
-     * Gets force_check
-     *
-     * @return bool
-     */
-    public function getForceCheck()
-    {
-        return $this->container['force_check'];
-    }
-
-    /**
-     * Sets force_check
-     *
-     * @param bool $force_check 是否强制校验收款人姓名
-     *
-     * @return $this
-     */
-    public function setForceCheck($force_check)
-    {
-        $this->container['force_check'] = $force_check;
-
-        return $this;
-    }
-
-    /**
-     * Gets name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->container['name'];
-    }
-
-    /**
-     * Sets name
-     *
-     * @param string $name 微信支付分账接收方姓名或名称
-     *
-     * @return $this
-     */
-    public function setName($name)
-    {
-        $this->container['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Gets type
-     *
-     * @return \Justapnet\Justap\Model\SettlementAccountRecipientRecipientType
-     */
-    public function getType()
-    {
-        return $this->container['type'];
-    }
-
-    /**
-     * Sets type
-     *
-     * @param \Justapnet\Justap\Model\SettlementAccountRecipientRecipientType $type 微信支付分账接收方类型
-     *
-     * @return $this
-     */
-    public function setType($type)
-    {
-        $this->container['type'] = $type;
-
-        return $this;
-    }
     /**
      * Returns true if offset exists. False otherwise.
      *

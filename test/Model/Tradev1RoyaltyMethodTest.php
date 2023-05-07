@@ -1,6 +1,6 @@
 <?php
 /**
- * SettlementAccountRecipientWechatpayChannelRecipientTest
+ * Tradev1RoyaltyMethodTest
  *
  * PHP version 5
  *
@@ -30,15 +30,15 @@
 namespace Justapnet\Justap;
 
 /**
- * SettlementAccountRecipientWechatpayChannelRecipientTest Class Doc Comment
+ * Tradev1RoyaltyMethodTest Class Doc Comment
  *
  * @category    Class
- * @description SettlementAccountRecipientWechatpayChannelRecipient
+ * @description - Alipay: 支付宝  - Wechatpay: 对应 MERCHANT_ID
  * @package     Justapnet\Justap
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class SettlementAccountRecipientWechatpayChannelRecipientTest extends \PHPUnit_Framework_TestCase
+class Tradev1RoyaltyMethodTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -70,51 +70,9 @@ class SettlementAccountRecipientWechatpayChannelRecipientTest extends \PHPUnit_F
     }
 
     /**
-     * Test "SettlementAccountRecipientWechatpayChannelRecipient"
+     * Test "Tradev1RoyaltyMethod"
      */
-    public function testSettlementAccountRecipientWechatpayChannelRecipient()
-    {
-    }
-
-    /**
-     * Test attribute "account"
-     */
-    public function testPropertyAccount()
-    {
-    }
-
-    /**
-     * Test attribute "account_type"
-     */
-    public function testPropertyAccountType()
-    {
-    }
-
-    /**
-     * Test attribute "app_id"
-     */
-    public function testPropertyAppId()
-    {
-    }
-
-    /**
-     * Test attribute "force_check"
-     */
-    public function testPropertyForceCheck()
-    {
-    }
-
-    /**
-     * Test attribute "name"
-     */
-    public function testPropertyName()
-    {
-    }
-
-    /**
-     * Test attribute "type"
-     */
-    public function testPropertyType()
+    public function testTradev1RoyaltyMethod()
     {
     }
 }
