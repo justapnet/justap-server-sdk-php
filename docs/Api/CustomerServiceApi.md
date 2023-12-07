@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **customerServiceUpdateCustomer**
-> \Justapnet\Justap\Model\V1CustomerResponse customerServiceUpdateCustomer($id, $app_id, $address, $currency, $description, $email, $name, $phone, $avatar, $disabled, $gender, $parent_customer_id, $out_customer_id)
+> \Justapnet\Justap\Model\V1CustomerResponse customerServiceUpdateCustomer($id)
 
 
 
@@ -335,21 +335,9 @@ $apiInstance = new Justapnet\Justap\Api\CustomerServiceApi(
     $config
 );
 $id = "id_example"; // string | 
-$app_id = "app_id_example"; // string | 
-$address = "address_example"; // string | 
-$currency = "currency_example"; // string | 
-$description = "description_example"; // string | 
-$email = "email_example"; // string | 
-$name = "name_example"; // string | 
-$phone = "phone_example"; // string | 
-$avatar = "avatar_example"; // string | 
-$disabled = true; // bool | 
-$gender = "GENDER_UNKNOWN"; // string | - GENDER_UNKNOWN: 未设置  - MALE: 男  - FE_MALE: 女  - PRIVACY: 保密  - ThirdGender: 第三性别
-$parent_customer_id = "parent_customer_id_example"; // string | 
-$out_customer_id = "out_customer_id_example"; // string | 
 
 try {
-    $result = $apiInstance->customerServiceUpdateCustomer($id, $app_id, $address, $currency, $description, $email, $name, $phone, $avatar, $disabled, $gender, $parent_customer_id, $out_customer_id);
+    $result = $apiInstance->customerServiceUpdateCustomer($id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling CustomerServiceApi->customerServiceUpdateCustomer: ', $e->getMessage(), PHP_EOL;
@@ -362,18 +350,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **string**|  |
- **app_id** | **string**|  | [optional]
- **address** | **string**|  | [optional]
- **currency** | **string**|  | [optional]
- **description** | **string**|  | [optional]
- **email** | **string**|  | [optional]
- **name** | **string**|  | [optional]
- **phone** | **string**|  | [optional]
- **avatar** | **string**|  | [optional]
- **disabled** | **bool**|  | [optional]
- **gender** | **string**| - GENDER_UNKNOWN: 未设置  - MALE: 男  - FE_MALE: 女  - PRIVACY: 保密  - ThirdGender: 第三性别 | [optional] [default to GENDER_UNKNOWN]
- **parent_customer_id** | **string**|  | [optional]
- **out_customer_id** | **string**|  | [optional]
 
 ### Return type
 

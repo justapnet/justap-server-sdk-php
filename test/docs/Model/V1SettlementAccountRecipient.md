@@ -3,9 +3,11 @@
 ## Properties
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**alipay_channel_recipient** | [**\Justapnet\Justap\Model\SettlementAccountRecipientAlipayChannelRecipient**](SettlementAccountRecipientAlipayChannelRecipient.md) |  | [optional] 
-**bank_channel_recipient** | [**\Justapnet\Justap\Model\SettlementAccountRecipientBankChannelRecipient**](SettlementAccountRecipientBankChannelRecipient.md) |  | [optional] 
-**wechatpay_channel_recipient** | [**\Justapnet\Justap\Model\SettlementAccountRecipientWechatpayChannelRecipient**](SettlementAccountRecipientWechatpayChannelRecipient.md) |  | [optional] 
+**balance** | [**\Justapnet\Justap\Model\SettlementAccountRecipientBalanceChannelRecipient**](SettlementAccountRecipientBalanceChannelRecipient.md) |  | [optional] 
+**bank** | [**\Justapnet\Justap\Model\SettlementAccountRecipientBankChannelRecipient**](SettlementAccountRecipientBankChannelRecipient.md) |  | [optional] 
+**payment_alipay** | [**\Justapnet\Justap\Model\SettlementAccountRecipientAlipayChannelRecipient**](SettlementAccountRecipientAlipayChannelRecipient.md) |  | [optional] 
+**wechatpay** | [**\Justapnet\Justap\Model\SettlementAccountRecipientWechatpayChannelRecipient**](SettlementAccountRecipientWechatpayChannelRecipient.md) |  | [optional] 
+**ysepay_merchant** | [**\Justapnet\Justap\Model\SettlementAccountRecipientYsepayMerchantRecipient**](SettlementAccountRecipientYsepayMerchantRecipient.md) |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

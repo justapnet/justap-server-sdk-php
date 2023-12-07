@@ -4,6 +4,13 @@ All URIs are relative to *http://127.0.0.1:21011*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**businessUserServiceCreateUser**](DefaultApi.md#businessUserServiceCreateUser) | **POST** /v1/business_users | 创建 Business User 对象
+[**businessUserServiceDeleteUser**](DefaultApi.md#businessUserServiceDeleteUser) | **DELETE** /v1/business_users/{id} | 删除 Business User 对象
+[**businessUserServiceListAllUsers**](DefaultApi.md#businessUserServiceListAllUsers) | **GET** /v1/business_users | 查询 Business User 对象列表
+[**businessUserServiceRetrieveUser**](DefaultApi.md#businessUserServiceRetrieveUser) | **GET** /v1/business_users/{id} | 查询 Business User 对象
+[**businessUserServiceSearchUsers**](DefaultApi.md#businessUserServiceSearchUsers) | **GET** /v1/business_users/search | 查询 Business User 对象列表
+[**businessUserServiceUpdateUser**](DefaultApi.md#businessUserServiceUpdateUser) | **PUT** /v1/business_users/{user.id} | 更新 Business User 对象
+[**businessUserServiceUpdateUser2**](DefaultApi.md#businessUserServiceUpdateUser2) | **PATCH** /v1/business_users/{user.id} | 更新 Business User 对象
 [**chargeServiceCharges**](DefaultApi.md#chargeServiceCharges) | **POST** /transaction/v1/charges | 创建 Charge 对象
 [**chargeServiceCharges2**](DefaultApi.md#chargeServiceCharges2) | **POST** /v1/charges | 创建 Charge 对象
 [**chargeServiceQueryCharge**](DefaultApi.md#chargeServiceQueryCharge) | **GET** /transaction/v1/charges/{charge_id} | 查询 Charge 对象
@@ -18,7 +25,446 @@ Method | HTTP request | Description
 [**refundServiceQueryRefundList2**](DefaultApi.md#refundServiceQueryRefundList2) | **GET** /v1/refunds | 查询 Refund 对象列表
 [**refundServiceRefunds**](DefaultApi.md#refundServiceRefunds) | **POST** /transaction/v1/refunds | 创建 Refund 对象
 [**refundServiceRefunds2**](DefaultApi.md#refundServiceRefunds2) | **POST** /v1/refunds | 创建 Refund 对象
+[**royaltyServiceCreateRoyalty**](DefaultApi.md#royaltyServiceCreateRoyalty) | **POST** /v1/royalties | 创建 Royalty 对象
+[**royaltyServiceListAllRoyalties**](DefaultApi.md#royaltyServiceListAllRoyalties) | **GET** /v1/royalties | 查询 Royalty 对象列表
+[**royaltyServiceRetrieveRoyalty**](DefaultApi.md#royaltyServiceRetrieveRoyalty) | **GET** /v1/royalties/{id} | 查询 Royalty 对象
+[**settlementServiceCreateSettlementAccount**](DefaultApi.md#settlementServiceCreateSettlementAccount) | **POST** /v1/settlement_accounts | 创建结算账户
+[**settlementServiceDeleteSettlementAccount**](DefaultApi.md#settlementServiceDeleteSettlementAccount) | **DELETE** /v1/settlement_accounts/{id} | 删除结算账户
+[**settlementServiceListAllSettlementAccounts**](DefaultApi.md#settlementServiceListAllSettlementAccounts) | **GET** /v1/settlement_accounts | 查询结算账户列表
+[**settlementServiceRetrieveSettlementAccount**](DefaultApi.md#settlementServiceRetrieveSettlementAccount) | **GET** /v1/settlement_accounts/{id} | 查询结算账户
+[**settlementServiceSearchSettlementAccounts**](DefaultApi.md#settlementServiceSearchSettlementAccounts) | **GET** /v1/settlement_accounts/search | 查询结算账户列表
+[**settlementServiceUpdateSettlementAccount**](DefaultApi.md#settlementServiceUpdateSettlementAccount) | **PUT** /v1/settlement_accounts/{settlementAccount.id} | 更新结算账户
+[**settlementServiceUpdateSettlementAccount2**](DefaultApi.md#settlementServiceUpdateSettlementAccount2) | **PATCH** /v1/settlement_accounts/{settlementAccount.id} | 更新结算账户
 
+
+# **businessUserServiceCreateUser**
+> \Justapnet\Justap\Model\V1UserResponse businessUserServiceCreateUser($body)
+
+创建 Business User 对象
+
+创建 Business User 对象。商业用户是本系统中的一种账户类型，在交易完成之后可以对该类型的账户进行分账等操作。
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$body = new \Justapnet\Justap\Model\V1CreateUserRequest(); // \Justapnet\Justap\Model\V1CreateUserRequest | 
+
+try {
+    $result = $apiInstance->businessUserServiceCreateUser($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->businessUserServiceCreateUser: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**\Justapnet\Justap\Model\V1CreateUserRequest**](../Model/V1CreateUserRequest.md)|  |
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1UserResponse**](../Model/V1UserResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **businessUserServiceDeleteUser**
+> \Justapnet\Justap\Model\V1DeleteUserResponse businessUserServiceDeleteUser($id, $app_id)
+
+删除 Business User 对象
+
+删除 Business User 对象
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = "id_example"; // string | 
+$app_id = "app_id_example"; // string | 
+
+try {
+    $result = $apiInstance->businessUserServiceDeleteUser($id, $app_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->businessUserServiceDeleteUser: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **string**|  |
+ **app_id** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1DeleteUserResponse**](../Model/V1DeleteUserResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **businessUserServiceListAllUsers**
+> \Justapnet\Justap\Model\V1UserListResponse businessUserServiceListAllUsers($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled)
+
+查询 Business User 对象列表
+
+查询 Business User 对象列表
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$app_id = "app_id_example"; // string | 
+$limit = 10; // int | [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项
+$starting_after = "starting_after_example"; // string | [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after = obj_end 去获取下一页
+$ending_before = "ending_before_example"; // string | [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before = obj_start 去获取上一页
+$created_lt = 0; // int | 大于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_lte = 0; // int | 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_gt = 0; // int | 小于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_gte = 0; // int | 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示
+$disabled = true; // bool | [OPTIONAL] 是否禁用，默认为 false
+
+try {
+    $result = $apiInstance->businessUserServiceListAllUsers($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->businessUserServiceListAllUsers: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **app_id** | **string**|  | [optional]
+ **limit** | **int**| [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 | [optional] [default to 10]
+ **starting_after** | **string**| [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 | [optional]
+ **ending_before** | **string**| [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 | [optional]
+ **created_lt** | **int**| 大于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_lte** | **int**| 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_gt** | **int**| 小于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_gte** | **int**| 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **disabled** | **bool**| [OPTIONAL] 是否禁用，默认为 false | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1UserListResponse**](../Model/V1UserListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **businessUserServiceRetrieveUser**
+> \Justapnet\Justap\Model\V1UserResponse businessUserServiceRetrieveUser($id, $app_id)
+
+查询 Business User 对象
+
+查询 Business User 对象
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = "id_example"; // string | 
+$app_id = "app_id_example"; // string | 
+
+try {
+    $result = $apiInstance->businessUserServiceRetrieveUser($id, $app_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->businessUserServiceRetrieveUser: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **string**|  |
+ **app_id** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1UserResponse**](../Model/V1UserResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **businessUserServiceSearchUsers**
+> \Justapnet\Justap\Model\V1UserListResponse businessUserServiceSearchUsers($app_id, $limit, $created_lt, $created_lte, $created_gt, $created_gte, $email, $name, $phone)
+
+查询 Business User 对象列表
+
+查询 Business User 对象列表
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$app_id = "app_id_example"; // string | 
+$limit = 10; // int | [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项
+$created_lt = 0; // int | 大于 BusinessUser 对象的创建时间，用 Unix 时间戳表示
+$created_lte = 0; // int | 大于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示
+$created_gt = 0; // int | 小于 BusinessUser 对象的创建时间，用 Unix 时间戳表示
+$created_gte = 0; // int | 小于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示
+$email = "email_example"; // string | [OPTIONAL] BusinessUser 对象的邮箱地址。支持模糊匹配
+$name = "name_example"; // string | [OPTIONAL] BusinessUser 对象的用户名。支持模糊匹配
+$phone = "phone_example"; // string | [OPTIONAL] BusinessUser 对象的手机号码
+
+try {
+    $result = $apiInstance->businessUserServiceSearchUsers($app_id, $limit, $created_lt, $created_lte, $created_gt, $created_gte, $email, $name, $phone);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->businessUserServiceSearchUsers: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **app_id** | **string**|  | [optional]
+ **limit** | **int**| [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 | [optional] [default to 10]
+ **created_lt** | **int**| 大于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_lte** | **int**| 大于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_gt** | **int**| 小于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_gte** | **int**| 小于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **email** | **string**| [OPTIONAL] BusinessUser 对象的邮箱地址。支持模糊匹配 | [optional]
+ **name** | **string**| [OPTIONAL] BusinessUser 对象的用户名。支持模糊匹配 | [optional]
+ **phone** | **string**| [OPTIONAL] BusinessUser 对象的手机号码 | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1UserListResponse**](../Model/V1UserListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **businessUserServiceUpdateUser**
+> \Justapnet\Justap\Model\V1UserResponse businessUserServiceUpdateUser($user_id, $body, $update_mask)
+
+更新 Business User 对象
+
+更新 Business User 对象
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$user_id = "user_id_example"; // string | 
+$body = new \Justapnet\Justap\Model\V1BusinessUser(); // \Justapnet\Justap\Model\V1BusinessUser | 
+$update_mask = "update_mask_example"; // string | 
+
+try {
+    $result = $apiInstance->businessUserServiceUpdateUser($user_id, $body, $update_mask);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->businessUserServiceUpdateUser: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **user_id** | **string**|  |
+ **body** | [**\Justapnet\Justap\Model\V1BusinessUser**](../Model/V1BusinessUser.md)|  |
+ **update_mask** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1UserResponse**](../Model/V1UserResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **businessUserServiceUpdateUser2**
+> \Justapnet\Justap\Model\V1UserResponse businessUserServiceUpdateUser2($user_id, $body, $update_mask)
+
+更新 Business User 对象
+
+更新 Business User 对象
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$user_id = "user_id_example"; // string | 
+$body = new \Justapnet\Justap\Model\V1BusinessUser(); // \Justapnet\Justap\Model\V1BusinessUser | 
+$update_mask = "update_mask_example"; // string | 
+
+try {
+    $result = $apiInstance->businessUserServiceUpdateUser2($user_id, $body, $update_mask);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->businessUserServiceUpdateUser2: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **user_id** | **string**|  |
+ **body** | [**\Justapnet\Justap\Model\V1BusinessUser**](../Model/V1BusinessUser.md)|  |
+ **update_mask** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1UserResponse**](../Model/V1UserResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **chargeServiceCharges**
 > \Justapnet\Justap\Model\V1ChargeResponse chargeServiceCharges($body)
@@ -43,7 +489,7 @@ $apiInstance = new Justapnet\Justap\Api\DefaultApi(
     new GuzzleHttp\Client(),
     $config
 );
-$body = new \Justapnet\Justap\Model\V1CreateChargeRequest(); // \Justapnet\Justap\Model\V1CreateChargeRequest | 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。
+$body = new \Justapnet\Justap\Model\V1CreateChargeRequest(); // \Justapnet\Justap\Model\V1CreateChargeRequest | 
 
 try {
     $result = $apiInstance->chargeServiceCharges($body);
@@ -58,7 +504,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Justapnet\Justap\Model\V1CreateChargeRequest**](../Model/V1CreateChargeRequest.md)| 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 |
+ **body** | [**\Justapnet\Justap\Model\V1CreateChargeRequest**](../Model/V1CreateChargeRequest.md)|  |
 
 ### Return type
 
@@ -98,7 +544,7 @@ $apiInstance = new Justapnet\Justap\Api\DefaultApi(
     new GuzzleHttp\Client(),
     $config
 );
-$body = new \Justapnet\Justap\Model\V1CreateChargeRequest(); // \Justapnet\Justap\Model\V1CreateChargeRequest | 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。
+$body = new \Justapnet\Justap\Model\V1CreateChargeRequest(); // \Justapnet\Justap\Model\V1CreateChargeRequest | 
 
 try {
     $result = $apiInstance->chargeServiceCharges2($body);
@@ -113,7 +559,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Justapnet\Justap\Model\V1CreateChargeRequest**](../Model/V1CreateChargeRequest.md)| 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 |
+ **body** | [**\Justapnet\Justap\Model\V1CreateChargeRequest**](../Model/V1CreateChargeRequest.md)|  |
 
 ### Return type
 
@@ -276,7 +722,7 @@ $created_lt = 0; // int | 大于 charge 对象的创建时间，用 Unix 时间�
 $created_lte = 0; // int | 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示
 $created_gt = 0; // int | 小于 charge 对象的创建时间，用 Unix 时间戳表示
 $created_gte = 0; // int | 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示
-$channel = "CHANNEL_INVALID_UNSPECIFIED"; // string | [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付
+$channel = "CHANNEL_INVALID_UNSPECIFIED"; // string | [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码）
 $paid = false; // bool | [OPTIONAL] 是否已付款
 $refunded = false; // bool | [OPTIONAL] 是否存在退款信息，无论退款是否成功。
 $reversed = false; // bool | [OPTIONAL] 是否已撤销
@@ -305,7 +751,7 @@ Name | Type | Description  | Notes
  **created_lte** | **int**| 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
  **created_gt** | **int**| 小于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
  **created_gte** | **int**| 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
- **channel** | **string**| [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 | [optional] [default to CHANNEL_INVALID_UNSPECIFIED]
+ **channel** | **string**| [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） | [optional] [default to CHANNEL_INVALID_UNSPECIFIED]
  **paid** | **bool**| [OPTIONAL] 是否已付款 | [optional] [default to false]
  **refunded** | **bool**| [OPTIONAL] 是否存在退款信息，无论退款是否成功。 | [optional] [default to false]
  **reversed** | **bool**| [OPTIONAL] 是否已撤销 | [optional] [default to false]
@@ -359,7 +805,7 @@ $created_lt = 0; // int | 大于 charge 对象的创建时间，用 Unix 时间�
 $created_lte = 0; // int | 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示
 $created_gt = 0; // int | 小于 charge 对象的创建时间，用 Unix 时间戳表示
 $created_gte = 0; // int | 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示
-$channel = "CHANNEL_INVALID_UNSPECIFIED"; // string | [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付
+$channel = "CHANNEL_INVALID_UNSPECIFIED"; // string | [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码）
 $paid = false; // bool | [OPTIONAL] 是否已付款
 $refunded = false; // bool | [OPTIONAL] 是否存在退款信息，无论退款是否成功。
 $reversed = false; // bool | [OPTIONAL] 是否已撤销
@@ -388,7 +834,7 @@ Name | Type | Description  | Notes
  **created_lte** | **int**| 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
  **created_gt** | **int**| 小于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
  **created_gte** | **int**| 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
- **channel** | **string**| [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 | [optional] [default to CHANNEL_INVALID_UNSPECIFIED]
+ **channel** | **string**| [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） | [optional] [default to CHANNEL_INVALID_UNSPECIFIED]
  **paid** | **bool**| [OPTIONAL] 是否已付款 | [optional] [default to false]
  **refunded** | **bool**| [OPTIONAL] 是否存在退款信息，无论退款是否成功。 | [optional] [default to false]
  **reversed** | **bool**| [OPTIONAL] 是否已撤销 | [optional] [default to false]
@@ -411,7 +857,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **chargeServiceReverseCharge**
-> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceReverseCharge($charge_id, $app_id)
+> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceReverseCharge($charge_id)
 
 撤销 Charge 对象
 
@@ -434,10 +880,9 @@ $apiInstance = new Justapnet\Justap\Api\DefaultApi(
     $config
 );
 $charge_id = "charge_id_example"; // string | Charge 对象 id
-$app_id = "app_id_example"; // string | [REQUIRED] 应用 id
 
 try {
-    $result = $apiInstance->chargeServiceReverseCharge($charge_id, $app_id);
+    $result = $apiInstance->chargeServiceReverseCharge($charge_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling DefaultApi->chargeServiceReverseCharge: ', $e->getMessage(), PHP_EOL;
@@ -450,7 +895,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **charge_id** | **string**| Charge 对象 id |
- **app_id** | **string**| [REQUIRED] 应用 id | [optional]
 
 ### Return type
 
@@ -468,7 +912,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **chargeServiceReverseCharge2**
-> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceReverseCharge2($charge_id, $app_id)
+> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceReverseCharge2($charge_id)
 
 撤销 Charge 对象
 
@@ -491,10 +935,9 @@ $apiInstance = new Justapnet\Justap\Api\DefaultApi(
     $config
 );
 $charge_id = "charge_id_example"; // string | Charge 对象 id
-$app_id = "app_id_example"; // string | [REQUIRED] 应用 id
 
 try {
-    $result = $apiInstance->chargeServiceReverseCharge2($charge_id, $app_id);
+    $result = $apiInstance->chargeServiceReverseCharge2($charge_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling DefaultApi->chargeServiceReverseCharge2: ', $e->getMessage(), PHP_EOL;
@@ -507,7 +950,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **charge_id** | **string**| Charge 对象 id |
- **app_id** | **string**| [REQUIRED] 应用 id | [optional]
 
 ### Return type
 
@@ -791,7 +1233,7 @@ $apiInstance = new Justapnet\Justap\Api\DefaultApi(
     new GuzzleHttp\Client(),
     $config
 );
-$body = new \Justapnet\Justap\Model\V1CreateRefundRequest(); // \Justapnet\Justap\Model\V1CreateRefundRequest | 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。
+$body = new \Justapnet\Justap\Model\V1CreateRefundRequest(); // \Justapnet\Justap\Model\V1CreateRefundRequest | 
 
 try {
     $result = $apiInstance->refundServiceRefunds($body);
@@ -806,7 +1248,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Justapnet\Justap\Model\V1CreateRefundRequest**](../Model/V1CreateRefundRequest.md)| 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 |
+ **body** | [**\Justapnet\Justap\Model\V1CreateRefundRequest**](../Model/V1CreateRefundRequest.md)|  |
 
 ### Return type
 
@@ -846,7 +1288,7 @@ $apiInstance = new Justapnet\Justap\Api\DefaultApi(
     new GuzzleHttp\Client(),
     $config
 );
-$body = new \Justapnet\Justap\Model\V1CreateRefundRequest(); // \Justapnet\Justap\Model\V1CreateRefundRequest | 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。
+$body = new \Justapnet\Justap\Model\V1CreateRefundRequest(); // \Justapnet\Justap\Model\V1CreateRefundRequest | 
 
 try {
     $result = $apiInstance->refundServiceRefunds2($body);
@@ -861,11 +1303,671 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**\Justapnet\Justap\Model\V1CreateRefundRequest**](../Model/V1CreateRefundRequest.md)| 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 |
+ **body** | [**\Justapnet\Justap\Model\V1CreateRefundRequest**](../Model/V1CreateRefundRequest.md)|  |
 
 ### Return type
 
 [**\Justapnet\Justap\Model\V1RefundResponse**](../Model/V1RefundResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **royaltyServiceCreateRoyalty**
+> \Justapnet\Justap\Model\V1RoyaltyResponse royaltyServiceCreateRoyalty($body)
+
+创建 Royalty 对象
+
+对一个 Charge 对象进行分账，分账的金额和分账接收方由 Royalty 对象指定。Royalty 创建仅代表本系统成功接收分账申请，尚未提交到支付机构清分，更不代表分账立即成功，相关结果信息请调用查询接口确认
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$body = new \Justapnet\Justap\Model\V1CreateRoyaltyRequest(); // \Justapnet\Justap\Model\V1CreateRoyaltyRequest | 
+
+try {
+    $result = $apiInstance->royaltyServiceCreateRoyalty($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->royaltyServiceCreateRoyalty: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**\Justapnet\Justap\Model\V1CreateRoyaltyRequest**](../Model/V1CreateRoyaltyRequest.md)|  |
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1RoyaltyResponse**](../Model/V1RoyaltyResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **royaltyServiceListAllRoyalties**
+> \Justapnet\Justap\Model\V1ListAllRoyaltiesResponse royaltyServiceListAllRoyalties($limit, $starting_after, $ending_before, $merchant_trade_id, $created_lt, $created_lte, $created_gt, $created_gte, $app_id, $settle_account_id, $royalty_settlement_id)
+
+查询 Royalty 对象列表
+
+查询 Royalty 对象的列表信息
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$limit = 10; // int | [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项
+$starting_after = "starting_after_example"; // string | [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after = obj_end 去获取下一页
+$ending_before = "ending_before_example"; // string | [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before = obj_start 去获取上一页
+$merchant_trade_id = "merchant_trade_id_example"; // string | [OPTIONAL] 客户系统订单号
+$created_lt = 0; // int | 大于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_lte = 0; // int | 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_gt = 0; // int | 小于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_gte = 0; // int | 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示
+$app_id = "app_id_example"; // string | 
+$settle_account_id = "settle_account_id_example"; // string | 
+$royalty_settlement_id = "royalty_settlement_id_example"; // string | 
+
+try {
+    $result = $apiInstance->royaltyServiceListAllRoyalties($limit, $starting_after, $ending_before, $merchant_trade_id, $created_lt, $created_lte, $created_gt, $created_gte, $app_id, $settle_account_id, $royalty_settlement_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->royaltyServiceListAllRoyalties: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **limit** | **int**| [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 | [optional] [default to 10]
+ **starting_after** | **string**| [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 | [optional]
+ **ending_before** | **string**| [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 | [optional]
+ **merchant_trade_id** | **string**| [OPTIONAL] 客户系统订单号 | [optional]
+ **created_lt** | **int**| 大于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_lte** | **int**| 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_gt** | **int**| 小于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_gte** | **int**| 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **app_id** | **string**|  | [optional]
+ **settle_account_id** | **string**|  | [optional]
+ **royalty_settlement_id** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1ListAllRoyaltiesResponse**](../Model/V1ListAllRoyaltiesResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **royaltyServiceRetrieveRoyalty**
+> \Justapnet\Justap\Model\V1RoyaltyResponse royaltyServiceRetrieveRoyalty($id)
+
+查询 Royalty 对象
+
+查询 Royalty 对象的信息
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = "id_example"; // string | 
+
+try {
+    $result = $apiInstance->royaltyServiceRetrieveRoyalty($id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->royaltyServiceRetrieveRoyalty: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **string**|  |
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1RoyaltyResponse**](../Model/V1RoyaltyResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **settlementServiceCreateSettlementAccount**
+> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceCreateSettlementAccount($body)
+
+创建结算账户
+
+为用户创建一个结算账户。添加结算账户信息后方可对该用进行分账、余额充值、转账等操作。
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$body = new \Justapnet\Justap\Model\V1CreateSettlementAccountRequest(); // \Justapnet\Justap\Model\V1CreateSettlementAccountRequest | 
+
+try {
+    $result = $apiInstance->settlementServiceCreateSettlementAccount($body);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->settlementServiceCreateSettlementAccount: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**\Justapnet\Justap\Model\V1CreateSettlementAccountRequest**](../Model/V1CreateSettlementAccountRequest.md)|  |
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1SettlementAccountResponse**](../Model/V1SettlementAccountResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **settlementServiceDeleteSettlementAccount**
+> \Justapnet\Justap\Model\V1DeleteSettlementAccountResponse settlementServiceDeleteSettlementAccount($id, $app_id)
+
+删除结算账户
+
+删除结算账户
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = "id_example"; // string | 
+$app_id = "app_id_example"; // string | 
+
+try {
+    $result = $apiInstance->settlementServiceDeleteSettlementAccount($id, $app_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->settlementServiceDeleteSettlementAccount: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **string**|  |
+ **app_id** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1DeleteSettlementAccountResponse**](../Model/V1DeleteSettlementAccountResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **settlementServiceListAllSettlementAccounts**
+> \Justapnet\Justap\Model\V1SettlementAccountListResponse settlementServiceListAllSettlementAccounts($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled, $customer_id, $business_user_id)
+
+查询结算账户列表
+
+查询结算账户列表
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$app_id = "app_id_example"; // string | 
+$limit = 10; // int | [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项
+$starting_after = "starting_after_example"; // string | [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after = obj_end 去获取下一页
+$ending_before = "ending_before_example"; // string | [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before = obj_start 去获取上一页
+$created_lt = 0; // int | 大于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_lte = 0; // int | 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_gt = 0; // int | 小于 charge 对象的创建时间，用 Unix 时间戳表示
+$created_gte = 0; // int | 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示
+$disabled = true; // bool | [OPTIONAL] 是否禁用，默认为 false
+$customer_id = "customer_id_example"; // string | [OPTIONAL] 客户 ID
+$business_user_id = "business_user_id_example"; // string | [OPTIONAL] 商户用户 ID
+
+try {
+    $result = $apiInstance->settlementServiceListAllSettlementAccounts($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled, $customer_id, $business_user_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->settlementServiceListAllSettlementAccounts: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **app_id** | **string**|  | [optional]
+ **limit** | **int**| [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 | [optional] [default to 10]
+ **starting_after** | **string**| [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 | [optional]
+ **ending_before** | **string**| [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 | [optional]
+ **created_lt** | **int**| 大于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_lte** | **int**| 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_gt** | **int**| 小于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **created_gte** | **int**| 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 | [optional] [default to 0]
+ **disabled** | **bool**| [OPTIONAL] 是否禁用，默认为 false | [optional]
+ **customer_id** | **string**| [OPTIONAL] 客户 ID | [optional]
+ **business_user_id** | **string**| [OPTIONAL] 商户用户 ID | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1SettlementAccountListResponse**](../Model/V1SettlementAccountListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **settlementServiceRetrieveSettlementAccount**
+> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceRetrieveSettlementAccount($id, $app_id, $object, $data_id, $data_app_id, $data_business_user_id, $data_customer_id, $data_channel, $data_recipient_wechatpay_account, $data_recipient_wechatpay_name, $data_recipient_wechatpay_force_check, $data_recipient_wechatpay_type, $data_recipient_wechatpay_account_type, $data_recipient_wechatpay_app_id, $data_recipient_wechatpay_sub_app_id, $data_recipient_payment_alipay_account, $data_recipient_payment_alipay_name, $data_recipient_payment_alipay_type, $data_recipient_payment_alipay_account_type, $data_recipient_bank_account, $data_recipient_bank_name, $data_recipient_bank_type, $data_recipient_bank_bank_name, $data_recipient_bank_bank_branch, $data_recipient_bank_bank_province, $data_recipient_bank_bank_city, $data_recipient_ysepay_merchant_division_mer_usercode, $data_created, $data_updated, $data_object)
+
+查询结算账户
+
+查询结算账户
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$id = "id_example"; // string | 
+$app_id = "app_id_example"; // string | 
+$object = "SettlementAccount"; // string | 对象类型
+$data_id = "0"; // string | 分账接收方的唯一标识
+$data_app_id = "0"; // string | 分账接收方所在的应用 ID
+$data_business_user_id = "0"; // string | 分账接收方的用户 ID
+$data_customer_id = "0"; // string | 分账接收方的用户 ID
+$data_channel = "CHANNEL_UNKNOWN"; // string | 分账接收方的账户类型
+$data_recipient_wechatpay_account = "data_recipient_wechatpay_account_example"; // string | openid 或者商户号，由类型决定. 微信支付分账接收方账户，OPENID或者商户号
+$data_recipient_wechatpay_name = "data_recipient_wechatpay_name_example"; // string | 微信支付分账接收方姓名或名称
+$data_recipient_wechatpay_force_check = false; // bool | 是否强制校验收款人姓名
+$data_recipient_wechatpay_type = "TYPE_UNSET"; // string | 微信支付分账接收方类型
+$data_recipient_wechatpay_account_type = "ACCOUNT_TYPE_UNSET"; // string | 微信支付分账接收方账户类型
+$data_recipient_wechatpay_app_id = "data_recipient_wechatpay_app_id_example"; // string | 微信支付分账接收方 openid 所对应的服务商公众号 ID
+$data_recipient_wechatpay_sub_app_id = "data_recipient_wechatpay_sub_app_id_example"; // string | 微信支付分账接收方 openid 所对应的商户公众号 ID
+$data_recipient_payment_alipay_account = "data_recipient_payment_alipay_account_example"; // string | 支付宝账号，账号ID或者登录邮箱
+$data_recipient_payment_alipay_name = "data_recipient_payment_alipay_name_example"; // string | 支付宝账号真实姓名
+$data_recipient_payment_alipay_type = "TYPE_UNSET"; // string | 支付宝账号类型
+$data_recipient_payment_alipay_account_type = "ACCOUNT_TYPE_UNSET"; // string | 支付宝账号类型
+$data_recipient_bank_account = "data_recipient_bank_account_example"; // string | 银行卡号
+$data_recipient_bank_name = "data_recipient_bank_name_example"; // string | 银行卡开户名
+$data_recipient_bank_type = "data_recipient_bank_type_example"; // string | 银行卡类型
+$data_recipient_bank_bank_name = "data_recipient_bank_bank_name_example"; // string | 银行卡开户行编码
+$data_recipient_bank_bank_branch = "data_recipient_bank_bank_branch_example"; // string | 银行卡开户支行
+$data_recipient_bank_bank_province = "data_recipient_bank_bank_province_example"; // string | 银行卡开户省份
+$data_recipient_bank_bank_city = "data_recipient_bank_bank_city_example"; // string | 银行卡开户城市
+$data_recipient_ysepay_merchant_division_mer_usercode = "data_recipient_ysepay_merchant_division_mer_usercode_example"; // string | 银盛商户号
+$data_created = 0; // int | 分账接收方的创建时间
+$data_updated = 0; // int | 分账接收方的更新时间
+$data_object = "Recipient"; // string | 对象类型
+
+try {
+    $result = $apiInstance->settlementServiceRetrieveSettlementAccount($id, $app_id, $object, $data_id, $data_app_id, $data_business_user_id, $data_customer_id, $data_channel, $data_recipient_wechatpay_account, $data_recipient_wechatpay_name, $data_recipient_wechatpay_force_check, $data_recipient_wechatpay_type, $data_recipient_wechatpay_account_type, $data_recipient_wechatpay_app_id, $data_recipient_wechatpay_sub_app_id, $data_recipient_payment_alipay_account, $data_recipient_payment_alipay_name, $data_recipient_payment_alipay_type, $data_recipient_payment_alipay_account_type, $data_recipient_bank_account, $data_recipient_bank_name, $data_recipient_bank_type, $data_recipient_bank_bank_name, $data_recipient_bank_bank_branch, $data_recipient_bank_bank_province, $data_recipient_bank_bank_city, $data_recipient_ysepay_merchant_division_mer_usercode, $data_created, $data_updated, $data_object);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->settlementServiceRetrieveSettlementAccount: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **string**|  |
+ **app_id** | **string**|  | [optional]
+ **object** | **string**| 对象类型 | [optional] [default to SettlementAccount]
+ **data_id** | **string**| 分账接收方的唯一标识 | [optional] [default to 0]
+ **data_app_id** | **string**| 分账接收方所在的应用 ID | [optional] [default to 0]
+ **data_business_user_id** | **string**| 分账接收方的用户 ID | [optional] [default to 0]
+ **data_customer_id** | **string**| 分账接收方的用户 ID | [optional] [default to 0]
+ **data_channel** | **string**| 分账接收方的账户类型 | [optional] [default to CHANNEL_UNKNOWN]
+ **data_recipient_wechatpay_account** | **string**| openid 或者商户号，由类型决定. 微信支付分账接收方账户，OPENID或者商户号 | [optional]
+ **data_recipient_wechatpay_name** | **string**| 微信支付分账接收方姓名或名称 | [optional]
+ **data_recipient_wechatpay_force_check** | **bool**| 是否强制校验收款人姓名 | [optional] [default to false]
+ **data_recipient_wechatpay_type** | **string**| 微信支付分账接收方类型 | [optional] [default to TYPE_UNSET]
+ **data_recipient_wechatpay_account_type** | **string**| 微信支付分账接收方账户类型 | [optional] [default to ACCOUNT_TYPE_UNSET]
+ **data_recipient_wechatpay_app_id** | **string**| 微信支付分账接收方 openid 所对应的服务商公众号 ID | [optional]
+ **data_recipient_wechatpay_sub_app_id** | **string**| 微信支付分账接收方 openid 所对应的商户公众号 ID | [optional]
+ **data_recipient_payment_alipay_account** | **string**| 支付宝账号，账号ID或者登录邮箱 | [optional]
+ **data_recipient_payment_alipay_name** | **string**| 支付宝账号真实姓名 | [optional]
+ **data_recipient_payment_alipay_type** | **string**| 支付宝账号类型 | [optional] [default to TYPE_UNSET]
+ **data_recipient_payment_alipay_account_type** | **string**| 支付宝账号类型 | [optional] [default to ACCOUNT_TYPE_UNSET]
+ **data_recipient_bank_account** | **string**| 银行卡号 | [optional]
+ **data_recipient_bank_name** | **string**| 银行卡开户名 | [optional]
+ **data_recipient_bank_type** | **string**| 银行卡类型 | [optional]
+ **data_recipient_bank_bank_name** | **string**| 银行卡开户行编码 | [optional]
+ **data_recipient_bank_bank_branch** | **string**| 银行卡开户支行 | [optional]
+ **data_recipient_bank_bank_province** | **string**| 银行卡开户省份 | [optional]
+ **data_recipient_bank_bank_city** | **string**| 银行卡开户城市 | [optional]
+ **data_recipient_ysepay_merchant_division_mer_usercode** | **string**| 银盛商户号 | [optional]
+ **data_created** | **int**| 分账接收方的创建时间 | [optional] [default to 0]
+ **data_updated** | **int**| 分账接收方的更新时间 | [optional] [default to 0]
+ **data_object** | **string**| 对象类型 | [optional] [default to Recipient]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1SettlementAccountResponse**](../Model/V1SettlementAccountResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **settlementServiceSearchSettlementAccounts**
+> \Justapnet\Justap\Model\V1SettlementAccountListResponse settlementServiceSearchSettlementAccounts($user_id, $app_id)
+
+查询结算账户列表
+
+查询结算账户列表
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$user_id = "user_id_example"; // string | 
+$app_id = "app_id_example"; // string | 
+
+try {
+    $result = $apiInstance->settlementServiceSearchSettlementAccounts($user_id, $app_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->settlementServiceSearchSettlementAccounts: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **user_id** | **string**|  | [optional]
+ **app_id** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1SettlementAccountListResponse**](../Model/V1SettlementAccountListResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **settlementServiceUpdateSettlementAccount**
+> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceUpdateSettlementAccount($settlement_account_id, $body, $update_mask)
+
+更新结算账户
+
+更新结算账户
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$settlement_account_id = "settlement_account_id_example"; // string | 
+$body = new \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody(); // \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody | 
+$update_mask = "update_mask_example"; // string | 
+
+try {
+    $result = $apiInstance->settlementServiceUpdateSettlementAccount($settlement_account_id, $body, $update_mask);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->settlementServiceUpdateSettlementAccount: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **settlement_account_id** | **string**|  |
+ **body** | [**\Justapnet\Justap\Model\V1UpdateAndPatchRequestBody**](../Model/V1UpdateAndPatchRequestBody.md)|  |
+ **update_mask** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1SettlementAccountResponse**](../Model/V1SettlementAccountResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **settlementServiceUpdateSettlementAccount2**
+> \Justapnet\Justap\Model\V1SettlementAccountResponse settlementServiceUpdateSettlementAccount2($settlement_account_id, $body, $update_mask)
+
+更新结算账户
+
+更新结算账户
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$settlement_account_id = "settlement_account_id_example"; // string | 
+$body = new \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody(); // \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody | 
+$update_mask = "update_mask_example"; // string | 
+
+try {
+    $result = $apiInstance->settlementServiceUpdateSettlementAccount2($settlement_account_id, $body, $update_mask);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->settlementServiceUpdateSettlementAccount2: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **settlement_account_id** | **string**|  |
+ **body** | [**\Justapnet\Justap\Model\V1UpdateAndPatchRequestBody**](../Model/V1UpdateAndPatchRequestBody.md)|  |
+ **update_mask** | **string**|  | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1SettlementAccountResponse**](../Model/V1SettlementAccountResponse.md)
 
 ### Authorization
 

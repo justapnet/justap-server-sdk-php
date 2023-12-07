@@ -16,7 +16,7 @@ Name | Type | Description | Notes
 **id** | **string** |  | [optional] 
 **metadata** | **map[string,string]** |  | [optional] 
 **name** | **string** |  | [optional] 
-**object** | **string** | 对象类型 | [optional] [default to 'Customer']
+**object** | **string** | 对象类型 | [default to 'Customer']
 **phone** | **string** |  | [optional] 
 **withdrawable_balance** | **double** |  | [optional] 
 

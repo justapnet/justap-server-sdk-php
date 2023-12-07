@@ -12,7 +12,7 @@
 /**
     * Justap API
     *
-    * 欢迎阅读 Justap Api 文档  Justap 是为移动端应用和PC端应用打造的下一代聚合支付SAAS服务平台，通过一个 SDK 即可快速的支持各种形式的应用，并且一次接口完成多个不同支付渠道的接入。平台除了支持服务商子商户模式，同时还对商家自有商户（即自己前往微信、支付宝等机构开户）提供了完整的支持。  感谢您的支持，我们将不断探索，为您提供更优质的服务！如需技术支持可前往商户中心提交工单，支持工程师会尽快与您取得联系！  # 文档说明 采用 REST 风格设计。所有接口请求地址都是可预期的以及面向资源的。使用规范的 HTTP 响应代码来表示请求结果的正确或错误信息。使用 HTTP 内置的特性，如 HTTP Authentication 和 HTTP 请求方法让接口易于理解。  ## HTTP 状态码 HTTP 状态码可以用于表明服务的状态。服务器返回的 HTTP 状态码遵循 [RFC 7231](http://tools.ietf.org/html/rfc7231#section-6) 和 [IANA Status Code Registry](http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) 标准。  ## 认证 在调用 API 时，必须提供 API Key 作为每个请求的身份验证。你可以在管理平台内管理你的 API Key。API Key 是商户在系统中的身份标识，请安全存储，确保其不要被泄露。如需获取或更新 API Key ，也可以在商户中心内进行操作。 Api Key 在使用自定义的 HTTP Header 进行传递。  ``` X-Justap-Api-Key ```  API Key 分为 live 和 test 两种模式。分别对应真实交易环境和模拟测试交易环境并且可以实时切换。 测试模式下的 API Key 会模拟交易等请求，但是不会产生任何真实交易行为和费用，便于调试和接入。  **⚠️ 注意**：在使用 live 模式前，需要先前往 `商户中心 -> 应用设置 -> 开发参数` 开启 live 模式。  <SecurityDefinitions />  ## 请求类型 所有的 API 请求只支持 HTTPS 方式调用。  ## 路由参数 路由参数是指出现在 URL 路径中的可变变量。在本文档中，使用 `{}` 包裹的部分。 例如： `{charge_id}`，在实际使用是，需要将 `{charge_id}` 替换为实际值 `charge_8a8sdf888888`  ## MIME Type MIME 类型用于指示服务器返回的数据格式。服务器目前默认采用 `application/json`。  例如: ``` application/json ```  ## 错误 服务器使用 HTTP 状态码 (status code) 来表明一个 API 请求的成功或失败状态。返回 HTTP 2XX 表明 API 请求成功。返回 HTTP 4XX 表明在请求 API 时提供了错误信息，例如参数缺失、参数错误、支付渠道错误等。返回 HTTP 5XX 表明 API 请求时，服务器发生了错误。 在返回错误的状态码时，回同时返回一些错误信息提示出错原因。  具体的错误码我们正在整理当中。  ## 分页 所有的 Justap 资源都可以被 list API 方法支持，例如分页 charges 和 refunds。这些 list API 方法拥有相同的数据结构。Justap 是基于 cursor 的分页机制，使用参数 starting_after 来决定列表从何处开始，使用参数 ending_before 来决定列表从何处结束。  ## 参数说明 请求参数中包含的以下字段释义请参考：  - REQUIRED: 必填参数 - OPTIONAL: 可选参数，可以在请求当前接口时按需传入 - CONDITIONAL: 在某些条件下必传 - RESPONSE-ONLY: 标示该参数仅在接口返回参数中出现，调用 API 时无需传入  # 如何保证幂等性 如果发生请求超时或服务器内部错误，客户端可能会尝试重发请求。您可以在请求中设置 ClientToken 参数避免多次重试带来重复操作的问题。  ## 什么是幂等性 在数学计算或者计算机科学中，幂等性（idempotence）是指相同操作或资源在一次或多次请求中具有同样效果的作用。幂等性是在分布式系统设计中具有十分重要的地位。  ## 保证幂等性 通常情况下，客户端只需要在500（InternalErrorInternalError）或503（ServiceUnavailable）错误，或者无法获取响应结果时重试。充实时您可以从客户端生成一个参数值不超过64个的ASCII字符，并将值赋予 ClientToken，保证重试请求的幂等性。  ## ClientToken 详解 ClientToken参数的详细信息如下所示。  - ClientToken 是一个由客户端生成的唯一的、大小写敏感、不超过64个ASCII字符的字符串。例如，`ClientToken=123e4567-e89b-12d3-a456-426655440000`。 - 如果您提供了一个已经使用过的 ClientToken，但其他请求参数**有变化**，则服务器会返回 IdempotentParameterMismatch 的错误代码。 - 如果您提供了一个已经使用过的 ClientToken，且其他请求参数**不变**，则服务器会尝试返回 ClientToken 对应的记录。  ## API列表 以下为部分包含了 ClientToken 参数的API，供您参考。具体哪些API支持 ClientToken 参数请以各 API 文档为准，此处不一一列举。  - [申请退款接口](https://www.justap.cn/docs#operation/TradeService_Refunds)  # 签名 为保证安全，JUSTAP 所有接口均需要对请求进行签名。服务器收到请求后进行签名的验证。如果签名验证不通过，将会拒绝处理请求，并返回 401 Unauthorized。  签名算法：  ``` base64Encode(hamc-sha256(md5(请求 body + 请求时间戳 + 一次性随机字符串) + 一次性随机字符串)) ```  ## 准备 首先需要在 Justap 创建一个应用，商户需要生成一对 RSA 密钥对，并将公钥配置到 `商户中心 -> 开发配置`。 RSA 可以使用支付宝提供的 [密钥生成工具](https://opendocs.alipay.com/common/02kipl) 来生成。  商户在使用时，可以按照下述步骤生成请求的签名。   ## 算法描述: - 在请求发送前，取完整的**请求 body** - 生成一个随机的32位字符串，得到 **一次性随机字符串** - 获取当前时间的时间戳，得到 **请求时间戳** - 在请求字符串后面拼接上 **请求时间戳** 和 **一次性随机字符串**，得到 **待 Hash 字符串** - 对 **待 Hash 字符串** 计算 md5，得到 **待签名字符串** - **待签名字符串** 后面拼接上 一次性随机字符串，得到完整的 **待签名字符串** - 使用商户 RSA 私钥，对 **待签名字符串** 计算签名，并对 结果 进行 base64 编码，即可得到 **签名**  ## 设置HTTP头 Justap 要求请求通过 自定义头部 来传递签名。具体定义如下:  ``` X-Justap-Signature: 签名 X-Justap-Request-Time: 请求时间戳 X-Justap-Nonce: 一次性随机字符串 X-Justap-Body-Hash: 待签名字符串 ```  具体的签名算法实现，可参考我们提供的各语言 SDK。  # WebHooks
+    * 欢迎阅读 Justap Api 文档  Justap 是为移动端应用和PC端应用打造的下一代聚合支付SAAS服务平台，通过一个 SDK 即可快速的支持各种形式的应用，并且一次接口完成多个不同支付渠道的接入。平台除了支持服务商子商户模式，同时还对商家自有商户（即自己前往微信、支付宝等机构开户）提供了完整的支持。  感谢您的支持，我们将不断探索，为您提供更优质的服务！如需技术支持可前往商户中心提交工单，支持工程师会尽快与您取得联系！  # 文档说明 采用 REST 风格设计。所有接口请求地址都是可预期的以及面向资源的。使用规范的 HTTP 响应代码来表示请求结果的正确或错误信息。使用 HTTP 内置的特性，如 HTTP Authentication 和 HTTP 请求方法让接口易于理解。  ## HTTP 状态码 HTTP 状态码可以用于表明服务的状态。服务器返回的 HTTP 状态码遵循 [RFC 7231](http://tools.ietf.org/html/rfc7231#section-6) 和 [IANA Status Code Registry](http://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) 标准。  ## 认证 在调用 API 时，必须提供 API Key 作为每个请求的身份验证。你可以在管理平台内管理你的 API Key。API Key 是商户在系统中的身份标识，请安全存储，确保其不要被泄露。如需获取或更新 API Key ，也可以在商户中心内进行操作。 Api Key 在使用自定义的 HTTP Header 进行传递。  ``` X-Justap-Api-Key ```  API Key 分为 live 和 test 两种模式。分别对应真实交易环境和模拟测试交易环境并且可以实时切换。 测试模式下的 API Key 会模拟交易等请求，但是不会产生任何真实交易行为和费用，便于调试和接入。  **⚠️ 注意**：在使用 live 模式前，需要先前往 `商户中心 -> 应用设置 -> 开发参数` 开启 live 模式。  <SecurityDefinitions />  ## 请求类型 所有的 API 请求只支持 HTTPS 方式调用。  ## 路由参数 路由参数是指出现在 URL 路径中的可变变量。在本文档中，使用 `{}` 包裹的部分。 例如： `{charge_id}`，在实际使用是，需要将 `{charge_id}` 替换为实际值 `charge_8a8sdf888888`  ## MIME Type MIME 类型用于指示服务器返回的数据格式。服务器目前默认采用 `application/json`。  例如: ``` application/json ```  ## 错误 服务器使用 HTTP 状态码 (status code) 来表明一个 API 请求的成功或失败状态。返回 HTTP 2XX 表明 API 请求成功。返回 HTTP 4XX 表明在请求 API 时提供了错误信息，例如参数缺失、参数错误、支付渠道错误等。返回 HTTP 5XX 表明 API 请求时，服务器发生了错误。 在返回错误的状态码时，回同时返回一些错误信息提示出错原因。  具体的错误码我们正在整理当中。  ## 分页 所有的 Justap 资源都可以被 list API 方法支持，例如分页 charges 和 refunds。这些 list API 方法拥有相同的数据结构。Justap 是基于 cursor 的分页机制，使用参数 starting_after 来决定列表从何处开始，使用参数 ending_before 来决定列表从何处结束。  ## 参数说明 请求参数中包含的以下字段释义请参考：  - REQUIRED: 必填参数 - OPTIONAL: 可选参数，可以在请求当前接口时按需传入 - CONDITIONAL: 在某些条件下必传 - RESPONSE-ONLY: 标示该参数仅在接口返回参数中出现，调用 API 时无需传入  # 如何保证幂等性 如果发生请求超时或服务器内部错误，客户端可能会尝试重发请求。您可以在请求中设置 ClientToken 参数避免多次重试带来重复操作的问题。  ## 什么是幂等性 在数学计算或者计算机科学中，幂等性（idempotence）是指相同操作或资源在一次或多次请求中具有同样效果的作用。幂等性是在分布式系统设计中具有十分重要的地位。  ## 保证幂等性 通常情况下，客户端只需要在500（InternalErrorInternalError）或503（ServiceUnavailable）错误，或者无法获取响应结果时重试。充实时您可以从客户端生成一个参数值不超过64个的ASCII字符，并将值赋予 ClientToken，保证重试请求的幂等性。  ## ClientToken 详解 ClientToken参数的详细信息如下所示。  - ClientToken 是一个由客户端生成的唯一的、大小写敏感、不超过64个ASCII字符的字符串。例如，`ClientToken=123e4567-e89b-12d3-a456-426655440000`。 - 如果您提供了一个已经使用过的 ClientToken，但其他请求参数**有变化**，则服务器会返回 IdempotentParameterMismatch 的错误代码。 - 如果您提供了一个已经使用过的 ClientToken，且其他请求参数**不变**，则服务器会尝试返回 ClientToken 对应的记录。  ## API列表 以下为部分包含了 ClientToken 参数的API，供您参考。具体哪些API支持 ClientToken 参数请以各 API 文档为准，此处不一一列举。  - [申请退款接口](https://www.justap.cn/docs#operation/TradeService_Refunds)  # 签名 为保证安全，JUSTAP 所有接口均需要对请求进行签名。服务器收到请求后进行签名的验证。如果签名验证不通过，将会拒绝处理请求，并返回 401 Unauthorized。  签名算法：  ``` base64Encode(hamc-sha256(md5(请求 body + 请求时间戳 + 一次性随机字符串) + 一次性随机字符串)) ```  ## 准备 首先需要在 Justap 创建一个应用，商户需要生成一对 RSA 密钥对，并将公钥配置到 `商户中心 -> 开发配置`。 RSA 可以使用支付宝提供的 [密钥生成工具](https://opendocs.alipay.com/common/02kipl) 来生成。  商户在使用时，可以按照下述步骤生成请求的签名。   ## 算法描述: - 在请求发送前，取完整的**请求 body** - 生成一个随机的32位字符串，得到 **一次性随机字符串** - 获取当前时间的时间戳，得到 **请求时间戳** - 在请求字符串后面拼接上 **请求时间戳** 和 **一次性随机字符串**，得到 **待 Hash 字符串** - 对 **待 Hash 字符串** 转换为 utf8 编码并计算 md5，得到 **待签名字符串** - **待签名字符串** 后面拼接上 一次性随机字符串，得到完整的 **待签名字符串** - 使用商户 RSA 私钥，对 **待签名字符串** 计算签名，并对 结果 进行 base64 编码，即可得到 **签名**  ## 设置HTTP头 Justap 要求请求通过 自定义头部 来传递签名。具体定义如下:  ``` X-Justap-Signature: 签名 X-Justap-Request-Time: 请求时间戳 X-Justap-Nonce: 一次性随机字符串 X-Justap-Body-Hash: 待签名字符串 ```  具体的签名算法实现，可参考我们提供的各语言 SDK。  # WebHooks
     *
 * OpenAPI spec version: 1.0
 * Contact: support@justap.net
@@ -88,11 +88,2595 @@ class DefaultApi
     }
 
     /**
+     * Operation businessUserServiceCreateUser
+     *
+     * 创建 Business User 对象
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateUserRequest $body body (required)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1UserResponse
+     */
+    public function businessUserServiceCreateUser($body)
+    {
+        list($response) = $this->businessUserServiceCreateUserWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation businessUserServiceCreateUserWithHttpInfo
+     *
+     * 创建 Business User 对象
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateUserRequest $body (required)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1UserResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function businessUserServiceCreateUserWithHttpInfo($body)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserResponse';
+        $request = $this->businessUserServiceCreateUserRequest($body);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1UserResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation businessUserServiceCreateUserAsync
+     *
+     * 创建 Business User 对象
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateUserRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceCreateUserAsync($body)
+    {
+        return $this->businessUserServiceCreateUserAsyncWithHttpInfo($body)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation businessUserServiceCreateUserAsyncWithHttpInfo
+     *
+     * 创建 Business User 对象
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateUserRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceCreateUserAsyncWithHttpInfo($body)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserResponse';
+        $request = $this->businessUserServiceCreateUserRequest($body);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'businessUserServiceCreateUser'
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateUserRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function businessUserServiceCreateUserRequest($body)
+    {
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling businessUserServiceCreateUser'
+            );
+        }
+
+        $resourcePath = '/v1/business_users';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation businessUserServiceDeleteUser
+     *
+     * 删除 Business User 对象
+     *
+     * @param  string $id id (required)
+     * @param  string $app_id app_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1DeleteUserResponse
+     */
+    public function businessUserServiceDeleteUser($id, $app_id = null)
+    {
+        list($response) = $this->businessUserServiceDeleteUserWithHttpInfo($id, $app_id);
+        return $response;
+    }
+
+    /**
+     * Operation businessUserServiceDeleteUserWithHttpInfo
+     *
+     * 删除 Business User 对象
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1DeleteUserResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function businessUserServiceDeleteUserWithHttpInfo($id, $app_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1DeleteUserResponse';
+        $request = $this->businessUserServiceDeleteUserRequest($id, $app_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1DeleteUserResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation businessUserServiceDeleteUserAsync
+     *
+     * 删除 Business User 对象
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceDeleteUserAsync($id, $app_id = null)
+    {
+        return $this->businessUserServiceDeleteUserAsyncWithHttpInfo($id, $app_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation businessUserServiceDeleteUserAsyncWithHttpInfo
+     *
+     * 删除 Business User 对象
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceDeleteUserAsyncWithHttpInfo($id, $app_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1DeleteUserResponse';
+        $request = $this->businessUserServiceDeleteUserRequest($id, $app_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'businessUserServiceDeleteUser'
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function businessUserServiceDeleteUserRequest($id, $app_id = null)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling businessUserServiceDeleteUser'
+            );
+        }
+
+        $resourcePath = '/v1/business_users/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'DELETE',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation businessUserServiceListAllUsers
+     *
+     * 查询 Business User 对象列表
+     *
+     * @param  string $app_id app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1UserListResponse
+     */
+    public function businessUserServiceListAllUsers($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null)
+    {
+        list($response) = $this->businessUserServiceListAllUsersWithHttpInfo($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled);
+        return $response;
+    }
+
+    /**
+     * Operation businessUserServiceListAllUsersWithHttpInfo
+     *
+     * 查询 Business User 对象列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1UserListResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function businessUserServiceListAllUsersWithHttpInfo($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserListResponse';
+        $request = $this->businessUserServiceListAllUsersRequest($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1UserListResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation businessUserServiceListAllUsersAsync
+     *
+     * 查询 Business User 对象列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceListAllUsersAsync($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null)
+    {
+        return $this->businessUserServiceListAllUsersAsyncWithHttpInfo($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation businessUserServiceListAllUsersAsyncWithHttpInfo
+     *
+     * 查询 Business User 对象列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceListAllUsersAsyncWithHttpInfo($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserListResponse';
+        $request = $this->businessUserServiceListAllUsersRequest($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'businessUserServiceListAllUsers'
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function businessUserServiceListAllUsersRequest($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null)
+    {
+
+        $resourcePath = '/v1/business_users';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = ObjectSerializer::toQueryValue($limit);
+        }
+        // query params
+        if ($starting_after !== null) {
+            $queryParams['starting_after'] = ObjectSerializer::toQueryValue($starting_after);
+        }
+        // query params
+        if ($ending_before !== null) {
+            $queryParams['ending_before'] = ObjectSerializer::toQueryValue($ending_before);
+        }
+        // query params
+        if ($created_lt !== null) {
+            $queryParams['created.lt'] = ObjectSerializer::toQueryValue($created_lt);
+        }
+        // query params
+        if ($created_lte !== null) {
+            $queryParams['created.lte'] = ObjectSerializer::toQueryValue($created_lte);
+        }
+        // query params
+        if ($created_gt !== null) {
+            $queryParams['created.gt'] = ObjectSerializer::toQueryValue($created_gt);
+        }
+        // query params
+        if ($created_gte !== null) {
+            $queryParams['created.gte'] = ObjectSerializer::toQueryValue($created_gte);
+        }
+        // query params
+        if ($disabled !== null) {
+            $queryParams['disabled'] = ObjectSerializer::toQueryValue($disabled);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation businessUserServiceRetrieveUser
+     *
+     * 查询 Business User 对象
+     *
+     * @param  string $id id (required)
+     * @param  string $app_id app_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1UserResponse
+     */
+    public function businessUserServiceRetrieveUser($id, $app_id = null)
+    {
+        list($response) = $this->businessUserServiceRetrieveUserWithHttpInfo($id, $app_id);
+        return $response;
+    }
+
+    /**
+     * Operation businessUserServiceRetrieveUserWithHttpInfo
+     *
+     * 查询 Business User 对象
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1UserResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function businessUserServiceRetrieveUserWithHttpInfo($id, $app_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserResponse';
+        $request = $this->businessUserServiceRetrieveUserRequest($id, $app_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1UserResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation businessUserServiceRetrieveUserAsync
+     *
+     * 查询 Business User 对象
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceRetrieveUserAsync($id, $app_id = null)
+    {
+        return $this->businessUserServiceRetrieveUserAsyncWithHttpInfo($id, $app_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation businessUserServiceRetrieveUserAsyncWithHttpInfo
+     *
+     * 查询 Business User 对象
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceRetrieveUserAsyncWithHttpInfo($id, $app_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserResponse';
+        $request = $this->businessUserServiceRetrieveUserRequest($id, $app_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'businessUserServiceRetrieveUser'
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function businessUserServiceRetrieveUserRequest($id, $app_id = null)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling businessUserServiceRetrieveUser'
+            );
+        }
+
+        $resourcePath = '/v1/business_users/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation businessUserServiceSearchUsers
+     *
+     * 查询 Business User 对象列表
+     *
+     * @param  string $app_id app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  int $created_lt 大于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $email [OPTIONAL] BusinessUser 对象的邮箱地址。支持模糊匹配 (optional)
+     * @param  string $name [OPTIONAL] BusinessUser 对象的用户名。支持模糊匹配 (optional)
+     * @param  string $phone [OPTIONAL] BusinessUser 对象的手机号码 (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1UserListResponse
+     */
+    public function businessUserServiceSearchUsers($app_id = null, $limit = '10', $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $email = null, $name = null, $phone = null)
+    {
+        list($response) = $this->businessUserServiceSearchUsersWithHttpInfo($app_id, $limit, $created_lt, $created_lte, $created_gt, $created_gte, $email, $name, $phone);
+        return $response;
+    }
+
+    /**
+     * Operation businessUserServiceSearchUsersWithHttpInfo
+     *
+     * 查询 Business User 对象列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  int $created_lt 大于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $email [OPTIONAL] BusinessUser 对象的邮箱地址。支持模糊匹配 (optional)
+     * @param  string $name [OPTIONAL] BusinessUser 对象的用户名。支持模糊匹配 (optional)
+     * @param  string $phone [OPTIONAL] BusinessUser 对象的手机号码 (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1UserListResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function businessUserServiceSearchUsersWithHttpInfo($app_id = null, $limit = '10', $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $email = null, $name = null, $phone = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserListResponse';
+        $request = $this->businessUserServiceSearchUsersRequest($app_id, $limit, $created_lt, $created_lte, $created_gt, $created_gte, $email, $name, $phone);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1UserListResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation businessUserServiceSearchUsersAsync
+     *
+     * 查询 Business User 对象列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  int $created_lt 大于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $email [OPTIONAL] BusinessUser 对象的邮箱地址。支持模糊匹配 (optional)
+     * @param  string $name [OPTIONAL] BusinessUser 对象的用户名。支持模糊匹配 (optional)
+     * @param  string $phone [OPTIONAL] BusinessUser 对象的手机号码 (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceSearchUsersAsync($app_id = null, $limit = '10', $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $email = null, $name = null, $phone = null)
+    {
+        return $this->businessUserServiceSearchUsersAsyncWithHttpInfo($app_id, $limit, $created_lt, $created_lte, $created_gt, $created_gte, $email, $name, $phone)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation businessUserServiceSearchUsersAsyncWithHttpInfo
+     *
+     * 查询 Business User 对象列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  int $created_lt 大于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $email [OPTIONAL] BusinessUser 对象的邮箱地址。支持模糊匹配 (optional)
+     * @param  string $name [OPTIONAL] BusinessUser 对象的用户名。支持模糊匹配 (optional)
+     * @param  string $phone [OPTIONAL] BusinessUser 对象的手机号码 (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceSearchUsersAsyncWithHttpInfo($app_id = null, $limit = '10', $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $email = null, $name = null, $phone = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserListResponse';
+        $request = $this->businessUserServiceSearchUsersRequest($app_id, $limit, $created_lt, $created_lte, $created_gt, $created_gte, $email, $name, $phone);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'businessUserServiceSearchUsers'
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  int $created_lt 大于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 BusinessUser 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $email [OPTIONAL] BusinessUser 对象的邮箱地址。支持模糊匹配 (optional)
+     * @param  string $name [OPTIONAL] BusinessUser 对象的用户名。支持模糊匹配 (optional)
+     * @param  string $phone [OPTIONAL] BusinessUser 对象的手机号码 (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function businessUserServiceSearchUsersRequest($app_id = null, $limit = '10', $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $email = null, $name = null, $phone = null)
+    {
+
+        $resourcePath = '/v1/business_users/search';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = ObjectSerializer::toQueryValue($limit);
+        }
+        // query params
+        if ($created_lt !== null) {
+            $queryParams['created.lt'] = ObjectSerializer::toQueryValue($created_lt);
+        }
+        // query params
+        if ($created_lte !== null) {
+            $queryParams['created.lte'] = ObjectSerializer::toQueryValue($created_lte);
+        }
+        // query params
+        if ($created_gt !== null) {
+            $queryParams['created.gt'] = ObjectSerializer::toQueryValue($created_gt);
+        }
+        // query params
+        if ($created_gte !== null) {
+            $queryParams['created.gte'] = ObjectSerializer::toQueryValue($created_gte);
+        }
+        // query params
+        if ($email !== null) {
+            $queryParams['email'] = ObjectSerializer::toQueryValue($email);
+        }
+        // query params
+        if ($name !== null) {
+            $queryParams['name'] = ObjectSerializer::toQueryValue($name);
+        }
+        // query params
+        if ($phone !== null) {
+            $queryParams['phone'] = ObjectSerializer::toQueryValue($phone);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation businessUserServiceUpdateUser
+     *
+     * 更新 Business User 对象
+     *
+     * @param  string $user_id user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body body (required)
+     * @param  string $update_mask update_mask (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1UserResponse
+     */
+    public function businessUserServiceUpdateUser($user_id, $body, $update_mask = null)
+    {
+        list($response) = $this->businessUserServiceUpdateUserWithHttpInfo($user_id, $body, $update_mask);
+        return $response;
+    }
+
+    /**
+     * Operation businessUserServiceUpdateUserWithHttpInfo
+     *
+     * 更新 Business User 对象
+     *
+     * @param  string $user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1UserResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function businessUserServiceUpdateUserWithHttpInfo($user_id, $body, $update_mask = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserResponse';
+        $request = $this->businessUserServiceUpdateUserRequest($user_id, $body, $update_mask);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1UserResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation businessUserServiceUpdateUserAsync
+     *
+     * 更新 Business User 对象
+     *
+     * @param  string $user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceUpdateUserAsync($user_id, $body, $update_mask = null)
+    {
+        return $this->businessUserServiceUpdateUserAsyncWithHttpInfo($user_id, $body, $update_mask)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation businessUserServiceUpdateUserAsyncWithHttpInfo
+     *
+     * 更新 Business User 对象
+     *
+     * @param  string $user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceUpdateUserAsyncWithHttpInfo($user_id, $body, $update_mask = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserResponse';
+        $request = $this->businessUserServiceUpdateUserRequest($user_id, $body, $update_mask);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'businessUserServiceUpdateUser'
+     *
+     * @param  string $user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function businessUserServiceUpdateUserRequest($user_id, $body, $update_mask = null)
+    {
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null || (is_array($user_id) && count($user_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $user_id when calling businessUserServiceUpdateUser'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling businessUserServiceUpdateUser'
+            );
+        }
+
+        $resourcePath = '/v1/business_users/{user.id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($update_mask !== null) {
+            $queryParams['updateMask'] = ObjectSerializer::toQueryValue($update_mask);
+        }
+
+        // path params
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'user.id' . '}',
+                ObjectSerializer::toPathValue($user_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'PUT',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation businessUserServiceUpdateUser2
+     *
+     * 更新 Business User 对象
+     *
+     * @param  string $user_id user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body body (required)
+     * @param  string $update_mask update_mask (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1UserResponse
+     */
+    public function businessUserServiceUpdateUser2($user_id, $body, $update_mask = null)
+    {
+        list($response) = $this->businessUserServiceUpdateUser2WithHttpInfo($user_id, $body, $update_mask);
+        return $response;
+    }
+
+    /**
+     * Operation businessUserServiceUpdateUser2WithHttpInfo
+     *
+     * 更新 Business User 对象
+     *
+     * @param  string $user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1UserResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function businessUserServiceUpdateUser2WithHttpInfo($user_id, $body, $update_mask = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserResponse';
+        $request = $this->businessUserServiceUpdateUser2Request($user_id, $body, $update_mask);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1UserResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation businessUserServiceUpdateUser2Async
+     *
+     * 更新 Business User 对象
+     *
+     * @param  string $user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceUpdateUser2Async($user_id, $body, $update_mask = null)
+    {
+        return $this->businessUserServiceUpdateUser2AsyncWithHttpInfo($user_id, $body, $update_mask)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation businessUserServiceUpdateUser2AsyncWithHttpInfo
+     *
+     * 更新 Business User 对象
+     *
+     * @param  string $user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function businessUserServiceUpdateUser2AsyncWithHttpInfo($user_id, $body, $update_mask = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1UserResponse';
+        $request = $this->businessUserServiceUpdateUser2Request($user_id, $body, $update_mask);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'businessUserServiceUpdateUser2'
+     *
+     * @param  string $user_id (required)
+     * @param  \Justapnet\Justap\Model\V1BusinessUser $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function businessUserServiceUpdateUser2Request($user_id, $body, $update_mask = null)
+    {
+        // verify the required parameter 'user_id' is set
+        if ($user_id === null || (is_array($user_id) && count($user_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $user_id when calling businessUserServiceUpdateUser2'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling businessUserServiceUpdateUser2'
+            );
+        }
+
+        $resourcePath = '/v1/business_users/{user.id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($update_mask !== null) {
+            $queryParams['updateMask'] = ObjectSerializer::toQueryValue($update_mask);
+        }
+
+        // path params
+        if ($user_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'user.id' . '}',
+                ObjectSerializer::toPathValue($user_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'PATCH',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
      * Operation chargeServiceCharges
      *
      * 创建 Charge 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body body (required)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -109,7 +2693,7 @@ class DefaultApi
      *
      * 创建 Charge 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body (required)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -232,7 +2816,7 @@ class DefaultApi
      *
      * 创建 Charge 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -252,7 +2836,7 @@ class DefaultApi
      *
      * 创建 Charge 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -302,7 +2886,7 @@ class DefaultApi
     /**
      * Create request for operation 'chargeServiceCharges'
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -430,7 +3014,7 @@ class DefaultApi
      *
      * 创建 Charge 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body body (required)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -447,7 +3031,7 @@ class DefaultApi
      *
      * 创建 Charge 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body (required)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -570,7 +3154,7 @@ class DefaultApi
      *
      * 创建 Charge 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -590,7 +3174,7 @@ class DefaultApi
      *
      * 创建 Charge 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -640,7 +3224,7 @@ class DefaultApi
     /**
      * Create request for operation 'chargeServiceCharges2'
      *
-     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body 你可以创建一个 charge 对象向用户收款。charge 是一个支付凭据对象，所有和支付相关的要素信息都存储在这个对象中，你的服务端可以通过发起支付请求来创建一个新的 charge 对象，也可以随时查询一个或者多个 charge 对象的状态。每个 charge 对象都拥有一个标识 id，该 id 在系统内唯一。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateChargeRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -1481,7 +4065,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -1512,7 +4096,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -1649,7 +4233,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -1683,7 +4267,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -1747,7 +4331,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -1940,7 +4524,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -1971,7 +4555,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -2108,7 +4692,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -2142,7 +4726,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -2206,7 +4790,7 @@ class DefaultApi
      * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
      * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
-     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付 (optional, default to CHANNEL_INVALID_UNSPECIFIED)
+     * @param  string $channel [OPTIONAL] 渠道名称   - BALANCE: 余额支付  - AlipayQR: 支付宝扫码支付  - AlipayScan: 支付宝条码支付  - AlipayApp: 支付宝 App 支付  - AlipayWap: 支付宝手机网站支付  - AlipayPage: 支付宝电脑网站支付  - AlipayFace: 支付宝刷脸支付  - AlipayLite: 支付宝小程序支付  - AlipayJSAPI: 支付宝 JSAPI 支付  - WechatpayApp: 微信 App 支付  - WechatpayJSAPI: 微信 JSAPI 支付  - WechatpayH5: 微信 H5 支付  - WechatpayNative: 微信 Native 支付  - WechatpayLite: 微信小程序支付  - WechatpayFace: 刷脸支付  - WechatpayScan: 微信付款码支付  - UnionPayQr: 银联二维码支付（云闪付扫码） (optional, default to CHANNEL_INVALID_UNSPECIFIED)
      * @param  bool $paid [OPTIONAL] 是否已付款 (optional, default to false)
      * @param  bool $refunded [OPTIONAL] 是否存在退款信息，无论退款是否成功。 (optional, default to false)
      * @param  bool $reversed [OPTIONAL] 是否已撤销 (optional, default to false)
@@ -2391,15 +4975,14 @@ class DefaultApi
      * 撤销 Charge 对象
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Justapnet\Justap\Model\V1ChargeResponse
      */
-    public function chargeServiceReverseCharge($charge_id, $app_id = null)
+    public function chargeServiceReverseCharge($charge_id)
     {
-        list($response) = $this->chargeServiceReverseChargeWithHttpInfo($charge_id, $app_id);
+        list($response) = $this->chargeServiceReverseChargeWithHttpInfo($charge_id);
         return $response;
     }
 
@@ -2409,16 +4992,15 @@ class DefaultApi
      * 撤销 Charge 对象
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Justapnet\Justap\Model\V1ChargeResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function chargeServiceReverseChargeWithHttpInfo($charge_id, $app_id = null)
+    public function chargeServiceReverseChargeWithHttpInfo($charge_id)
     {
         $returnType = '\Justapnet\Justap\Model\V1ChargeResponse';
-        $request = $this->chargeServiceReverseChargeRequest($charge_id, $app_id);
+        $request = $this->chargeServiceReverseChargeRequest($charge_id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2533,14 +5115,13 @@ class DefaultApi
      * 撤销 Charge 对象
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function chargeServiceReverseChargeAsync($charge_id, $app_id = null)
+    public function chargeServiceReverseChargeAsync($charge_id)
     {
-        return $this->chargeServiceReverseChargeAsyncWithHttpInfo($charge_id, $app_id)
+        return $this->chargeServiceReverseChargeAsyncWithHttpInfo($charge_id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2554,15 +5135,14 @@ class DefaultApi
      * 撤销 Charge 对象
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function chargeServiceReverseChargeAsyncWithHttpInfo($charge_id, $app_id = null)
+    public function chargeServiceReverseChargeAsyncWithHttpInfo($charge_id)
     {
         $returnType = '\Justapnet\Justap\Model\V1ChargeResponse';
-        $request = $this->chargeServiceReverseChargeRequest($charge_id, $app_id);
+        $request = $this->chargeServiceReverseChargeRequest($charge_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2605,12 +5185,11 @@ class DefaultApi
      * Create request for operation 'chargeServiceReverseCharge'
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function chargeServiceReverseChargeRequest($charge_id, $app_id = null)
+    protected function chargeServiceReverseChargeRequest($charge_id)
     {
         // verify the required parameter 'charge_id' is set
         if ($charge_id === null || (is_array($charge_id) && count($charge_id) === 0)) {
@@ -2626,10 +5205,6 @@ class DefaultApi
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($app_id !== null) {
-            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
-        }
 
         // path params
         if ($charge_id !== null) {
@@ -2743,15 +5318,14 @@ class DefaultApi
      * 撤销 Charge 对象
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return \Justapnet\Justap\Model\V1ChargeResponse
      */
-    public function chargeServiceReverseCharge2($charge_id, $app_id = null)
+    public function chargeServiceReverseCharge2($charge_id)
     {
-        list($response) = $this->chargeServiceReverseCharge2WithHttpInfo($charge_id, $app_id);
+        list($response) = $this->chargeServiceReverseCharge2WithHttpInfo($charge_id);
         return $response;
     }
 
@@ -2761,16 +5335,15 @@ class DefaultApi
      * 撤销 Charge 对象
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
      * @return array of \Justapnet\Justap\Model\V1ChargeResponse, HTTP status code, HTTP response headers (array of strings)
      */
-    public function chargeServiceReverseCharge2WithHttpInfo($charge_id, $app_id = null)
+    public function chargeServiceReverseCharge2WithHttpInfo($charge_id)
     {
         $returnType = '\Justapnet\Justap\Model\V1ChargeResponse';
-        $request = $this->chargeServiceReverseCharge2Request($charge_id, $app_id);
+        $request = $this->chargeServiceReverseCharge2Request($charge_id);
 
         try {
             $options = $this->createHttpClientOption();
@@ -2885,14 +5458,13 @@ class DefaultApi
      * 撤销 Charge 对象
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function chargeServiceReverseCharge2Async($charge_id, $app_id = null)
+    public function chargeServiceReverseCharge2Async($charge_id)
     {
-        return $this->chargeServiceReverseCharge2AsyncWithHttpInfo($charge_id, $app_id)
+        return $this->chargeServiceReverseCharge2AsyncWithHttpInfo($charge_id)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -2906,15 +5478,14 @@ class DefaultApi
      * 撤销 Charge 对象
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function chargeServiceReverseCharge2AsyncWithHttpInfo($charge_id, $app_id = null)
+    public function chargeServiceReverseCharge2AsyncWithHttpInfo($charge_id)
     {
         $returnType = '\Justapnet\Justap\Model\V1ChargeResponse';
-        $request = $this->chargeServiceReverseCharge2Request($charge_id, $app_id);
+        $request = $this->chargeServiceReverseCharge2Request($charge_id);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -2957,12 +5528,11 @@ class DefaultApi
      * Create request for operation 'chargeServiceReverseCharge2'
      *
      * @param  string $charge_id Charge 对象 id (required)
-     * @param  string $app_id [REQUIRED] 应用 id (optional)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    protected function chargeServiceReverseCharge2Request($charge_id, $app_id = null)
+    protected function chargeServiceReverseCharge2Request($charge_id)
     {
         // verify the required parameter 'charge_id' is set
         if ($charge_id === null || (is_array($charge_id) && count($charge_id) === 0)) {
@@ -2978,10 +5548,6 @@ class DefaultApi
         $httpBody = '';
         $multipart = false;
 
-        // query params
-        if ($app_id !== null) {
-            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
-        }
 
         // path params
         if ($charge_id !== null) {
@@ -4574,7 +7140,7 @@ class DefaultApi
      *
      * 创建 Refund 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body body (required)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -4591,7 +7157,7 @@ class DefaultApi
      *
      * 创建 Refund 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body (required)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -4714,7 +7280,7 @@ class DefaultApi
      *
      * 创建 Refund 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -4734,7 +7300,7 @@ class DefaultApi
      *
      * 创建 Refund 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -4784,7 +7350,7 @@ class DefaultApi
     /**
      * Create request for operation 'refundServiceRefunds'
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -4912,7 +7478,7 @@ class DefaultApi
      *
      * 创建 Refund 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body body (required)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -4929,7 +7495,7 @@ class DefaultApi
      *
      * 创建 Refund 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body (required)
      *
      * @throws \Justapnet\Justap\ApiException on non-2xx response
      * @throws \InvalidArgumentException
@@ -5052,7 +7618,7 @@ class DefaultApi
      *
      * 创建 Refund 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -5072,7 +7638,7 @@ class DefaultApi
      *
      * 创建 Refund 对象
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
@@ -5122,7 +7688,7 @@ class DefaultApi
     /**
      * Create request for operation 'refundServiceRefunds2'
      *
-     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body 通过发起一次退款请求创建一个新的 refund 对象，只能对已经发生交易并且没有全额退款的 charge 对象发起退款。当进行全额退款之前，可以进行多次退款，直至全额退款。当一次退款成功后，会发送 Webhooks 通知。 (required)
+     * @param  \Justapnet\Justap\Model\V1CreateRefundRequest $body (required)
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
@@ -5239,6 +7805,3901 @@ class DefaultApi
 
         return new Request(
             'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation royaltyServiceCreateRoyalty
+     *
+     * 创建 Royalty 对象
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateRoyaltyRequest $body body (required)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1RoyaltyResponse
+     */
+    public function royaltyServiceCreateRoyalty($body)
+    {
+        list($response) = $this->royaltyServiceCreateRoyaltyWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation royaltyServiceCreateRoyaltyWithHttpInfo
+     *
+     * 创建 Royalty 对象
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateRoyaltyRequest $body (required)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1RoyaltyResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function royaltyServiceCreateRoyaltyWithHttpInfo($body)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1RoyaltyResponse';
+        $request = $this->royaltyServiceCreateRoyaltyRequest($body);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1RoyaltyResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation royaltyServiceCreateRoyaltyAsync
+     *
+     * 创建 Royalty 对象
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateRoyaltyRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function royaltyServiceCreateRoyaltyAsync($body)
+    {
+        return $this->royaltyServiceCreateRoyaltyAsyncWithHttpInfo($body)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation royaltyServiceCreateRoyaltyAsyncWithHttpInfo
+     *
+     * 创建 Royalty 对象
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateRoyaltyRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function royaltyServiceCreateRoyaltyAsyncWithHttpInfo($body)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1RoyaltyResponse';
+        $request = $this->royaltyServiceCreateRoyaltyRequest($body);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'royaltyServiceCreateRoyalty'
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateRoyaltyRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function royaltyServiceCreateRoyaltyRequest($body)
+    {
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling royaltyServiceCreateRoyalty'
+            );
+        }
+
+        $resourcePath = '/v1/royalties';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation royaltyServiceListAllRoyalties
+     *
+     * 查询 Royalty 对象列表
+     *
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  string $merchant_trade_id [OPTIONAL] 客户系统订单号 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $app_id app_id (optional)
+     * @param  string $settle_account_id settle_account_id (optional)
+     * @param  string $royalty_settlement_id royalty_settlement_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1ListAllRoyaltiesResponse
+     */
+    public function royaltyServiceListAllRoyalties($limit = '10', $starting_after = null, $ending_before = null, $merchant_trade_id = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $app_id = null, $settle_account_id = null, $royalty_settlement_id = null)
+    {
+        list($response) = $this->royaltyServiceListAllRoyaltiesWithHttpInfo($limit, $starting_after, $ending_before, $merchant_trade_id, $created_lt, $created_lte, $created_gt, $created_gte, $app_id, $settle_account_id, $royalty_settlement_id);
+        return $response;
+    }
+
+    /**
+     * Operation royaltyServiceListAllRoyaltiesWithHttpInfo
+     *
+     * 查询 Royalty 对象列表
+     *
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  string $merchant_trade_id [OPTIONAL] 客户系统订单号 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $app_id (optional)
+     * @param  string $settle_account_id (optional)
+     * @param  string $royalty_settlement_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1ListAllRoyaltiesResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function royaltyServiceListAllRoyaltiesWithHttpInfo($limit = '10', $starting_after = null, $ending_before = null, $merchant_trade_id = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $app_id = null, $settle_account_id = null, $royalty_settlement_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1ListAllRoyaltiesResponse';
+        $request = $this->royaltyServiceListAllRoyaltiesRequest($limit, $starting_after, $ending_before, $merchant_trade_id, $created_lt, $created_lte, $created_gt, $created_gte, $app_id, $settle_account_id, $royalty_settlement_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1ListAllRoyaltiesResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation royaltyServiceListAllRoyaltiesAsync
+     *
+     * 查询 Royalty 对象列表
+     *
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  string $merchant_trade_id [OPTIONAL] 客户系统订单号 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $app_id (optional)
+     * @param  string $settle_account_id (optional)
+     * @param  string $royalty_settlement_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function royaltyServiceListAllRoyaltiesAsync($limit = '10', $starting_after = null, $ending_before = null, $merchant_trade_id = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $app_id = null, $settle_account_id = null, $royalty_settlement_id = null)
+    {
+        return $this->royaltyServiceListAllRoyaltiesAsyncWithHttpInfo($limit, $starting_after, $ending_before, $merchant_trade_id, $created_lt, $created_lte, $created_gt, $created_gte, $app_id, $settle_account_id, $royalty_settlement_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation royaltyServiceListAllRoyaltiesAsyncWithHttpInfo
+     *
+     * 查询 Royalty 对象列表
+     *
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  string $merchant_trade_id [OPTIONAL] 客户系统订单号 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $app_id (optional)
+     * @param  string $settle_account_id (optional)
+     * @param  string $royalty_settlement_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function royaltyServiceListAllRoyaltiesAsyncWithHttpInfo($limit = '10', $starting_after = null, $ending_before = null, $merchant_trade_id = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $app_id = null, $settle_account_id = null, $royalty_settlement_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1ListAllRoyaltiesResponse';
+        $request = $this->royaltyServiceListAllRoyaltiesRequest($limit, $starting_after, $ending_before, $merchant_trade_id, $created_lt, $created_lte, $created_gt, $created_gte, $app_id, $settle_account_id, $royalty_settlement_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'royaltyServiceListAllRoyalties'
+     *
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  string $merchant_trade_id [OPTIONAL] 客户系统订单号 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  string $app_id (optional)
+     * @param  string $settle_account_id (optional)
+     * @param  string $royalty_settlement_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function royaltyServiceListAllRoyaltiesRequest($limit = '10', $starting_after = null, $ending_before = null, $merchant_trade_id = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $app_id = null, $settle_account_id = null, $royalty_settlement_id = null)
+    {
+
+        $resourcePath = '/v1/royalties';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = ObjectSerializer::toQueryValue($limit);
+        }
+        // query params
+        if ($starting_after !== null) {
+            $queryParams['starting_after'] = ObjectSerializer::toQueryValue($starting_after);
+        }
+        // query params
+        if ($ending_before !== null) {
+            $queryParams['ending_before'] = ObjectSerializer::toQueryValue($ending_before);
+        }
+        // query params
+        if ($merchant_trade_id !== null) {
+            $queryParams['merchant_trade_id'] = ObjectSerializer::toQueryValue($merchant_trade_id);
+        }
+        // query params
+        if ($created_lt !== null) {
+            $queryParams['created.lt'] = ObjectSerializer::toQueryValue($created_lt);
+        }
+        // query params
+        if ($created_lte !== null) {
+            $queryParams['created.lte'] = ObjectSerializer::toQueryValue($created_lte);
+        }
+        // query params
+        if ($created_gt !== null) {
+            $queryParams['created.gt'] = ObjectSerializer::toQueryValue($created_gt);
+        }
+        // query params
+        if ($created_gte !== null) {
+            $queryParams['created.gte'] = ObjectSerializer::toQueryValue($created_gte);
+        }
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+        // query params
+        if ($settle_account_id !== null) {
+            $queryParams['settle_account_id'] = ObjectSerializer::toQueryValue($settle_account_id);
+        }
+        // query params
+        if ($royalty_settlement_id !== null) {
+            $queryParams['royalty_settlement_id'] = ObjectSerializer::toQueryValue($royalty_settlement_id);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation royaltyServiceRetrieveRoyalty
+     *
+     * 查询 Royalty 对象
+     *
+     * @param  string $id id (required)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1RoyaltyResponse
+     */
+    public function royaltyServiceRetrieveRoyalty($id)
+    {
+        list($response) = $this->royaltyServiceRetrieveRoyaltyWithHttpInfo($id);
+        return $response;
+    }
+
+    /**
+     * Operation royaltyServiceRetrieveRoyaltyWithHttpInfo
+     *
+     * 查询 Royalty 对象
+     *
+     * @param  string $id (required)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1RoyaltyResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function royaltyServiceRetrieveRoyaltyWithHttpInfo($id)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1RoyaltyResponse';
+        $request = $this->royaltyServiceRetrieveRoyaltyRequest($id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1RoyaltyResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation royaltyServiceRetrieveRoyaltyAsync
+     *
+     * 查询 Royalty 对象
+     *
+     * @param  string $id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function royaltyServiceRetrieveRoyaltyAsync($id)
+    {
+        return $this->royaltyServiceRetrieveRoyaltyAsyncWithHttpInfo($id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation royaltyServiceRetrieveRoyaltyAsyncWithHttpInfo
+     *
+     * 查询 Royalty 对象
+     *
+     * @param  string $id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function royaltyServiceRetrieveRoyaltyAsyncWithHttpInfo($id)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1RoyaltyResponse';
+        $request = $this->royaltyServiceRetrieveRoyaltyRequest($id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'royaltyServiceRetrieveRoyalty'
+     *
+     * @param  string $id (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function royaltyServiceRetrieveRoyaltyRequest($id)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling royaltyServiceRetrieveRoyalty'
+            );
+        }
+
+        $resourcePath = '/v1/royalties/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation settlementServiceCreateSettlementAccount
+     *
+     * 创建结算账户
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateSettlementAccountRequest $body body (required)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1SettlementAccountResponse
+     */
+    public function settlementServiceCreateSettlementAccount($body)
+    {
+        list($response) = $this->settlementServiceCreateSettlementAccountWithHttpInfo($body);
+        return $response;
+    }
+
+    /**
+     * Operation settlementServiceCreateSettlementAccountWithHttpInfo
+     *
+     * 创建结算账户
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateSettlementAccountRequest $body (required)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1SettlementAccountResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function settlementServiceCreateSettlementAccountWithHttpInfo($body)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountResponse';
+        $request = $this->settlementServiceCreateSettlementAccountRequest($body);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1SettlementAccountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation settlementServiceCreateSettlementAccountAsync
+     *
+     * 创建结算账户
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateSettlementAccountRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceCreateSettlementAccountAsync($body)
+    {
+        return $this->settlementServiceCreateSettlementAccountAsyncWithHttpInfo($body)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation settlementServiceCreateSettlementAccountAsyncWithHttpInfo
+     *
+     * 创建结算账户
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateSettlementAccountRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceCreateSettlementAccountAsyncWithHttpInfo($body)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountResponse';
+        $request = $this->settlementServiceCreateSettlementAccountRequest($body);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'settlementServiceCreateSettlementAccount'
+     *
+     * @param  \Justapnet\Justap\Model\V1CreateSettlementAccountRequest $body (required)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function settlementServiceCreateSettlementAccountRequest($body)
+    {
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling settlementServiceCreateSettlementAccount'
+            );
+        }
+
+        $resourcePath = '/v1/settlement_accounts';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'POST',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation settlementServiceDeleteSettlementAccount
+     *
+     * 删除结算账户
+     *
+     * @param  string $id id (required)
+     * @param  string $app_id app_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1DeleteSettlementAccountResponse
+     */
+    public function settlementServiceDeleteSettlementAccount($id, $app_id = null)
+    {
+        list($response) = $this->settlementServiceDeleteSettlementAccountWithHttpInfo($id, $app_id);
+        return $response;
+    }
+
+    /**
+     * Operation settlementServiceDeleteSettlementAccountWithHttpInfo
+     *
+     * 删除结算账户
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1DeleteSettlementAccountResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function settlementServiceDeleteSettlementAccountWithHttpInfo($id, $app_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1DeleteSettlementAccountResponse';
+        $request = $this->settlementServiceDeleteSettlementAccountRequest($id, $app_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1DeleteSettlementAccountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation settlementServiceDeleteSettlementAccountAsync
+     *
+     * 删除结算账户
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceDeleteSettlementAccountAsync($id, $app_id = null)
+    {
+        return $this->settlementServiceDeleteSettlementAccountAsyncWithHttpInfo($id, $app_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation settlementServiceDeleteSettlementAccountAsyncWithHttpInfo
+     *
+     * 删除结算账户
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceDeleteSettlementAccountAsyncWithHttpInfo($id, $app_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1DeleteSettlementAccountResponse';
+        $request = $this->settlementServiceDeleteSettlementAccountRequest($id, $app_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'settlementServiceDeleteSettlementAccount'
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function settlementServiceDeleteSettlementAccountRequest($id, $app_id = null)
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling settlementServiceDeleteSettlementAccount'
+            );
+        }
+
+        $resourcePath = '/v1/settlement_accounts/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'DELETE',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation settlementServiceListAllSettlementAccounts
+     *
+     * 查询结算账户列表
+     *
+     * @param  string $app_id app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     * @param  string $customer_id [OPTIONAL] 客户 ID (optional)
+     * @param  string $business_user_id [OPTIONAL] 商户用户 ID (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1SettlementAccountListResponse
+     */
+    public function settlementServiceListAllSettlementAccounts($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null, $customer_id = null, $business_user_id = null)
+    {
+        list($response) = $this->settlementServiceListAllSettlementAccountsWithHttpInfo($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled, $customer_id, $business_user_id);
+        return $response;
+    }
+
+    /**
+     * Operation settlementServiceListAllSettlementAccountsWithHttpInfo
+     *
+     * 查询结算账户列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     * @param  string $customer_id [OPTIONAL] 客户 ID (optional)
+     * @param  string $business_user_id [OPTIONAL] 商户用户 ID (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1SettlementAccountListResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function settlementServiceListAllSettlementAccountsWithHttpInfo($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null, $customer_id = null, $business_user_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountListResponse';
+        $request = $this->settlementServiceListAllSettlementAccountsRequest($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled, $customer_id, $business_user_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1SettlementAccountListResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation settlementServiceListAllSettlementAccountsAsync
+     *
+     * 查询结算账户列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     * @param  string $customer_id [OPTIONAL] 客户 ID (optional)
+     * @param  string $business_user_id [OPTIONAL] 商户用户 ID (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceListAllSettlementAccountsAsync($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null, $customer_id = null, $business_user_id = null)
+    {
+        return $this->settlementServiceListAllSettlementAccountsAsyncWithHttpInfo($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled, $customer_id, $business_user_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation settlementServiceListAllSettlementAccountsAsyncWithHttpInfo
+     *
+     * 查询结算账户列表
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     * @param  string $customer_id [OPTIONAL] 客户 ID (optional)
+     * @param  string $business_user_id [OPTIONAL] 商户用户 ID (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceListAllSettlementAccountsAsyncWithHttpInfo($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null, $customer_id = null, $business_user_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountListResponse';
+        $request = $this->settlementServiceListAllSettlementAccountsRequest($app_id, $limit, $starting_after, $ending_before, $created_lt, $created_lte, $created_gt, $created_gte, $disabled, $customer_id, $business_user_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'settlementServiceListAllSettlementAccounts'
+     *
+     * @param  string $app_id (optional)
+     * @param  int $limit [OPTIONAL] 限制有多少对象可以被返回，限制范围是从 1~100 项，默认是 10 项 (optional, default to 10)
+     * @param  string $starting_after [OPTIONAL] 在分页时使用的指针，决定了列表的第一项从何处开始。假设你的一次请求返回列表的最后一项的 id 是 obj_end，你可以使用 starting_after &#x3D; obj_end 去获取下一页 (optional)
+     * @param  string $ending_before [OPTIONAL] 在分页时使用的指针，决定了列表的最末项在何处结束。假设你的一次请求返回列表的第一项的 id 是 obj_start，你可以使用 ending_before &#x3D; obj_start 去获取上一页 (optional)
+     * @param  int $created_lt 大于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_lte 大于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gt 小于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  int $created_gte 小于或等于 charge 对象的创建时间，用 Unix 时间戳表示 (optional, default to 0)
+     * @param  bool $disabled [OPTIONAL] 是否禁用，默认为 false (optional)
+     * @param  string $customer_id [OPTIONAL] 客户 ID (optional)
+     * @param  string $business_user_id [OPTIONAL] 商户用户 ID (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function settlementServiceListAllSettlementAccountsRequest($app_id = null, $limit = '10', $starting_after = null, $ending_before = null, $created_lt = '0', $created_lte = '0', $created_gt = '0', $created_gte = '0', $disabled = null, $customer_id = null, $business_user_id = null)
+    {
+
+        $resourcePath = '/v1/settlement_accounts';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+        // query params
+        if ($limit !== null) {
+            $queryParams['limit'] = ObjectSerializer::toQueryValue($limit);
+        }
+        // query params
+        if ($starting_after !== null) {
+            $queryParams['starting_after'] = ObjectSerializer::toQueryValue($starting_after);
+        }
+        // query params
+        if ($ending_before !== null) {
+            $queryParams['ending_before'] = ObjectSerializer::toQueryValue($ending_before);
+        }
+        // query params
+        if ($created_lt !== null) {
+            $queryParams['created.lt'] = ObjectSerializer::toQueryValue($created_lt);
+        }
+        // query params
+        if ($created_lte !== null) {
+            $queryParams['created.lte'] = ObjectSerializer::toQueryValue($created_lte);
+        }
+        // query params
+        if ($created_gt !== null) {
+            $queryParams['created.gt'] = ObjectSerializer::toQueryValue($created_gt);
+        }
+        // query params
+        if ($created_gte !== null) {
+            $queryParams['created.gte'] = ObjectSerializer::toQueryValue($created_gte);
+        }
+        // query params
+        if ($disabled !== null) {
+            $queryParams['disabled'] = ObjectSerializer::toQueryValue($disabled);
+        }
+        // query params
+        if ($customer_id !== null) {
+            $queryParams['customer_id'] = ObjectSerializer::toQueryValue($customer_id);
+        }
+        // query params
+        if ($business_user_id !== null) {
+            $queryParams['business_user_id'] = ObjectSerializer::toQueryValue($business_user_id);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation settlementServiceRetrieveSettlementAccount
+     *
+     * 查询结算账户
+     *
+     * @param  string $id id (required)
+     * @param  string $app_id app_id (optional)
+     * @param  string $object 对象类型 (optional, default to SettlementAccount)
+     * @param  string $data_id 分账接收方的唯一标识 (optional, default to 0)
+     * @param  string $data_app_id 分账接收方所在的应用 ID (optional, default to 0)
+     * @param  string $data_business_user_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_customer_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_channel 分账接收方的账户类型 (optional, default to CHANNEL_UNKNOWN)
+     * @param  string $data_recipient_wechatpay_account openid 或者商户号，由类型决定. 微信支付分账接收方账户，OPENID或者商户号 (optional)
+     * @param  string $data_recipient_wechatpay_name 微信支付分账接收方姓名或名称 (optional)
+     * @param  bool $data_recipient_wechatpay_force_check 是否强制校验收款人姓名 (optional, default to false)
+     * @param  string $data_recipient_wechatpay_type 微信支付分账接收方类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_account_type 微信支付分账接收方账户类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_app_id 微信支付分账接收方 openid 所对应的服务商公众号 ID (optional)
+     * @param  string $data_recipient_wechatpay_sub_app_id 微信支付分账接收方 openid 所对应的商户公众号 ID (optional)
+     * @param  string $data_recipient_payment_alipay_account 支付宝账号，账号ID或者登录邮箱 (optional)
+     * @param  string $data_recipient_payment_alipay_name 支付宝账号真实姓名 (optional)
+     * @param  string $data_recipient_payment_alipay_type 支付宝账号类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_payment_alipay_account_type 支付宝账号类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_bank_account 银行卡号 (optional)
+     * @param  string $data_recipient_bank_name 银行卡开户名 (optional)
+     * @param  string $data_recipient_bank_type 银行卡类型 (optional)
+     * @param  string $data_recipient_bank_bank_name 银行卡开户行编码 (optional)
+     * @param  string $data_recipient_bank_bank_branch 银行卡开户支行 (optional)
+     * @param  string $data_recipient_bank_bank_province 银行卡开户省份 (optional)
+     * @param  string $data_recipient_bank_bank_city 银行卡开户城市 (optional)
+     * @param  string $data_recipient_ysepay_merchant_division_mer_usercode 银盛商户号 (optional)
+     * @param  int $data_created 分账接收方的创建时间 (optional, default to 0)
+     * @param  int $data_updated 分账接收方的更新时间 (optional, default to 0)
+     * @param  string $data_object 对象类型 (optional, default to Recipient)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1SettlementAccountResponse
+     */
+    public function settlementServiceRetrieveSettlementAccount($id, $app_id = null, $object = 'SettlementAccount', $data_id = '0', $data_app_id = '0', $data_business_user_id = '0', $data_customer_id = '0', $data_channel = 'CHANNEL_UNKNOWN', $data_recipient_wechatpay_account = null, $data_recipient_wechatpay_name = null, $data_recipient_wechatpay_force_check = 'false', $data_recipient_wechatpay_type = 'TYPE_UNSET', $data_recipient_wechatpay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_wechatpay_app_id = null, $data_recipient_wechatpay_sub_app_id = null, $data_recipient_payment_alipay_account = null, $data_recipient_payment_alipay_name = null, $data_recipient_payment_alipay_type = 'TYPE_UNSET', $data_recipient_payment_alipay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_bank_account = null, $data_recipient_bank_name = null, $data_recipient_bank_type = null, $data_recipient_bank_bank_name = null, $data_recipient_bank_bank_branch = null, $data_recipient_bank_bank_province = null, $data_recipient_bank_bank_city = null, $data_recipient_ysepay_merchant_division_mer_usercode = null, $data_created = '0', $data_updated = '0', $data_object = 'Recipient')
+    {
+        list($response) = $this->settlementServiceRetrieveSettlementAccountWithHttpInfo($id, $app_id, $object, $data_id, $data_app_id, $data_business_user_id, $data_customer_id, $data_channel, $data_recipient_wechatpay_account, $data_recipient_wechatpay_name, $data_recipient_wechatpay_force_check, $data_recipient_wechatpay_type, $data_recipient_wechatpay_account_type, $data_recipient_wechatpay_app_id, $data_recipient_wechatpay_sub_app_id, $data_recipient_payment_alipay_account, $data_recipient_payment_alipay_name, $data_recipient_payment_alipay_type, $data_recipient_payment_alipay_account_type, $data_recipient_bank_account, $data_recipient_bank_name, $data_recipient_bank_type, $data_recipient_bank_bank_name, $data_recipient_bank_bank_branch, $data_recipient_bank_bank_province, $data_recipient_bank_bank_city, $data_recipient_ysepay_merchant_division_mer_usercode, $data_created, $data_updated, $data_object);
+        return $response;
+    }
+
+    /**
+     * Operation settlementServiceRetrieveSettlementAccountWithHttpInfo
+     *
+     * 查询结算账户
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     * @param  string $object 对象类型 (optional, default to SettlementAccount)
+     * @param  string $data_id 分账接收方的唯一标识 (optional, default to 0)
+     * @param  string $data_app_id 分账接收方所在的应用 ID (optional, default to 0)
+     * @param  string $data_business_user_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_customer_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_channel 分账接收方的账户类型 (optional, default to CHANNEL_UNKNOWN)
+     * @param  string $data_recipient_wechatpay_account openid 或者商户号，由类型决定. 微信支付分账接收方账户，OPENID或者商户号 (optional)
+     * @param  string $data_recipient_wechatpay_name 微信支付分账接收方姓名或名称 (optional)
+     * @param  bool $data_recipient_wechatpay_force_check 是否强制校验收款人姓名 (optional, default to false)
+     * @param  string $data_recipient_wechatpay_type 微信支付分账接收方类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_account_type 微信支付分账接收方账户类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_app_id 微信支付分账接收方 openid 所对应的服务商公众号 ID (optional)
+     * @param  string $data_recipient_wechatpay_sub_app_id 微信支付分账接收方 openid 所对应的商户公众号 ID (optional)
+     * @param  string $data_recipient_payment_alipay_account 支付宝账号，账号ID或者登录邮箱 (optional)
+     * @param  string $data_recipient_payment_alipay_name 支付宝账号真实姓名 (optional)
+     * @param  string $data_recipient_payment_alipay_type 支付宝账号类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_payment_alipay_account_type 支付宝账号类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_bank_account 银行卡号 (optional)
+     * @param  string $data_recipient_bank_name 银行卡开户名 (optional)
+     * @param  string $data_recipient_bank_type 银行卡类型 (optional)
+     * @param  string $data_recipient_bank_bank_name 银行卡开户行编码 (optional)
+     * @param  string $data_recipient_bank_bank_branch 银行卡开户支行 (optional)
+     * @param  string $data_recipient_bank_bank_province 银行卡开户省份 (optional)
+     * @param  string $data_recipient_bank_bank_city 银行卡开户城市 (optional)
+     * @param  string $data_recipient_ysepay_merchant_division_mer_usercode 银盛商户号 (optional)
+     * @param  int $data_created 分账接收方的创建时间 (optional, default to 0)
+     * @param  int $data_updated 分账接收方的更新时间 (optional, default to 0)
+     * @param  string $data_object 对象类型 (optional, default to Recipient)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1SettlementAccountResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function settlementServiceRetrieveSettlementAccountWithHttpInfo($id, $app_id = null, $object = 'SettlementAccount', $data_id = '0', $data_app_id = '0', $data_business_user_id = '0', $data_customer_id = '0', $data_channel = 'CHANNEL_UNKNOWN', $data_recipient_wechatpay_account = null, $data_recipient_wechatpay_name = null, $data_recipient_wechatpay_force_check = 'false', $data_recipient_wechatpay_type = 'TYPE_UNSET', $data_recipient_wechatpay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_wechatpay_app_id = null, $data_recipient_wechatpay_sub_app_id = null, $data_recipient_payment_alipay_account = null, $data_recipient_payment_alipay_name = null, $data_recipient_payment_alipay_type = 'TYPE_UNSET', $data_recipient_payment_alipay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_bank_account = null, $data_recipient_bank_name = null, $data_recipient_bank_type = null, $data_recipient_bank_bank_name = null, $data_recipient_bank_bank_branch = null, $data_recipient_bank_bank_province = null, $data_recipient_bank_bank_city = null, $data_recipient_ysepay_merchant_division_mer_usercode = null, $data_created = '0', $data_updated = '0', $data_object = 'Recipient')
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountResponse';
+        $request = $this->settlementServiceRetrieveSettlementAccountRequest($id, $app_id, $object, $data_id, $data_app_id, $data_business_user_id, $data_customer_id, $data_channel, $data_recipient_wechatpay_account, $data_recipient_wechatpay_name, $data_recipient_wechatpay_force_check, $data_recipient_wechatpay_type, $data_recipient_wechatpay_account_type, $data_recipient_wechatpay_app_id, $data_recipient_wechatpay_sub_app_id, $data_recipient_payment_alipay_account, $data_recipient_payment_alipay_name, $data_recipient_payment_alipay_type, $data_recipient_payment_alipay_account_type, $data_recipient_bank_account, $data_recipient_bank_name, $data_recipient_bank_type, $data_recipient_bank_bank_name, $data_recipient_bank_bank_branch, $data_recipient_bank_bank_province, $data_recipient_bank_bank_city, $data_recipient_ysepay_merchant_division_mer_usercode, $data_created, $data_updated, $data_object);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1SettlementAccountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation settlementServiceRetrieveSettlementAccountAsync
+     *
+     * 查询结算账户
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     * @param  string $object 对象类型 (optional, default to SettlementAccount)
+     * @param  string $data_id 分账接收方的唯一标识 (optional, default to 0)
+     * @param  string $data_app_id 分账接收方所在的应用 ID (optional, default to 0)
+     * @param  string $data_business_user_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_customer_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_channel 分账接收方的账户类型 (optional, default to CHANNEL_UNKNOWN)
+     * @param  string $data_recipient_wechatpay_account openid 或者商户号，由类型决定. 微信支付分账接收方账户，OPENID或者商户号 (optional)
+     * @param  string $data_recipient_wechatpay_name 微信支付分账接收方姓名或名称 (optional)
+     * @param  bool $data_recipient_wechatpay_force_check 是否强制校验收款人姓名 (optional, default to false)
+     * @param  string $data_recipient_wechatpay_type 微信支付分账接收方类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_account_type 微信支付分账接收方账户类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_app_id 微信支付分账接收方 openid 所对应的服务商公众号 ID (optional)
+     * @param  string $data_recipient_wechatpay_sub_app_id 微信支付分账接收方 openid 所对应的商户公众号 ID (optional)
+     * @param  string $data_recipient_payment_alipay_account 支付宝账号，账号ID或者登录邮箱 (optional)
+     * @param  string $data_recipient_payment_alipay_name 支付宝账号真实姓名 (optional)
+     * @param  string $data_recipient_payment_alipay_type 支付宝账号类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_payment_alipay_account_type 支付宝账号类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_bank_account 银行卡号 (optional)
+     * @param  string $data_recipient_bank_name 银行卡开户名 (optional)
+     * @param  string $data_recipient_bank_type 银行卡类型 (optional)
+     * @param  string $data_recipient_bank_bank_name 银行卡开户行编码 (optional)
+     * @param  string $data_recipient_bank_bank_branch 银行卡开户支行 (optional)
+     * @param  string $data_recipient_bank_bank_province 银行卡开户省份 (optional)
+     * @param  string $data_recipient_bank_bank_city 银行卡开户城市 (optional)
+     * @param  string $data_recipient_ysepay_merchant_division_mer_usercode 银盛商户号 (optional)
+     * @param  int $data_created 分账接收方的创建时间 (optional, default to 0)
+     * @param  int $data_updated 分账接收方的更新时间 (optional, default to 0)
+     * @param  string $data_object 对象类型 (optional, default to Recipient)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceRetrieveSettlementAccountAsync($id, $app_id = null, $object = 'SettlementAccount', $data_id = '0', $data_app_id = '0', $data_business_user_id = '0', $data_customer_id = '0', $data_channel = 'CHANNEL_UNKNOWN', $data_recipient_wechatpay_account = null, $data_recipient_wechatpay_name = null, $data_recipient_wechatpay_force_check = 'false', $data_recipient_wechatpay_type = 'TYPE_UNSET', $data_recipient_wechatpay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_wechatpay_app_id = null, $data_recipient_wechatpay_sub_app_id = null, $data_recipient_payment_alipay_account = null, $data_recipient_payment_alipay_name = null, $data_recipient_payment_alipay_type = 'TYPE_UNSET', $data_recipient_payment_alipay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_bank_account = null, $data_recipient_bank_name = null, $data_recipient_bank_type = null, $data_recipient_bank_bank_name = null, $data_recipient_bank_bank_branch = null, $data_recipient_bank_bank_province = null, $data_recipient_bank_bank_city = null, $data_recipient_ysepay_merchant_division_mer_usercode = null, $data_created = '0', $data_updated = '0', $data_object = 'Recipient')
+    {
+        return $this->settlementServiceRetrieveSettlementAccountAsyncWithHttpInfo($id, $app_id, $object, $data_id, $data_app_id, $data_business_user_id, $data_customer_id, $data_channel, $data_recipient_wechatpay_account, $data_recipient_wechatpay_name, $data_recipient_wechatpay_force_check, $data_recipient_wechatpay_type, $data_recipient_wechatpay_account_type, $data_recipient_wechatpay_app_id, $data_recipient_wechatpay_sub_app_id, $data_recipient_payment_alipay_account, $data_recipient_payment_alipay_name, $data_recipient_payment_alipay_type, $data_recipient_payment_alipay_account_type, $data_recipient_bank_account, $data_recipient_bank_name, $data_recipient_bank_type, $data_recipient_bank_bank_name, $data_recipient_bank_bank_branch, $data_recipient_bank_bank_province, $data_recipient_bank_bank_city, $data_recipient_ysepay_merchant_division_mer_usercode, $data_created, $data_updated, $data_object)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation settlementServiceRetrieveSettlementAccountAsyncWithHttpInfo
+     *
+     * 查询结算账户
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     * @param  string $object 对象类型 (optional, default to SettlementAccount)
+     * @param  string $data_id 分账接收方的唯一标识 (optional, default to 0)
+     * @param  string $data_app_id 分账接收方所在的应用 ID (optional, default to 0)
+     * @param  string $data_business_user_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_customer_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_channel 分账接收方的账户类型 (optional, default to CHANNEL_UNKNOWN)
+     * @param  string $data_recipient_wechatpay_account openid 或者商户号，由类型决定. 微信支付分账接收方账户，OPENID或者商户号 (optional)
+     * @param  string $data_recipient_wechatpay_name 微信支付分账接收方姓名或名称 (optional)
+     * @param  bool $data_recipient_wechatpay_force_check 是否强制校验收款人姓名 (optional, default to false)
+     * @param  string $data_recipient_wechatpay_type 微信支付分账接收方类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_account_type 微信支付分账接收方账户类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_app_id 微信支付分账接收方 openid 所对应的服务商公众号 ID (optional)
+     * @param  string $data_recipient_wechatpay_sub_app_id 微信支付分账接收方 openid 所对应的商户公众号 ID (optional)
+     * @param  string $data_recipient_payment_alipay_account 支付宝账号，账号ID或者登录邮箱 (optional)
+     * @param  string $data_recipient_payment_alipay_name 支付宝账号真实姓名 (optional)
+     * @param  string $data_recipient_payment_alipay_type 支付宝账号类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_payment_alipay_account_type 支付宝账号类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_bank_account 银行卡号 (optional)
+     * @param  string $data_recipient_bank_name 银行卡开户名 (optional)
+     * @param  string $data_recipient_bank_type 银行卡类型 (optional)
+     * @param  string $data_recipient_bank_bank_name 银行卡开户行编码 (optional)
+     * @param  string $data_recipient_bank_bank_branch 银行卡开户支行 (optional)
+     * @param  string $data_recipient_bank_bank_province 银行卡开户省份 (optional)
+     * @param  string $data_recipient_bank_bank_city 银行卡开户城市 (optional)
+     * @param  string $data_recipient_ysepay_merchant_division_mer_usercode 银盛商户号 (optional)
+     * @param  int $data_created 分账接收方的创建时间 (optional, default to 0)
+     * @param  int $data_updated 分账接收方的更新时间 (optional, default to 0)
+     * @param  string $data_object 对象类型 (optional, default to Recipient)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceRetrieveSettlementAccountAsyncWithHttpInfo($id, $app_id = null, $object = 'SettlementAccount', $data_id = '0', $data_app_id = '0', $data_business_user_id = '0', $data_customer_id = '0', $data_channel = 'CHANNEL_UNKNOWN', $data_recipient_wechatpay_account = null, $data_recipient_wechatpay_name = null, $data_recipient_wechatpay_force_check = 'false', $data_recipient_wechatpay_type = 'TYPE_UNSET', $data_recipient_wechatpay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_wechatpay_app_id = null, $data_recipient_wechatpay_sub_app_id = null, $data_recipient_payment_alipay_account = null, $data_recipient_payment_alipay_name = null, $data_recipient_payment_alipay_type = 'TYPE_UNSET', $data_recipient_payment_alipay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_bank_account = null, $data_recipient_bank_name = null, $data_recipient_bank_type = null, $data_recipient_bank_bank_name = null, $data_recipient_bank_bank_branch = null, $data_recipient_bank_bank_province = null, $data_recipient_bank_bank_city = null, $data_recipient_ysepay_merchant_division_mer_usercode = null, $data_created = '0', $data_updated = '0', $data_object = 'Recipient')
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountResponse';
+        $request = $this->settlementServiceRetrieveSettlementAccountRequest($id, $app_id, $object, $data_id, $data_app_id, $data_business_user_id, $data_customer_id, $data_channel, $data_recipient_wechatpay_account, $data_recipient_wechatpay_name, $data_recipient_wechatpay_force_check, $data_recipient_wechatpay_type, $data_recipient_wechatpay_account_type, $data_recipient_wechatpay_app_id, $data_recipient_wechatpay_sub_app_id, $data_recipient_payment_alipay_account, $data_recipient_payment_alipay_name, $data_recipient_payment_alipay_type, $data_recipient_payment_alipay_account_type, $data_recipient_bank_account, $data_recipient_bank_name, $data_recipient_bank_type, $data_recipient_bank_bank_name, $data_recipient_bank_bank_branch, $data_recipient_bank_bank_province, $data_recipient_bank_bank_city, $data_recipient_ysepay_merchant_division_mer_usercode, $data_created, $data_updated, $data_object);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'settlementServiceRetrieveSettlementAccount'
+     *
+     * @param  string $id (required)
+     * @param  string $app_id (optional)
+     * @param  string $object 对象类型 (optional, default to SettlementAccount)
+     * @param  string $data_id 分账接收方的唯一标识 (optional, default to 0)
+     * @param  string $data_app_id 分账接收方所在的应用 ID (optional, default to 0)
+     * @param  string $data_business_user_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_customer_id 分账接收方的用户 ID (optional, default to 0)
+     * @param  string $data_channel 分账接收方的账户类型 (optional, default to CHANNEL_UNKNOWN)
+     * @param  string $data_recipient_wechatpay_account openid 或者商户号，由类型决定. 微信支付分账接收方账户，OPENID或者商户号 (optional)
+     * @param  string $data_recipient_wechatpay_name 微信支付分账接收方姓名或名称 (optional)
+     * @param  bool $data_recipient_wechatpay_force_check 是否强制校验收款人姓名 (optional, default to false)
+     * @param  string $data_recipient_wechatpay_type 微信支付分账接收方类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_account_type 微信支付分账接收方账户类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_wechatpay_app_id 微信支付分账接收方 openid 所对应的服务商公众号 ID (optional)
+     * @param  string $data_recipient_wechatpay_sub_app_id 微信支付分账接收方 openid 所对应的商户公众号 ID (optional)
+     * @param  string $data_recipient_payment_alipay_account 支付宝账号，账号ID或者登录邮箱 (optional)
+     * @param  string $data_recipient_payment_alipay_name 支付宝账号真实姓名 (optional)
+     * @param  string $data_recipient_payment_alipay_type 支付宝账号类型 (optional, default to TYPE_UNSET)
+     * @param  string $data_recipient_payment_alipay_account_type 支付宝账号类型 (optional, default to ACCOUNT_TYPE_UNSET)
+     * @param  string $data_recipient_bank_account 银行卡号 (optional)
+     * @param  string $data_recipient_bank_name 银行卡开户名 (optional)
+     * @param  string $data_recipient_bank_type 银行卡类型 (optional)
+     * @param  string $data_recipient_bank_bank_name 银行卡开户行编码 (optional)
+     * @param  string $data_recipient_bank_bank_branch 银行卡开户支行 (optional)
+     * @param  string $data_recipient_bank_bank_province 银行卡开户省份 (optional)
+     * @param  string $data_recipient_bank_bank_city 银行卡开户城市 (optional)
+     * @param  string $data_recipient_ysepay_merchant_division_mer_usercode 银盛商户号 (optional)
+     * @param  int $data_created 分账接收方的创建时间 (optional, default to 0)
+     * @param  int $data_updated 分账接收方的更新时间 (optional, default to 0)
+     * @param  string $data_object 对象类型 (optional, default to Recipient)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function settlementServiceRetrieveSettlementAccountRequest($id, $app_id = null, $object = 'SettlementAccount', $data_id = '0', $data_app_id = '0', $data_business_user_id = '0', $data_customer_id = '0', $data_channel = 'CHANNEL_UNKNOWN', $data_recipient_wechatpay_account = null, $data_recipient_wechatpay_name = null, $data_recipient_wechatpay_force_check = 'false', $data_recipient_wechatpay_type = 'TYPE_UNSET', $data_recipient_wechatpay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_wechatpay_app_id = null, $data_recipient_wechatpay_sub_app_id = null, $data_recipient_payment_alipay_account = null, $data_recipient_payment_alipay_name = null, $data_recipient_payment_alipay_type = 'TYPE_UNSET', $data_recipient_payment_alipay_account_type = 'ACCOUNT_TYPE_UNSET', $data_recipient_bank_account = null, $data_recipient_bank_name = null, $data_recipient_bank_type = null, $data_recipient_bank_bank_name = null, $data_recipient_bank_bank_branch = null, $data_recipient_bank_bank_province = null, $data_recipient_bank_bank_city = null, $data_recipient_ysepay_merchant_division_mer_usercode = null, $data_created = '0', $data_updated = '0', $data_object = 'Recipient')
+    {
+        // verify the required parameter 'id' is set
+        if ($id === null || (is_array($id) && count($id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $id when calling settlementServiceRetrieveSettlementAccount'
+            );
+        }
+
+        $resourcePath = '/v1/settlement_accounts/{id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+        // query params
+        if ($object !== null) {
+            $queryParams['object'] = ObjectSerializer::toQueryValue($object);
+        }
+        // query params
+        if ($data_id !== null) {
+            $queryParams['data.id'] = ObjectSerializer::toQueryValue($data_id);
+        }
+        // query params
+        if ($data_app_id !== null) {
+            $queryParams['data.app_id'] = ObjectSerializer::toQueryValue($data_app_id);
+        }
+        // query params
+        if ($data_business_user_id !== null) {
+            $queryParams['data.business_user_id'] = ObjectSerializer::toQueryValue($data_business_user_id);
+        }
+        // query params
+        if ($data_customer_id !== null) {
+            $queryParams['data.customer_id'] = ObjectSerializer::toQueryValue($data_customer_id);
+        }
+        // query params
+        if ($data_channel !== null) {
+            $queryParams['data.channel'] = ObjectSerializer::toQueryValue($data_channel);
+        }
+        // query params
+        if ($data_recipient_wechatpay_account !== null) {
+            $queryParams['data.recipient.wechatpay.account'] = ObjectSerializer::toQueryValue($data_recipient_wechatpay_account);
+        }
+        // query params
+        if ($data_recipient_wechatpay_name !== null) {
+            $queryParams['data.recipient.wechatpay.name'] = ObjectSerializer::toQueryValue($data_recipient_wechatpay_name);
+        }
+        // query params
+        if ($data_recipient_wechatpay_force_check !== null) {
+            $queryParams['data.recipient.wechatpay.force_check'] = ObjectSerializer::toQueryValue($data_recipient_wechatpay_force_check);
+        }
+        // query params
+        if ($data_recipient_wechatpay_type !== null) {
+            $queryParams['data.recipient.wechatpay.type'] = ObjectSerializer::toQueryValue($data_recipient_wechatpay_type);
+        }
+        // query params
+        if ($data_recipient_wechatpay_account_type !== null) {
+            $queryParams['data.recipient.wechatpay.account_type'] = ObjectSerializer::toQueryValue($data_recipient_wechatpay_account_type);
+        }
+        // query params
+        if ($data_recipient_wechatpay_app_id !== null) {
+            $queryParams['data.recipient.wechatpay.app_id'] = ObjectSerializer::toQueryValue($data_recipient_wechatpay_app_id);
+        }
+        // query params
+        if ($data_recipient_wechatpay_sub_app_id !== null) {
+            $queryParams['data.recipient.wechatpay.sub_app_id'] = ObjectSerializer::toQueryValue($data_recipient_wechatpay_sub_app_id);
+        }
+        // query params
+        if ($data_recipient_payment_alipay_account !== null) {
+            $queryParams['data.recipient.payment_alipay.account'] = ObjectSerializer::toQueryValue($data_recipient_payment_alipay_account);
+        }
+        // query params
+        if ($data_recipient_payment_alipay_name !== null) {
+            $queryParams['data.recipient.payment_alipay.name'] = ObjectSerializer::toQueryValue($data_recipient_payment_alipay_name);
+        }
+        // query params
+        if ($data_recipient_payment_alipay_type !== null) {
+            $queryParams['data.recipient.payment_alipay.type'] = ObjectSerializer::toQueryValue($data_recipient_payment_alipay_type);
+        }
+        // query params
+        if ($data_recipient_payment_alipay_account_type !== null) {
+            $queryParams['data.recipient.payment_alipay.account_type'] = ObjectSerializer::toQueryValue($data_recipient_payment_alipay_account_type);
+        }
+        // query params
+        if ($data_recipient_bank_account !== null) {
+            $queryParams['data.recipient.bank.account'] = ObjectSerializer::toQueryValue($data_recipient_bank_account);
+        }
+        // query params
+        if ($data_recipient_bank_name !== null) {
+            $queryParams['data.recipient.bank.name'] = ObjectSerializer::toQueryValue($data_recipient_bank_name);
+        }
+        // query params
+        if ($data_recipient_bank_type !== null) {
+            $queryParams['data.recipient.bank.type'] = ObjectSerializer::toQueryValue($data_recipient_bank_type);
+        }
+        // query params
+        if ($data_recipient_bank_bank_name !== null) {
+            $queryParams['data.recipient.bank.bank_name'] = ObjectSerializer::toQueryValue($data_recipient_bank_bank_name);
+        }
+        // query params
+        if ($data_recipient_bank_bank_branch !== null) {
+            $queryParams['data.recipient.bank.bank_branch'] = ObjectSerializer::toQueryValue($data_recipient_bank_bank_branch);
+        }
+        // query params
+        if ($data_recipient_bank_bank_province !== null) {
+            $queryParams['data.recipient.bank.bank_province'] = ObjectSerializer::toQueryValue($data_recipient_bank_bank_province);
+        }
+        // query params
+        if ($data_recipient_bank_bank_city !== null) {
+            $queryParams['data.recipient.bank.bank_city'] = ObjectSerializer::toQueryValue($data_recipient_bank_bank_city);
+        }
+        // query params
+        if ($data_recipient_ysepay_merchant_division_mer_usercode !== null) {
+            $queryParams['data.recipient.ysepay_merchant.division_mer_usercode'] = ObjectSerializer::toQueryValue($data_recipient_ysepay_merchant_division_mer_usercode);
+        }
+        // query params
+        if ($data_created !== null) {
+            $queryParams['data.created'] = ObjectSerializer::toQueryValue($data_created);
+        }
+        // query params
+        if ($data_updated !== null) {
+            $queryParams['data.updated'] = ObjectSerializer::toQueryValue($data_updated);
+        }
+        // query params
+        if ($data_object !== null) {
+            $queryParams['data.object'] = ObjectSerializer::toQueryValue($data_object);
+        }
+
+        // path params
+        if ($id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'id' . '}',
+                ObjectSerializer::toPathValue($id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation settlementServiceSearchSettlementAccounts
+     *
+     * 查询结算账户列表
+     *
+     * @param  string $user_id user_id (optional)
+     * @param  string $app_id app_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1SettlementAccountListResponse
+     */
+    public function settlementServiceSearchSettlementAccounts($user_id = null, $app_id = null)
+    {
+        list($response) = $this->settlementServiceSearchSettlementAccountsWithHttpInfo($user_id, $app_id);
+        return $response;
+    }
+
+    /**
+     * Operation settlementServiceSearchSettlementAccountsWithHttpInfo
+     *
+     * 查询结算账户列表
+     *
+     * @param  string $user_id (optional)
+     * @param  string $app_id (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1SettlementAccountListResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function settlementServiceSearchSettlementAccountsWithHttpInfo($user_id = null, $app_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountListResponse';
+        $request = $this->settlementServiceSearchSettlementAccountsRequest($user_id, $app_id);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1SettlementAccountListResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation settlementServiceSearchSettlementAccountsAsync
+     *
+     * 查询结算账户列表
+     *
+     * @param  string $user_id (optional)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceSearchSettlementAccountsAsync($user_id = null, $app_id = null)
+    {
+        return $this->settlementServiceSearchSettlementAccountsAsyncWithHttpInfo($user_id, $app_id)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation settlementServiceSearchSettlementAccountsAsyncWithHttpInfo
+     *
+     * 查询结算账户列表
+     *
+     * @param  string $user_id (optional)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceSearchSettlementAccountsAsyncWithHttpInfo($user_id = null, $app_id = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountListResponse';
+        $request = $this->settlementServiceSearchSettlementAccountsRequest($user_id, $app_id);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'settlementServiceSearchSettlementAccounts'
+     *
+     * @param  string $user_id (optional)
+     * @param  string $app_id (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function settlementServiceSearchSettlementAccountsRequest($user_id = null, $app_id = null)
+    {
+
+        $resourcePath = '/v1/settlement_accounts/search';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($user_id !== null) {
+            $queryParams['user_id'] = ObjectSerializer::toQueryValue($user_id);
+        }
+        // query params
+        if ($app_id !== null) {
+            $queryParams['app_id'] = ObjectSerializer::toQueryValue($app_id);
+        }
+
+
+        // body params
+        $_tempBody = null;
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'GET',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation settlementServiceUpdateSettlementAccount
+     *
+     * 更新结算账户
+     *
+     * @param  string $settlement_account_id settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body body (required)
+     * @param  string $update_mask update_mask (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1SettlementAccountResponse
+     */
+    public function settlementServiceUpdateSettlementAccount($settlement_account_id, $body, $update_mask = null)
+    {
+        list($response) = $this->settlementServiceUpdateSettlementAccountWithHttpInfo($settlement_account_id, $body, $update_mask);
+        return $response;
+    }
+
+    /**
+     * Operation settlementServiceUpdateSettlementAccountWithHttpInfo
+     *
+     * 更新结算账户
+     *
+     * @param  string $settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1SettlementAccountResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function settlementServiceUpdateSettlementAccountWithHttpInfo($settlement_account_id, $body, $update_mask = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountResponse';
+        $request = $this->settlementServiceUpdateSettlementAccountRequest($settlement_account_id, $body, $update_mask);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1SettlementAccountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation settlementServiceUpdateSettlementAccountAsync
+     *
+     * 更新结算账户
+     *
+     * @param  string $settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceUpdateSettlementAccountAsync($settlement_account_id, $body, $update_mask = null)
+    {
+        return $this->settlementServiceUpdateSettlementAccountAsyncWithHttpInfo($settlement_account_id, $body, $update_mask)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation settlementServiceUpdateSettlementAccountAsyncWithHttpInfo
+     *
+     * 更新结算账户
+     *
+     * @param  string $settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceUpdateSettlementAccountAsyncWithHttpInfo($settlement_account_id, $body, $update_mask = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountResponse';
+        $request = $this->settlementServiceUpdateSettlementAccountRequest($settlement_account_id, $body, $update_mask);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'settlementServiceUpdateSettlementAccount'
+     *
+     * @param  string $settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function settlementServiceUpdateSettlementAccountRequest($settlement_account_id, $body, $update_mask = null)
+    {
+        // verify the required parameter 'settlement_account_id' is set
+        if ($settlement_account_id === null || (is_array($settlement_account_id) && count($settlement_account_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $settlement_account_id when calling settlementServiceUpdateSettlementAccount'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling settlementServiceUpdateSettlementAccount'
+            );
+        }
+
+        $resourcePath = '/v1/settlement_accounts/{settlementAccount.id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($update_mask !== null) {
+            $queryParams['updateMask'] = ObjectSerializer::toQueryValue($update_mask);
+        }
+
+        // path params
+        if ($settlement_account_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'settlementAccount.id' . '}',
+                ObjectSerializer::toPathValue($settlement_account_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'PUT',
+            $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation settlementServiceUpdateSettlementAccount2
+     *
+     * 更新结算账户
+     *
+     * @param  string $settlement_account_id settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body body (required)
+     * @param  string $update_mask update_mask (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return \Justapnet\Justap\Model\V1SettlementAccountResponse
+     */
+    public function settlementServiceUpdateSettlementAccount2($settlement_account_id, $body, $update_mask = null)
+    {
+        list($response) = $this->settlementServiceUpdateSettlementAccount2WithHttpInfo($settlement_account_id, $body, $update_mask);
+        return $response;
+    }
+
+    /**
+     * Operation settlementServiceUpdateSettlementAccount2WithHttpInfo
+     *
+     * 更新结算账户
+     *
+     * @param  string $settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \Justapnet\Justap\ApiException on non-2xx response
+     * @throws \InvalidArgumentException
+     * @return array of \Justapnet\Justap\Model\V1SettlementAccountResponse, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function settlementServiceUpdateSettlementAccount2WithHttpInfo($settlement_account_id, $body, $update_mask = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountResponse';
+        $request = $this->settlementServiceUpdateSettlementAccount2Request($settlement_account_id, $body, $update_mask);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? $e->getResponse()->getBody()->getContents() : null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    $response->getBody()
+                );
+            }
+
+            $responseBody = $response->getBody();
+            if ($returnType === '\SplFileObject') {
+                $content = $responseBody; //stream goes to serializer
+            } else {
+                $content = $responseBody->getContents();
+                if ($returnType !== 'string') {
+                    $content = json_decode($content);
+                }
+            }
+
+            return [
+                ObjectSerializer::deserialize($content, $returnType, []),
+                $response->getStatusCode(),
+                $response->getHeaders()
+            ];
+
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\V1SettlementAccountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 401:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 403:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                case 503:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+                default:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\Justapnet\Justap\Model\RpcStatus',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    break;
+            }
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation settlementServiceUpdateSettlementAccount2Async
+     *
+     * 更新结算账户
+     *
+     * @param  string $settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceUpdateSettlementAccount2Async($settlement_account_id, $body, $update_mask = null)
+    {
+        return $this->settlementServiceUpdateSettlementAccount2AsyncWithHttpInfo($settlement_account_id, $body, $update_mask)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation settlementServiceUpdateSettlementAccount2AsyncWithHttpInfo
+     *
+     * 更新结算账户
+     *
+     * @param  string $settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function settlementServiceUpdateSettlementAccount2AsyncWithHttpInfo($settlement_account_id, $body, $update_mask = null)
+    {
+        $returnType = '\Justapnet\Justap\Model\V1SettlementAccountResponse';
+        $request = $this->settlementServiceUpdateSettlementAccount2Request($settlement_account_id, $body, $update_mask);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    $responseBody = $response->getBody();
+                    if ($returnType === '\SplFileObject') {
+                        $content = $responseBody; //stream goes to serializer
+                    } else {
+                        $content = $responseBody->getContents();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'settlementServiceUpdateSettlementAccount2'
+     *
+     * @param  string $settlement_account_id (required)
+     * @param  \Justapnet\Justap\Model\V1UpdateAndPatchRequestBody $body (required)
+     * @param  string $update_mask (optional)
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    protected function settlementServiceUpdateSettlementAccount2Request($settlement_account_id, $body, $update_mask = null)
+    {
+        // verify the required parameter 'settlement_account_id' is set
+        if ($settlement_account_id === null || (is_array($settlement_account_id) && count($settlement_account_id) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $settlement_account_id when calling settlementServiceUpdateSettlementAccount2'
+            );
+        }
+        // verify the required parameter 'body' is set
+        if ($body === null || (is_array($body) && count($body) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $body when calling settlementServiceUpdateSettlementAccount2'
+            );
+        }
+
+        $resourcePath = '/v1/settlement_accounts/{settlementAccount.id}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+        // query params
+        if ($update_mask !== null) {
+            $queryParams['updateMask'] = ObjectSerializer::toQueryValue($update_mask);
+        }
+
+        // path params
+        if ($settlement_account_id !== null) {
+            $resourcePath = str_replace(
+                '{' . 'settlementAccount.id' . '}',
+                ObjectSerializer::toPathValue($settlement_account_id),
+                $resourcePath
+            );
+        }
+
+        // body params
+        $_tempBody = null;
+        if (isset($body)) {
+            $_tempBody = $body;
+        }
+
+        if ($multipart) {
+            $headers = $this->headerSelector->selectHeadersForMultipart(
+                ['application/json']
+            );
+        } else {
+            $headers = $this->headerSelector->selectHeaders(
+                ['application/json'],
+                ['application/json']
+            );
+        }
+
+        // for model (json/xml)
+        if (isset($_tempBody)) {
+            // $_tempBody is the method argument, if present
+            $httpBody = $_tempBody;
+            
+            if($headers['Content-Type'] === 'application/json') {
+                // \stdClass has no __toString(), so we should encode it manually
+                if ($httpBody instanceof \stdClass) {
+                    $httpBody = \GuzzleHttp\json_encode($httpBody);
+                }
+                // array has no __toString(), so we should encode it manually
+                if(is_array($httpBody)) {
+                    $httpBody = \GuzzleHttp\json_encode(ObjectSerializer::sanitizeForSerialization($httpBody));
+                }
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $multipartContents[] = [
+                        'name' => $formParamName,
+                        'contents' => $formParamValue
+                    ];
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif ($headers['Content-Type'] === 'application/json') {
+                $httpBody = \GuzzleHttp\json_encode($formParams);
+
+            } else {
+                // for HTTP post (form)
+                $httpBody = \GuzzleHttp\Psr7\Query::build($formParams);
+            }
+        }
+
+        // this endpoint requires API key authentication
+        $apiKey = $this->config->getApiKeyWithPrefix('X-JUSTAP-API-KEY');
+        if ($apiKey !== null) {
+            $headers['X-JUSTAP-API-KEY'] = $apiKey;
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $query = \GuzzleHttp\Psr7\Query::build($queryParams);
+
+        // signature
+        $dataToBeSign = "";
+        $dataToBeSign .= $httpBody;
+        $requestTime = time();
+        $dataToBeSign .= $requestTime;
+        $nonceStr = rand_chars(32);
+        $dataToBeSign .= $nonceStr;
+
+        $bodyMd5 = md5($dataToBeSign);
+
+        $signResult = openssl_sign($bodyMd5.$nonceStr, $requestSignature, $this->config->getPrivateKey(), 'sha256');
+        if (!$signResult) {
+            throw new \Exception("Generate signature failed");
+        }
+        $headers['X-Justap-Signature'] = base64_encode($requestSignature);
+        $headers['X-Justap-Request-Time'] = $requestTime;
+        $headers['X-Justap-Nonce'] = $nonceStr;
+        $headers['X-Justap-Body-Hash'] = $bodyMd5;
+        // end signature
+
+        return new Request(
+            'PATCH',
             $this->config->getHost() . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody
