@@ -75,4 +75,25 @@ class V1AcquirerCreateRefundResponseTest extends \PHPUnit_Framework_TestCase
     public function testV1AcquirerCreateRefundResponse()
     {
     }
+
+    /**
+     * Test attribute "charge_id"
+     */
+    public function testPropertyChargeId()
+    {
+    }
+
+    /**
+     * Test attribute "error"
+     */
+    public function testPropertyError()
+    {
+    }
+
+    /**
+     * Test attribute "refund_id"
+     */
+    public function testPropertyRefundId()
+    {
+    }
 }

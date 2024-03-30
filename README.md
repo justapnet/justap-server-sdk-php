@@ -97,6 +97,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**chargeServiceCharges2**](docs/Api/DefaultApi.md#chargeservicecharges2) | **POST** /v1/charges | 创建 Charge 对象
 *DefaultApi* | [**chargeServiceQueryCharge**](docs/Api/DefaultApi.md#chargeservicequerycharge) | **GET** /transaction/v1/charges/{charge_id} | 查询 Charge 对象
 *DefaultApi* | [**chargeServiceQueryCharge2**](docs/Api/DefaultApi.md#chargeservicequerycharge2) | **GET** /v1/charges/{charge_id} | 查询 Charge 对象
+*DefaultApi* | [**chargeServiceQueryCharge3**](docs/Api/DefaultApi.md#chargeservicequerycharge3) | **GET** /v1/charges/merchant_trade_id/{merchant_trade_id} | 查询 Charge 对象
 *DefaultApi* | [**chargeServiceQueryChargeList**](docs/Api/DefaultApi.md#chargeservicequerychargelist) | **GET** /transaction/v1/charges | 查询 Charge 对象列表
 *DefaultApi* | [**chargeServiceQueryChargeList2**](docs/Api/DefaultApi.md#chargeservicequerychargelist2) | **GET** /v1/charges | 查询 Charge 对象列表
 *DefaultApi* | [**chargeServiceReverseCharge**](docs/Api/DefaultApi.md#chargeservicereversecharge) | **POST** /transaction/v1/charges/{charge_id}/reverse | 撤销 Charge 对象
@@ -132,10 +133,12 @@ Class | Method | HTTP request | Description
  - [CreateRoyaltyRequestRoyaltyMode](docs/Model/CreateRoyaltyRequestRoyaltyMode.md)
  - [CreateRoyaltyRequestRoyaltyReceiver](docs/Model/CreateRoyaltyRequestRoyaltyReceiver.md)
  - [ExtraAlipayInvoiceInfoKeyInfo](docs/Model/ExtraAlipayInvoiceInfoKeyInfo.md)
+ - [ExtraAlipayJSAPIPayer](docs/Model/ExtraAlipayJSAPIPayer.md)
  - [ExtraAlipaySettleInfoSettleDetailInfos](docs/Model/ExtraAlipaySettleInfoSettleDetailInfos.md)
  - [ExtraWechatpayDetailGoodsDetail](docs/Model/ExtraWechatpayDetailGoodsDetail.md)
  - [ExtraWechatpaySceneInfoH5Info](docs/Model/ExtraWechatpaySceneInfoH5Info.md)
  - [ExtraWechatpaySceneInfoStoreInfo](docs/Model/ExtraWechatpaySceneInfoStoreInfo.md)
+ - [GooglerpcStatus](docs/Model/GooglerpcStatus.md)
  - [OpenApiRoyaltyDetailInfoPojoTradeFundBillItem](docs/Model/OpenApiRoyaltyDetailInfoPojoTradeFundBillItem.md)
  - [ProtobufAny](docs/Model/ProtobufAny.md)
  - [RefundExtraAlipayOpenApiRoyaltyDetailInfoPojo](docs/Model/RefundExtraAlipayOpenApiRoyaltyDetailInfoPojo.md)
@@ -144,7 +147,7 @@ Class | Method | HTTP request | Description
  - [RefundRoutingRequestRefundMethod](docs/Model/RefundRoutingRequestRefundMethod.md)
  - [RoyaltyReceiverRoyaltyFeeMode](docs/Model/RoyaltyReceiverRoyaltyFeeMode.md)
  - [RoyaltySettlementRoyaltySettlementStatus](docs/Model/RoyaltySettlementRoyaltySettlementStatus.md)
- - [RpcStatus](docs/Model/RpcStatus.md)
+ - [RoyaltySettlementTransactionRoyaltyTransactionStatus](docs/Model/RoyaltySettlementTransactionRoyaltyTransactionStatus.md)
  - [SettlementAccountRecipientAccountType](docs/Model/SettlementAccountRecipientAccountType.md)
  - [SettlementAccountRecipientAlipayChannelRecipient](docs/Model/SettlementAccountRecipientAlipayChannelRecipient.md)
  - [SettlementAccountRecipientBalanceChannelRecipient](docs/Model/SettlementAccountRecipientBalanceChannelRecipient.md)
@@ -195,6 +198,7 @@ Class | Method | HTTP request | Description
  - [V1ExtraAlipayFundBillList](docs/Model/V1ExtraAlipayFundBillList.md)
  - [V1ExtraAlipayGoodsDetail](docs/Model/V1ExtraAlipayGoodsDetail.md)
  - [V1ExtraAlipayInvoiceInfo](docs/Model/V1ExtraAlipayInvoiceInfo.md)
+ - [V1ExtraAlipayJSAPI](docs/Model/V1ExtraAlipayJSAPI.md)
  - [V1ExtraAlipayLite](docs/Model/V1ExtraAlipayLite.md)
  - [V1ExtraAlipayLogisticsDetail](docs/Model/V1ExtraAlipayLogisticsDetail.md)
  - [V1ExtraAlipayPage](docs/Model/V1ExtraAlipayPage.md)
@@ -249,6 +253,7 @@ Class | Method | HTTP request | Description
  - [V1RoyaltySettlementTransaction](docs/Model/V1RoyaltySettlementTransaction.md)
  - [V1RoyaltySettlementTransactionListResponse](docs/Model/V1RoyaltySettlementTransactionListResponse.md)
  - [V1RoyaltySettlementTransactionResponse](docs/Model/V1RoyaltySettlementTransactionResponse.md)
+ - [V1RoyaltyStatus](docs/Model/V1RoyaltyStatus.md)
  - [V1SearchCustomersRequestCreated](docs/Model/V1SearchCustomersRequestCreated.md)
  - [V1SearchRoyaltiesResponse](docs/Model/V1SearchRoyaltiesResponse.md)
  - [V1SearchUsersRequestCreated](docs/Model/V1SearchUsersRequestCreated.md)

@@ -57,7 +57,9 @@ class V1AcquirerCreateRefundResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        
+        'charge_id' => 'int',
+        'error' => '\Justapnet\Justap\Model\V1ServiceError',
+        'refund_id' => 'int'
     ];
 
     /**
@@ -66,7 +68,9 @@ class V1AcquirerCreateRefundResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        
+        'charge_id' => 'int64',
+        'error' => null,
+        'refund_id' => 'int64'
     ];
 
     /**
@@ -96,7 +100,9 @@ class V1AcquirerCreateRefundResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        
+        'charge_id' => 'charge_id',
+        'error' => 'error',
+        'refund_id' => 'refund_id'
     ];
 
     /**
@@ -105,7 +111,9 @@ class V1AcquirerCreateRefundResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        
+        'charge_id' => 'setChargeId',
+        'error' => 'setError',
+        'refund_id' => 'setRefundId'
     ];
 
     /**
@@ -114,7 +122,9 @@ class V1AcquirerCreateRefundResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        
+        'charge_id' => 'getChargeId',
+        'error' => 'getError',
+        'refund_id' => 'getRefundId'
     ];
 
     /**
@@ -177,6 +187,9 @@ class V1AcquirerCreateRefundResponse implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['charge_id'] = isset($data['charge_id']) ? $data['charge_id'] : 0;
+        $this->container['error'] = isset($data['error']) ? $data['error'] : null;
+        $this->container['refund_id'] = isset($data['refund_id']) ? $data['refund_id'] : 0;
     }
 
     /**
@@ -188,6 +201,12 @@ class V1AcquirerCreateRefundResponse implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['charge_id'] === null) {
+            $invalidProperties[] = "'charge_id' can't be null";
+        }
+        if ($this->container['refund_id'] === null) {
+            $invalidProperties[] = "'refund_id' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -202,6 +221,78 @@ class V1AcquirerCreateRefundResponse implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets charge_id
+     *
+     * @return int
+     */
+    public function getChargeId()
+    {
+        return $this->container['charge_id'];
+    }
+
+    /**
+     * Sets charge_id
+     *
+     * @param int $charge_id 支付单 ID
+     *
+     * @return $this
+     */
+    public function setChargeId($charge_id)
+    {
+        $this->container['charge_id'] = $charge_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets error
+     *
+     * @return \Justapnet\Justap\Model\V1ServiceError
+     */
+    public function getError()
+    {
+        return $this->container['error'];
+    }
+
+    /**
+     * Sets error
+     *
+     * @param \Justapnet\Justap\Model\V1ServiceError $error error
+     *
+     * @return $this
+     */
+    public function setError($error)
+    {
+        $this->container['error'] = $error;
+
+        return $this;
+    }
+
+    /**
+     * Gets refund_id
+     *
+     * @return int
+     */
+    public function getRefundId()
+    {
+        return $this->container['refund_id'];
+    }
+
+    /**
+     * Sets refund_id
+     *
+     * @param int $refund_id 退款单号
+     *
+     * @return $this
+     */
+    public function setRefundId($refund_id)
+    {
+        $this->container['refund_id'] = $refund_id;
+
+        return $this;
+    }
     /**
      * Returns true if offset exists. False otherwise.
      *

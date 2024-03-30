@@ -182,6 +182,16 @@ class DefaultApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test case for chargeServiceQueryCharge3
+     *
+     * 查询 Charge 对象.
+     *
+     */
+    public function testChargeServiceQueryCharge3()
+    {
+    }
+
+    /**
      * Test case for chargeServiceQueryChargeList
      *
      * 查询 Charge 对象列表.

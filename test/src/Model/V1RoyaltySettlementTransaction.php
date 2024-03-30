@@ -66,7 +66,7 @@ class V1RoyaltySettlementTransaction implements ModelInterface, ArrayAccess
         'recipient_app_id' => 'string',
         'recipient_user_id' => 'string',
         'royalty_settlement_id' => 'string',
-        'status' => 'string',
+        'status' => '\Justapnet\Justap\Model\RoyaltySettlementTransactionRoyaltyTransactionStatus',
         'transfer_id' => 'string',
         'user_settlement_account_id' => 'string'
     ];
@@ -86,7 +86,7 @@ class V1RoyaltySettlementTransaction implements ModelInterface, ArrayAccess
         'recipient_app_id' => 'string',
         'recipient_user_id' => 'string',
         'royalty_settlement_id' => null,
-        'status' => 'string',
+        'status' => null,
         'transfer_id' => 'string',
         'user_settlement_account_id' => 'string'
     ];
@@ -272,9 +272,6 @@ class V1RoyaltySettlementTransaction implements ModelInterface, ArrayAccess
         }
         if ($this->container['recipient_user_id'] === null) {
             $invalidProperties[] = "'recipient_user_id' can't be null";
-        }
-        if ($this->container['status'] === null) {
-            $invalidProperties[] = "'status' can't be null";
         }
         if ($this->container['transfer_id'] === null) {
             $invalidProperties[] = "'transfer_id' can't be null";
@@ -516,7 +513,7 @@ class V1RoyaltySettlementTransaction implements ModelInterface, ArrayAccess
     /**
      * Gets status
      *
-     * @return string
+     * @return \Justapnet\Justap\Model\RoyaltySettlementTransactionRoyaltyTransactionStatus
      */
     public function getStatus()
     {
@@ -526,7 +523,7 @@ class V1RoyaltySettlementTransaction implements ModelInterface, ArrayAccess
     /**
      * Sets status
      *
-     * @param string $status 结算状态
+     * @param \Justapnet\Justap\Model\RoyaltySettlementTransactionRoyaltyTransactionStatus $status 结算状态
      *
      * @return $this
      */

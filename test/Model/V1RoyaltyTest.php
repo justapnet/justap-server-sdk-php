@@ -77,13 +77,6 @@ class V1RoyaltyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test attribute "amount"
-     */
-    public function testPropertyAmount()
-    {
-    }
-
-    /**
      * Test attribute "charge_id"
      */
     public function testPropertyChargeId()
@@ -171,13 +164,6 @@ class V1RoyaltyTest extends \PHPUnit_Framework_TestCase
      * Test attribute "royalty_settlement_id"
      */
     public function testPropertyRoyaltySettlementId()
-    {
-    }
-
-    /**
-     * Test attribute "royalty_settlement_transaction_id"
-     */
-    public function testPropertyRoyaltySettlementTransactionId()
     {
     }
 

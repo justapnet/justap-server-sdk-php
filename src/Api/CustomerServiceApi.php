@@ -213,7 +213,7 @@ class CustomerServiceApi
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Justapnet\Justap\Model\RpcStatus',
+                        '\Justapnet\Justap\Model\GooglerpcStatus',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -549,7 +549,7 @@ class CustomerServiceApi
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Justapnet\Justap\Model\RpcStatus',
+                        '\Justapnet\Justap\Model\GooglerpcStatus',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -911,7 +911,7 @@ class CustomerServiceApi
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Justapnet\Justap\Model\RpcStatus',
+                        '\Justapnet\Justap\Model\GooglerpcStatus',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1298,7 +1298,7 @@ class CustomerServiceApi
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Justapnet\Justap\Model\RpcStatus',
+                        '\Justapnet\Justap\Model\GooglerpcStatus',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1660,7 +1660,7 @@ class CustomerServiceApi
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Justapnet\Justap\Model\RpcStatus',
+                        '\Justapnet\Justap\Model\GooglerpcStatus',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -2045,7 +2045,7 @@ class CustomerServiceApi
                 default:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\Justapnet\Justap\Model\RpcStatus',
+                        '\Justapnet\Justap\Model\GooglerpcStatus',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);

@@ -15,6 +15,7 @@ Method | HTTP request | Description
 [**chargeServiceCharges2**](DefaultApi.md#chargeServiceCharges2) | **POST** /v1/charges | 创建 Charge 对象
 [**chargeServiceQueryCharge**](DefaultApi.md#chargeServiceQueryCharge) | **GET** /transaction/v1/charges/{charge_id} | 查询 Charge 对象
 [**chargeServiceQueryCharge2**](DefaultApi.md#chargeServiceQueryCharge2) | **GET** /v1/charges/{charge_id} | 查询 Charge 对象
+[**chargeServiceQueryCharge3**](DefaultApi.md#chargeServiceQueryCharge3) | **GET** /v1/charges/merchant_trade_id/{merchant_trade_id} | 查询 Charge 对象
 [**chargeServiceQueryChargeList**](DefaultApi.md#chargeServiceQueryChargeList) | **GET** /transaction/v1/charges | 查询 Charge 对象列表
 [**chargeServiceQueryChargeList2**](DefaultApi.md#chargeServiceQueryChargeList2) | **GET** /v1/charges | 查询 Charge 对象列表
 [**chargeServiceReverseCharge**](DefaultApi.md#chargeServiceReverseCharge) | **POST** /transaction/v1/charges/{charge_id}/reverse | 撤销 Charge 对象
@@ -577,7 +578,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **chargeServiceQueryCharge**
-> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceQueryCharge($charge_id, $app_id)
+> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceQueryCharge($charge_id, $app_id, $merchant_trade_id)
 
 查询 Charge 对象
 
@@ -601,9 +602,10 @@ $apiInstance = new Justapnet\Justap\Api\DefaultApi(
 );
 $charge_id = "charge_id_example"; // string | [REQUIRED] Charge 对象 id
 $app_id = "app_id_example"; // string | [REQUIRED] 应用 id
+$merchant_trade_id = "merchant_trade_id_example"; // string | [OPTIONAL] 商户订单号
 
 try {
-    $result = $apiInstance->chargeServiceQueryCharge($charge_id, $app_id);
+    $result = $apiInstance->chargeServiceQueryCharge($charge_id, $app_id, $merchant_trade_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling DefaultApi->chargeServiceQueryCharge: ', $e->getMessage(), PHP_EOL;
@@ -617,6 +619,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **charge_id** | **string**| [REQUIRED] Charge 对象 id |
  **app_id** | **string**| [REQUIRED] 应用 id | [optional]
+ **merchant_trade_id** | **string**| [OPTIONAL] 商户订单号 | [optional]
 
 ### Return type
 
@@ -634,7 +637,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **chargeServiceQueryCharge2**
-> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceQueryCharge2($charge_id, $app_id)
+> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceQueryCharge2($charge_id, $app_id, $merchant_trade_id)
 
 查询 Charge 对象
 
@@ -658,9 +661,10 @@ $apiInstance = new Justapnet\Justap\Api\DefaultApi(
 );
 $charge_id = "charge_id_example"; // string | [REQUIRED] Charge 对象 id
 $app_id = "app_id_example"; // string | [REQUIRED] 应用 id
+$merchant_trade_id = "merchant_trade_id_example"; // string | [OPTIONAL] 商户订单号
 
 try {
-    $result = $apiInstance->chargeServiceQueryCharge2($charge_id, $app_id);
+    $result = $apiInstance->chargeServiceQueryCharge2($charge_id, $app_id, $merchant_trade_id);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling DefaultApi->chargeServiceQueryCharge2: ', $e->getMessage(), PHP_EOL;
@@ -673,6 +677,66 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **charge_id** | **string**| [REQUIRED] Charge 对象 id |
+ **app_id** | **string**| [REQUIRED] 应用 id | [optional]
+ **merchant_trade_id** | **string**| [OPTIONAL] 商户订单号 | [optional]
+
+### Return type
+
+[**\Justapnet\Justap\Model\V1ChargeResponse**](../Model/V1ChargeResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../../README.md#ApiKeyAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
+
+# **chargeServiceQueryCharge3**
+> \Justapnet\Justap\Model\V1ChargeResponse chargeServiceQueryCharge3($merchant_trade_id, $charge_id, $app_id)
+
+查询 Charge 对象
+
+你可以在后台异步通知之前，通过查询接口确认支付状态。通过charge对象的id查询一个已创建的charge对象。
+
+### Example
+```php
+<?php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Configure API key authorization: ApiKeyAuth
+$config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKey('X-JUSTAP-API-KEY', 'YOUR_API_KEY');
+// Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+// $config = Justapnet\Justap\Configuration::getDefaultConfiguration()->setApiKeyPrefix('X-JUSTAP-API-KEY', 'Bearer');
+
+$apiInstance = new Justapnet\Justap\Api\DefaultApi(
+    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
+    // This is optional, `GuzzleHttp\Client` will be used as default.
+    new GuzzleHttp\Client(),
+    $config
+);
+$merchant_trade_id = "merchant_trade_id_example"; // string | [OPTIONAL] 商户订单号
+$charge_id = "charge_id_example"; // string | [REQUIRED] Charge 对象 id
+$app_id = "app_id_example"; // string | [REQUIRED] 应用 id
+
+try {
+    $result = $apiInstance->chargeServiceQueryCharge3($merchant_trade_id, $charge_id, $app_id);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling DefaultApi->chargeServiceQueryCharge3: ', $e->getMessage(), PHP_EOL;
+}
+?>
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **merchant_trade_id** | **string**| [OPTIONAL] 商户订单号 |
+ **charge_id** | **string**| [REQUIRED] Charge 对象 id | [optional]
  **app_id** | **string**| [REQUIRED] 应用 id | [optional]
 
 ### Return type

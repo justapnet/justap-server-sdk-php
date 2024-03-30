@@ -59,6 +59,7 @@ class V1CreateChargeRequestExtra implements ModelInterface, ArrayAccess
     protected static $swaggerTypes = [
         'alipay_app' => '\Justapnet\Justap\Model\V1ExtraAlipayApp',
         'alipay_face' => '\Justapnet\Justap\Model\V1ExtraAlipayFace',
+        'alipay_jsapi' => '\Justapnet\Justap\Model\V1ExtraAlipayJSAPI',
         'alipay_lite' => '\Justapnet\Justap\Model\V1ExtraAlipayLite',
         'alipay_page' => '\Justapnet\Justap\Model\V1ExtraAlipayPage',
         'alipay_qr' => '\Justapnet\Justap\Model\V1ExtraAlipayQr',
@@ -80,6 +81,7 @@ class V1CreateChargeRequestExtra implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'alipay_app' => null,
         'alipay_face' => null,
+        'alipay_jsapi' => null,
         'alipay_lite' => null,
         'alipay_page' => null,
         'alipay_qr' => null,
@@ -122,6 +124,7 @@ class V1CreateChargeRequestExtra implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'alipay_app' => 'alipay_app',
         'alipay_face' => 'alipay_face',
+        'alipay_jsapi' => 'alipay_jsapi',
         'alipay_lite' => 'alipay_lite',
         'alipay_page' => 'alipay_page',
         'alipay_qr' => 'alipay_qr',
@@ -143,6 +146,7 @@ class V1CreateChargeRequestExtra implements ModelInterface, ArrayAccess
     protected static $setters = [
         'alipay_app' => 'setAlipayApp',
         'alipay_face' => 'setAlipayFace',
+        'alipay_jsapi' => 'setAlipayJsapi',
         'alipay_lite' => 'setAlipayLite',
         'alipay_page' => 'setAlipayPage',
         'alipay_qr' => 'setAlipayQr',
@@ -164,6 +168,7 @@ class V1CreateChargeRequestExtra implements ModelInterface, ArrayAccess
     protected static $getters = [
         'alipay_app' => 'getAlipayApp',
         'alipay_face' => 'getAlipayFace',
+        'alipay_jsapi' => 'getAlipayJsapi',
         'alipay_lite' => 'getAlipayLite',
         'alipay_page' => 'getAlipayPage',
         'alipay_qr' => 'getAlipayQr',
@@ -239,6 +244,7 @@ class V1CreateChargeRequestExtra implements ModelInterface, ArrayAccess
     {
         $this->container['alipay_app'] = isset($data['alipay_app']) ? $data['alipay_app'] : null;
         $this->container['alipay_face'] = isset($data['alipay_face']) ? $data['alipay_face'] : null;
+        $this->container['alipay_jsapi'] = isset($data['alipay_jsapi']) ? $data['alipay_jsapi'] : null;
         $this->container['alipay_lite'] = isset($data['alipay_lite']) ? $data['alipay_lite'] : null;
         $this->container['alipay_page'] = isset($data['alipay_page']) ? $data['alipay_page'] : null;
         $this->container['alipay_qr'] = isset($data['alipay_qr']) ? $data['alipay_qr'] : null;
@@ -320,6 +326,30 @@ class V1CreateChargeRequestExtra implements ModelInterface, ArrayAccess
     public function setAlipayFace($alipay_face)
     {
         $this->container['alipay_face'] = $alipay_face;
+
+        return $this;
+    }
+
+    /**
+     * Gets alipay_jsapi
+     *
+     * @return \Justapnet\Justap\Model\V1ExtraAlipayJSAPI
+     */
+    public function getAlipayJsapi()
+    {
+        return $this->container['alipay_jsapi'];
+    }
+
+    /**
+     * Sets alipay_jsapi
+     *
+     * @param \Justapnet\Justap\Model\V1ExtraAlipayJSAPI $alipay_jsapi 支付宝 JSAPI 支付元数据
+     *
+     * @return $this
+     */
+    public function setAlipayJsapi($alipay_jsapi)
+    {
+        $this->container['alipay_jsapi'] = $alipay_jsapi;
 
         return $this;
     }

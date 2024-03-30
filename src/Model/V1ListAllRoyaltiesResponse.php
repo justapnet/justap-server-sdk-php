@@ -57,7 +57,7 @@ class V1ListAllRoyaltiesResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'data' => '\Justapnet\Justap\Model\V1Royalty',
+        'data' => '\Justapnet\Justap\Model\V1Royalty[]',
         'has_more' => 'bool',
         'object' => 'string'
     ];
@@ -228,7 +228,7 @@ class V1ListAllRoyaltiesResponse implements ModelInterface, ArrayAccess
     /**
      * Gets data
      *
-     * @return \Justapnet\Justap\Model\V1Royalty
+     * @return \Justapnet\Justap\Model\V1Royalty[]
      */
     public function getData()
     {
@@ -238,7 +238,7 @@ class V1ListAllRoyaltiesResponse implements ModelInterface, ArrayAccess
     /**
      * Sets data
      *
-     * @param \Justapnet\Justap\Model\V1Royalty $data 分账列表
+     * @param \Justapnet\Justap\Model\V1Royalty[] $data 分账列表
      *
      * @return $this
      */

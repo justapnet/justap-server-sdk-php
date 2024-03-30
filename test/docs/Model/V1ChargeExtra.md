@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **alipay_app** | [**\Justapnet\Justap\Model\V1ExtraAlipayApp**](V1ExtraAlipayApp.md) | 支付宝 App 支付渠道元数据 | [optional] 
 **alipay_face** | [**\Justapnet\Justap\Model\V1ExtraAlipayFace**](V1ExtraAlipayFace.md) | 支付宝 刷脸 支付渠道元数据 | [optional] 
+**alipay_jsapi** | [**\Justapnet\Justap\Model\V1ExtraAlipayJSAPI**](V1ExtraAlipayJSAPI.md) | 支付宝 JSAPI 支付渠道元数据 | [optional] 
 **alipay_lite** | [**\Justapnet\Justap\Model\V1ExtraAlipayLite**](V1ExtraAlipayLite.md) | 支付宝 小程序 支付渠道元数据 | [optional] 
 **alipay_page** | [**\Justapnet\Justap\Model\V1ExtraAlipayPage**](V1ExtraAlipayPage.md) | 支付宝 电脑网站 支付渠道元数据 | [optional] 
 **alipay_qr** | [**\Justapnet\Justap\Model\V1ExtraAlipayQr**](V1ExtraAlipayQr.md) | 支付宝 当面付 支付渠道元数据 | [optional] 

@@ -57,7 +57,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'amount' => 'float',
         'charge_id' => 'string',
         'created' => 'int',
         'description' => 'string',
@@ -71,8 +70,7 @@ class V1Royalty implements ModelInterface, ArrayAccess
         'payer_settle_account_id' => 'string',
         'payer_user_id' => 'string',
         'royalty_settlement_id' => 'string',
-        'royalty_settlement_transaction_id' => 'string',
-        'status' => 'string',
+        'status' => '\Justapnet\Justap\Model\V1RoyaltyStatus',
         'time_settled' => 'int'
     ];
 
@@ -82,7 +80,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'amount' => 'float',
         'charge_id' => 'string',
         'created' => 'int64',
         'description' => 'string',
@@ -96,8 +93,7 @@ class V1Royalty implements ModelInterface, ArrayAccess
         'payer_settle_account_id' => 'string',
         'payer_user_id' => 'string',
         'royalty_settlement_id' => 'string',
-        'royalty_settlement_transaction_id' => null,
-        'status' => 'string',
+        'status' => null,
         'time_settled' => 'int64'
     ];
 
@@ -128,7 +124,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'amount' => 'amount',
         'charge_id' => 'charge_id',
         'created' => 'created',
         'description' => 'description',
@@ -142,7 +137,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
         'payer_settle_account_id' => 'payer_settle_account_id',
         'payer_user_id' => 'payer_user_id',
         'royalty_settlement_id' => 'royalty_settlement_id',
-        'royalty_settlement_transaction_id' => 'royalty_settlement_transaction_id',
         'status' => 'status',
         'time_settled' => 'time_settled'
     ];
@@ -153,7 +147,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'amount' => 'setAmount',
         'charge_id' => 'setChargeId',
         'created' => 'setCreated',
         'description' => 'setDescription',
@@ -167,7 +160,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
         'payer_settle_account_id' => 'setPayerSettleAccountId',
         'payer_user_id' => 'setPayerUserId',
         'royalty_settlement_id' => 'setRoyaltySettlementId',
-        'royalty_settlement_transaction_id' => 'setRoyaltySettlementTransactionId',
         'status' => 'setStatus',
         'time_settled' => 'setTimeSettled'
     ];
@@ -178,7 +170,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'amount' => 'getAmount',
         'charge_id' => 'getChargeId',
         'created' => 'getCreated',
         'description' => 'getDescription',
@@ -192,7 +183,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
         'payer_settle_account_id' => 'getPayerSettleAccountId',
         'payer_user_id' => 'getPayerUserId',
         'royalty_settlement_id' => 'getRoyaltySettlementId',
-        'royalty_settlement_transaction_id' => 'getRoyaltySettlementTransactionId',
         'status' => 'getStatus',
         'time_settled' => 'getTimeSettled'
     ];
@@ -257,7 +247,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['amount'] = isset($data['amount']) ? $data['amount'] : null;
         $this->container['charge_id'] = isset($data['charge_id']) ? $data['charge_id'] : null;
         $this->container['created'] = isset($data['created']) ? $data['created'] : 0;
         $this->container['description'] = isset($data['description']) ? $data['description'] : null;
@@ -271,7 +260,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
         $this->container['payer_settle_account_id'] = isset($data['payer_settle_account_id']) ? $data['payer_settle_account_id'] : null;
         $this->container['payer_user_id'] = isset($data['payer_user_id']) ? $data['payer_user_id'] : null;
         $this->container['royalty_settlement_id'] = isset($data['royalty_settlement_id']) ? $data['royalty_settlement_id'] : null;
-        $this->container['royalty_settlement_transaction_id'] = isset($data['royalty_settlement_transaction_id']) ? $data['royalty_settlement_transaction_id'] : null;
         $this->container['status'] = isset($data['status']) ? $data['status'] : null;
         $this->container['time_settled'] = isset($data['time_settled']) ? $data['time_settled'] : 0;
     }
@@ -285,9 +273,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['amount'] === null) {
-            $invalidProperties[] = "'amount' can't be null";
-        }
         if ($this->container['charge_id'] === null) {
             $invalidProperties[] = "'charge_id' can't be null";
         }
@@ -344,30 +329,6 @@ class V1Royalty implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
-
-    /**
-     * Gets amount
-     *
-     * @return float
-     */
-    public function getAmount()
-    {
-        return $this->container['amount'];
-    }
-
-    /**
-     * Sets amount
-     *
-     * @param float $amount 分账金额
-     *
-     * @return $this
-     */
-    public function setAmount($amount)
-    {
-        $this->container['amount'] = $amount;
-
-        return $this;
-    }
 
     /**
      * Gets charge_id
@@ -682,33 +643,9 @@ class V1Royalty implements ModelInterface, ArrayAccess
     }
 
     /**
-     * Gets royalty_settlement_transaction_id
-     *
-     * @return string
-     */
-    public function getRoyaltySettlementTransactionId()
-    {
-        return $this->container['royalty_settlement_transaction_id'];
-    }
-
-    /**
-     * Sets royalty_settlement_transaction_id
-     *
-     * @param string $royalty_settlement_transaction_id royalty_settlement_transaction_id
-     *
-     * @return $this
-     */
-    public function setRoyaltySettlementTransactionId($royalty_settlement_transaction_id)
-    {
-        $this->container['royalty_settlement_transaction_id'] = $royalty_settlement_transaction_id;
-
-        return $this;
-    }
-
-    /**
      * Gets status
      *
-     * @return string
+     * @return \Justapnet\Justap\Model\V1RoyaltyStatus
      */
     public function getStatus()
     {
@@ -718,7 +655,7 @@ class V1Royalty implements ModelInterface, ArrayAccess
     /**
      * Sets status
      *
-     * @param string $status 分账状态
+     * @param \Justapnet\Justap\Model\V1RoyaltyStatus $status 分账状态
      *
      * @return $this
      */

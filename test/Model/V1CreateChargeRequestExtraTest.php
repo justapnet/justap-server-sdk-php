@@ -91,6 +91,13 @@ class V1CreateChargeRequestExtraTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "alipay_jsapi"
+     */
+    public function testPropertyAlipayJsapi()
+    {
+    }
+
+    /**
      * Test attribute "alipay_lite"
      */
     public function testPropertyAlipayLite()
