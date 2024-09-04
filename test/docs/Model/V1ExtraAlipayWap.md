@@ -5,6 +5,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **auth_token** | **string** | 授权码 | 
 **business_params** | **string** | 业务扩展参数 | 
+**direct_pay_form** | [**\Justapnet\Justap\Model\ExtraAlipayPageAlipayDirectPayForm**](ExtraAlipayPageAlipayDirectPayForm.md) |  | [optional] 
 **disable_pay_channels** | **string** | 禁用渠道 | 
 **enable_pay_channels** | **string** | 可用渠道 | 
 **extend_params** | [**\Justapnet\Justap\Model\V1ExtraAlipayExtendParams**](V1ExtraAlipayExtendParams.md) | 业务扩展参数 | [optional] 

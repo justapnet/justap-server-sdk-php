@@ -133,6 +133,13 @@ class V1ChargeExtraTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "unionpay_cardless_quick_pay"
+     */
+    public function testPropertyUnionpayCardlessQuickPay()
+    {
+    }
+
+    /**
      * Test attribute "wechatpay_app"
      */
     public function testPropertyWechatpayApp()

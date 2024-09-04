@@ -57,7 +57,8 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        
+        'error' => '\Justapnet\Justap\Model\V1ServiceError',
+        'royalty_id' => 'int'
     ];
 
     /**
@@ -66,7 +67,8 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        
+        'error' => null,
+        'royalty_id' => 'int64'
     ];
 
     /**
@@ -96,7 +98,8 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        
+        'error' => 'error',
+        'royalty_id' => 'royalty_id'
     ];
 
     /**
@@ -105,7 +108,8 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        
+        'error' => 'setError',
+        'royalty_id' => 'setRoyaltyId'
     ];
 
     /**
@@ -114,7 +118,8 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        
+        'error' => 'getError',
+        'royalty_id' => 'getRoyaltyId'
     ];
 
     /**
@@ -177,6 +182,8 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['error'] = isset($data['error']) ? $data['error'] : null;
+        $this->container['royalty_id'] = isset($data['royalty_id']) ? $data['royalty_id'] : 0;
     }
 
     /**
@@ -188,6 +195,9 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['royalty_id'] === null) {
+            $invalidProperties[] = "'royalty_id' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -202,6 +212,54 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets error
+     *
+     * @return \Justapnet\Justap\Model\V1ServiceError
+     */
+    public function getError()
+    {
+        return $this->container['error'];
+    }
+
+    /**
+     * Sets error
+     *
+     * @param \Justapnet\Justap\Model\V1ServiceError $error error
+     *
+     * @return $this
+     */
+    public function setError($error)
+    {
+        $this->container['error'] = $error;
+
+        return $this;
+    }
+
+    /**
+     * Gets royalty_id
+     *
+     * @return int
+     */
+    public function getRoyaltyId()
+    {
+        return $this->container['royalty_id'];
+    }
+
+    /**
+     * Sets royalty_id
+     *
+     * @param int $royalty_id 分账单号
+     *
+     * @return $this
+     */
+    public function setRoyaltyId($royalty_id)
+    {
+        $this->container['royalty_id'] = $royalty_id;
+
+        return $this;
+    }
     /**
      * Returns true if offset exists. False otherwise.
      *

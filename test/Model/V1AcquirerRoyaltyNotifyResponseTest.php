@@ -75,4 +75,18 @@ class V1AcquirerRoyaltyNotifyResponseTest extends \PHPUnit_Framework_TestCase
     public function testV1AcquirerRoyaltyNotifyResponse()
     {
     }
+
+    /**
+     * Test attribute "error"
+     */
+    public function testPropertyError()
+    {
+    }
+
+    /**
+     * Test attribute "royalty_id"
+     */
+    public function testPropertyRoyaltyId()
+    {
+    }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * V1CreateChargeRequestExtraTest
+ * ExtraAlipayPageAlipayDirectPayFormTest
  *
  * PHP version 5
  *
@@ -30,15 +30,15 @@
 namespace Justapnet\Justap;
 
 /**
- * V1CreateChargeRequestExtraTest Class Doc Comment
+ * ExtraAlipayPageAlipayDirectPayFormTest Class Doc Comment
  *
  * @category    Class
- * @description V1CreateChargeRequestExtra
+ * @description ExtraAlipayPageAlipayDirectPayForm
  * @package     Justapnet\Justap
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class V1CreateChargeRequestExtraTest extends \PHPUnit_Framework_TestCase
+class ExtraAlipayPageAlipayDirectPayFormTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -70,114 +70,23 @@ class V1CreateChargeRequestExtraTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "V1CreateChargeRequestExtra"
+     * Test "ExtraAlipayPageAlipayDirectPayForm"
      */
-    public function testV1CreateChargeRequestExtra()
+    public function testExtraAlipayPageAlipayDirectPayForm()
     {
     }
 
     /**
-     * Test attribute "alipay_app"
+     * Test attribute "form_action"
      */
-    public function testPropertyAlipayApp()
+    public function testPropertyFormAction()
     {
     }
 
     /**
-     * Test attribute "alipay_face"
+     * Test attribute "form_fields"
      */
-    public function testPropertyAlipayFace()
-    {
-    }
-
-    /**
-     * Test attribute "alipay_jsapi"
-     */
-    public function testPropertyAlipayJsapi()
-    {
-    }
-
-    /**
-     * Test attribute "alipay_lite"
-     */
-    public function testPropertyAlipayLite()
-    {
-    }
-
-    /**
-     * Test attribute "alipay_page"
-     */
-    public function testPropertyAlipayPage()
-    {
-    }
-
-    /**
-     * Test attribute "alipay_qr"
-     */
-    public function testPropertyAlipayQr()
-    {
-    }
-
-    /**
-     * Test attribute "alipay_scan"
-     */
-    public function testPropertyAlipayScan()
-    {
-    }
-
-    /**
-     * Test attribute "alipay_wap"
-     */
-    public function testPropertyAlipayWap()
-    {
-    }
-
-    /**
-     * Test attribute "unionpay_cardless_quick_pay"
-     */
-    public function testPropertyUnionpayCardlessQuickPay()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_app"
-     */
-    public function testPropertyWechatpayApp()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_h5"
-     */
-    public function testPropertyWechatpayH5()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_jsapi"
-     */
-    public function testPropertyWechatpayJsapi()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_lite"
-     */
-    public function testPropertyWechatpayLite()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_native"
-     */
-    public function testPropertyWechatpayNative()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_scan"
-     */
-    public function testPropertyWechatpayScan()
+    public function testPropertyFormFields()
     {
     }
 }

@@ -64,7 +64,9 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
         'description' => 'string',
         'extra' => '\Justapnet\Justap\Model\ProtobufAny',
         'merchant_refund_id' => 'string',
-        'metadata' => 'map[string,string]'
+        'metadata' => 'map[string,string]',
+        'notification_area' => 'string',
+        'notify_url' => 'string'
     ];
 
     /**
@@ -79,7 +81,9 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
         'description' => 'string',
         'extra' => null,
         'merchant_refund_id' => 'string',
-        'metadata' => null
+        'metadata' => null,
+        'notification_area' => 'string',
+        'notify_url' => null
     ];
 
     /**
@@ -115,7 +119,9 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
         'description' => 'description',
         'extra' => 'extra',
         'merchant_refund_id' => 'merchant_refund_id',
-        'metadata' => 'metadata'
+        'metadata' => 'metadata',
+        'notification_area' => 'notification_area',
+        'notify_url' => 'notify_url'
     ];
 
     /**
@@ -130,7 +136,9 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
         'description' => 'setDescription',
         'extra' => 'setExtra',
         'merchant_refund_id' => 'setMerchantRefundId',
-        'metadata' => 'setMetadata'
+        'metadata' => 'setMetadata',
+        'notification_area' => 'setNotificationArea',
+        'notify_url' => 'setNotifyUrl'
     ];
 
     /**
@@ -145,7 +153,9 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
         'description' => 'getDescription',
         'extra' => 'getExtra',
         'merchant_refund_id' => 'getMerchantRefundId',
-        'metadata' => 'getMetadata'
+        'metadata' => 'getMetadata',
+        'notification_area' => 'getNotificationArea',
+        'notify_url' => 'getNotifyUrl'
     ];
 
     /**
@@ -215,6 +225,8 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
         $this->container['extra'] = isset($data['extra']) ? $data['extra'] : null;
         $this->container['merchant_refund_id'] = isset($data['merchant_refund_id']) ? $data['merchant_refund_id'] : null;
         $this->container['metadata'] = isset($data['metadata']) ? $data['metadata'] : null;
+        $this->container['notification_area'] = isset($data['notification_area']) ? $data['notification_area'] : 'CN';
+        $this->container['notify_url'] = isset($data['notify_url']) ? $data['notify_url'] : null;
     }
 
     /**
@@ -240,6 +252,9 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
         }
         if ($this->container['merchant_refund_id'] === null) {
             $invalidProperties[] = "'merchant_refund_id' can't be null";
+        }
+        if ($this->container['notification_area'] === null) {
+            $invalidProperties[] = "'notification_area' can't be null";
         }
         return $invalidProperties;
     }
@@ -420,6 +435,54 @@ class V1CreateRefundRequest implements ModelInterface, ArrayAccess
     public function setMetadata($metadata)
     {
         $this->container['metadata'] = $metadata;
+
+        return $this;
+    }
+
+    /**
+     * Gets notification_area
+     *
+     * @return string
+     */
+    public function getNotificationArea()
+    {
+        return $this->container['notification_area'];
+    }
+
+    /**
+     * Sets notification_area
+     *
+     * @param string $notification_area [OPTIONAL] 接受通知服务器所在区域，为确保消息能够送达，请选择服务器所在国家的国家码。如不填默认为 CN
+     *
+     * @return $this
+     */
+    public function setNotificationArea($notification_area)
+    {
+        $this->container['notification_area'] = $notification_area;
+
+        return $this;
+    }
+
+    /**
+     * Gets notify_url
+     *
+     * @return string
+     */
+    public function getNotifyUrl()
+    {
+        return $this->container['notify_url'];
+    }
+
+    /**
+     * Sets notify_url
+     *
+     * @param string $notify_url [OPTIONAL] 退款成功后的异步通知地址。
+     *
+     * @return $this
+     */
+    public function setNotifyUrl($notify_url)
+    {
+        $this->container['notify_url'] = $notify_url;
 
         return $this;
     }

@@ -75,4 +75,18 @@ class V1AcquirerPaymentNotifyResponseTest extends \PHPUnit_Framework_TestCase
     public function testV1AcquirerPaymentNotifyResponse()
     {
     }
+
+    /**
+     * Test attribute "charge_id"
+     */
+    public function testPropertyChargeId()
+    {
+    }
+
+    /**
+     * Test attribute "error"
+     */
+    public function testPropertyError()
+    {
+    }
 }

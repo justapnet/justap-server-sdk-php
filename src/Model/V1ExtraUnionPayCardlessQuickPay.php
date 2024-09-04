@@ -1,6 +1,6 @@
 <?php
 /**
- * V1AcquirerRoyaltyNotifyResponse
+ * V1ExtraUnionPayCardlessQuickPay
  *
  * PHP version 5
  *
@@ -33,14 +33,14 @@ use \ArrayAccess;
 use \Justapnet\Justap\ObjectSerializer;
 
 /**
- * V1AcquirerRoyaltyNotifyResponse Class Doc Comment
+ * V1ExtraUnionPayCardlessQuickPay Class Doc Comment
  *
  * @category Class
  * @package  Justapnet\Justap
  * @author   Swagger Codegen team
  * @link     https://github.com/swagger-api/swagger-codegen
  */
-class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
+class V1ExtraUnionPayCardlessQuickPay implements ModelInterface, ArrayAccess
 {
     const DISCRIMINATOR = null;
 
@@ -49,7 +49,7 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
       *
       * @var string
       */
-    protected static $swaggerModelName = 'v1AcquirerRoyaltyNotifyResponse';
+    protected static $swaggerModelName = 'v1ExtraUnionPayCardlessQuickPay';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -57,8 +57,16 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        'error' => '\Justapnet\Justap\Model\V1ServiceError',
-        'royalty_id' => 'int'
+        'bank_account_type' => 'string',
+        'bank_name' => 'string',
+        'bank_type' => 'string',
+        'buyer_card_number' => 'string',
+        'buyer_id_no' => 'string',
+        'buyer_mobile' => 'string',
+        'buyer_name' => 'string',
+        'credit_card_cvn2' => 'string',
+        'credit_card_expiry' => 'string',
+        'support_card_type' => '\Justapnet\Justap\Model\ExtraUnionPayCardlessQuickPayCardType'
     ];
 
     /**
@@ -67,8 +75,16 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        'error' => null,
-        'royalty_id' => 'int64'
+        'bank_account_type' => 'string',
+        'bank_name' => 'string',
+        'bank_type' => 'string',
+        'buyer_card_number' => 'string',
+        'buyer_id_no' => 'string',
+        'buyer_mobile' => 'string',
+        'buyer_name' => 'string',
+        'credit_card_cvn2' => 'string',
+        'credit_card_expiry' => 'string',
+        'support_card_type' => null
     ];
 
     /**
@@ -98,8 +114,16 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        'error' => 'error',
-        'royalty_id' => 'royalty_id'
+        'bank_account_type' => 'bank_account_type',
+        'bank_name' => 'bank_name',
+        'bank_type' => 'bank_type',
+        'buyer_card_number' => 'buyer_card_number',
+        'buyer_id_no' => 'buyer_id_no',
+        'buyer_mobile' => 'buyer_mobile',
+        'buyer_name' => 'buyer_name',
+        'credit_card_cvn2' => 'credit_card_cvn2',
+        'credit_card_expiry' => 'credit_card_expiry',
+        'support_card_type' => 'support_card_type'
     ];
 
     /**
@@ -108,8 +132,16 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        'error' => 'setError',
-        'royalty_id' => 'setRoyaltyId'
+        'bank_account_type' => 'setBankAccountType',
+        'bank_name' => 'setBankName',
+        'bank_type' => 'setBankType',
+        'buyer_card_number' => 'setBuyerCardNumber',
+        'buyer_id_no' => 'setBuyerIdNo',
+        'buyer_mobile' => 'setBuyerMobile',
+        'buyer_name' => 'setBuyerName',
+        'credit_card_cvn2' => 'setCreditCardCvn2',
+        'credit_card_expiry' => 'setCreditCardExpiry',
+        'support_card_type' => 'setSupportCardType'
     ];
 
     /**
@@ -118,8 +150,16 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        'error' => 'getError',
-        'royalty_id' => 'getRoyaltyId'
+        'bank_account_type' => 'getBankAccountType',
+        'bank_name' => 'getBankName',
+        'bank_type' => 'getBankType',
+        'buyer_card_number' => 'getBuyerCardNumber',
+        'buyer_id_no' => 'getBuyerIdNo',
+        'buyer_mobile' => 'getBuyerMobile',
+        'buyer_name' => 'getBuyerName',
+        'credit_card_cvn2' => 'getCreditCardCvn2',
+        'credit_card_expiry' => 'getCreditCardExpiry',
+        'support_card_type' => 'getSupportCardType'
     ];
 
     /**
@@ -182,8 +222,16 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
-        $this->container['error'] = isset($data['error']) ? $data['error'] : null;
-        $this->container['royalty_id'] = isset($data['royalty_id']) ? $data['royalty_id'] : 0;
+        $this->container['bank_account_type'] = isset($data['bank_account_type']) ? $data['bank_account_type'] : 'personal';
+        $this->container['bank_name'] = isset($data['bank_name']) ? $data['bank_name'] : null;
+        $this->container['bank_type'] = isset($data['bank_type']) ? $data['bank_type'] : null;
+        $this->container['buyer_card_number'] = isset($data['buyer_card_number']) ? $data['buyer_card_number'] : null;
+        $this->container['buyer_id_no'] = isset($data['buyer_id_no']) ? $data['buyer_id_no'] : null;
+        $this->container['buyer_mobile'] = isset($data['buyer_mobile']) ? $data['buyer_mobile'] : null;
+        $this->container['buyer_name'] = isset($data['buyer_name']) ? $data['buyer_name'] : null;
+        $this->container['credit_card_cvn2'] = isset($data['credit_card_cvn2']) ? $data['credit_card_cvn2'] : null;
+        $this->container['credit_card_expiry'] = isset($data['credit_card_expiry']) ? $data['credit_card_expiry'] : null;
+        $this->container['support_card_type'] = isset($data['support_card_type']) ? $data['support_card_type'] : null;
     }
 
     /**
@@ -195,8 +243,35 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
-        if ($this->container['royalty_id'] === null) {
-            $invalidProperties[] = "'royalty_id' can't be null";
+        if ($this->container['bank_account_type'] === null) {
+            $invalidProperties[] = "'bank_account_type' can't be null";
+        }
+        if ($this->container['bank_name'] === null) {
+            $invalidProperties[] = "'bank_name' can't be null";
+        }
+        if ($this->container['bank_type'] === null) {
+            $invalidProperties[] = "'bank_type' can't be null";
+        }
+        if ($this->container['buyer_card_number'] === null) {
+            $invalidProperties[] = "'buyer_card_number' can't be null";
+        }
+        if ($this->container['buyer_id_no'] === null) {
+            $invalidProperties[] = "'buyer_id_no' can't be null";
+        }
+        if ($this->container['buyer_mobile'] === null) {
+            $invalidProperties[] = "'buyer_mobile' can't be null";
+        }
+        if ($this->container['buyer_name'] === null) {
+            $invalidProperties[] = "'buyer_name' can't be null";
+        }
+        if ($this->container['credit_card_cvn2'] === null) {
+            $invalidProperties[] = "'credit_card_cvn2' can't be null";
+        }
+        if ($this->container['credit_card_expiry'] === null) {
+            $invalidProperties[] = "'credit_card_expiry' can't be null";
+        }
+        if ($this->container['support_card_type'] === null) {
+            $invalidProperties[] = "'support_card_type' can't be null";
         }
         return $invalidProperties;
     }
@@ -214,49 +289,241 @@ class V1AcquirerRoyaltyNotifyResponse implements ModelInterface, ArrayAccess
 
 
     /**
-     * Gets error
+     * Gets bank_account_type
      *
-     * @return \Justapnet\Justap\Model\V1ServiceError
+     * @return string
      */
-    public function getError()
+    public function getBankAccountType()
     {
-        return $this->container['error'];
+        return $this->container['bank_account_type'];
     }
 
     /**
-     * Sets error
+     * Sets bank_account_type
      *
-     * @param \Justapnet\Justap\Model\V1ServiceError $error error
+     * @param string $bank_account_type 银行卡类型
      *
      * @return $this
      */
-    public function setError($error)
+    public function setBankAccountType($bank_account_type)
     {
-        $this->container['error'] = $error;
+        $this->container['bank_account_type'] = $bank_account_type;
 
         return $this;
     }
 
     /**
-     * Gets royalty_id
+     * Gets bank_name
      *
-     * @return int
+     * @return string
      */
-    public function getRoyaltyId()
+    public function getBankName()
     {
-        return $this->container['royalty_id'];
+        return $this->container['bank_name'];
     }
 
     /**
-     * Sets royalty_id
+     * Sets bank_name
      *
-     * @param int $royalty_id 分账单号
+     * @param string $bank_name 银行名称
      *
      * @return $this
      */
-    public function setRoyaltyId($royalty_id)
+    public function setBankName($bank_name)
     {
-        $this->container['royalty_id'] = $royalty_id;
+        $this->container['bank_name'] = $bank_name;
+
+        return $this;
+    }
+
+    /**
+     * Gets bank_type
+     *
+     * @return string
+     */
+    public function getBankType()
+    {
+        return $this->container['bank_type'];
+    }
+
+    /**
+     * Sets bank_type
+     *
+     * @param string $bank_type 银行类型
+     *
+     * @return $this
+     */
+    public function setBankType($bank_type)
+    {
+        $this->container['bank_type'] = $bank_type;
+
+        return $this;
+    }
+
+    /**
+     * Gets buyer_card_number
+     *
+     * @return string
+     */
+    public function getBuyerCardNumber()
+    {
+        return $this->container['buyer_card_number'];
+    }
+
+    /**
+     * Sets buyer_card_number
+     *
+     * @param string $buyer_card_number 付款方银行卡号
+     *
+     * @return $this
+     */
+    public function setBuyerCardNumber($buyer_card_number)
+    {
+        $this->container['buyer_card_number'] = $buyer_card_number;
+
+        return $this;
+    }
+
+    /**
+     * Gets buyer_id_no
+     *
+     * @return string
+     */
+    public function getBuyerIdNo()
+    {
+        return $this->container['buyer_id_no'];
+    }
+
+    /**
+     * Sets buyer_id_no
+     *
+     * @param string $buyer_id_no 付款方身份证号
+     *
+     * @return $this
+     */
+    public function setBuyerIdNo($buyer_id_no)
+    {
+        $this->container['buyer_id_no'] = $buyer_id_no;
+
+        return $this;
+    }
+
+    /**
+     * Gets buyer_mobile
+     *
+     * @return string
+     */
+    public function getBuyerMobile()
+    {
+        return $this->container['buyer_mobile'];
+    }
+
+    /**
+     * Sets buyer_mobile
+     *
+     * @param string $buyer_mobile 付款方银行预留手机号
+     *
+     * @return $this
+     */
+    public function setBuyerMobile($buyer_mobile)
+    {
+        $this->container['buyer_mobile'] = $buyer_mobile;
+
+        return $this;
+    }
+
+    /**
+     * Gets buyer_name
+     *
+     * @return string
+     */
+    public function getBuyerName()
+    {
+        return $this->container['buyer_name'];
+    }
+
+    /**
+     * Sets buyer_name
+     *
+     * @param string $buyer_name 付款方银行姓名
+     *
+     * @return $this
+     */
+    public function setBuyerName($buyer_name)
+    {
+        $this->container['buyer_name'] = $buyer_name;
+
+        return $this;
+    }
+
+    /**
+     * Gets credit_card_cvn2
+     *
+     * @return string
+     */
+    public function getCreditCardCvn2()
+    {
+        return $this->container['credit_card_cvn2'];
+    }
+
+    /**
+     * Sets credit_card_cvn2
+     *
+     * @param string $credit_card_cvn2 信用卡背面的末三位数字
+     *
+     * @return $this
+     */
+    public function setCreditCardCvn2($credit_card_cvn2)
+    {
+        $this->container['credit_card_cvn2'] = $credit_card_cvn2;
+
+        return $this;
+    }
+
+    /**
+     * Gets credit_card_expiry
+     *
+     * @return string
+     */
+    public function getCreditCardExpiry()
+    {
+        return $this->container['credit_card_expiry'];
+    }
+
+    /**
+     * Sets credit_card_expiry
+     *
+     * @param string $credit_card_expiry 信用卡有效期
+     *
+     * @return $this
+     */
+    public function setCreditCardExpiry($credit_card_expiry)
+    {
+        $this->container['credit_card_expiry'] = $credit_card_expiry;
+
+        return $this;
+    }
+
+    /**
+     * Gets support_card_type
+     *
+     * @return \Justapnet\Justap\Model\ExtraUnionPayCardlessQuickPayCardType
+     */
+    public function getSupportCardType()
+    {
+        return $this->container['support_card_type'];
+    }
+
+    /**
+     * Sets support_card_type
+     *
+     * @param \Justapnet\Justap\Model\ExtraUnionPayCardlessQuickPayCardType $support_card_type 支持的银行卡类型
+     *
+     * @return $this
+     */
+    public function setSupportCardType($support_card_type)
+    {
+        $this->container['support_card_type'] = $support_card_type;
 
         return $this;
     }

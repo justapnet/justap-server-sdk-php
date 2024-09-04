@@ -71,6 +71,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
         'metadata' => 'map[string,string]',
         'notification_area' => 'string',
         'notify_url' => 'string',
+        'source' => 'string',
         'subject' => 'string',
         'ttl' => 'int'
     ];
@@ -94,6 +95,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
         'metadata' => null,
         'notification_area' => 'string',
         'notify_url' => 'string',
+        'source' => 'string',
         'subject' => 'string',
         'ttl' => 'int32'
     ];
@@ -138,6 +140,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
         'metadata' => 'metadata',
         'notification_area' => 'notification_area',
         'notify_url' => 'notify_url',
+        'source' => 'source',
         'subject' => 'subject',
         'ttl' => 'ttl'
     ];
@@ -161,6 +164,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
         'metadata' => 'setMetadata',
         'notification_area' => 'setNotificationArea',
         'notify_url' => 'setNotifyUrl',
+        'source' => 'setSource',
         'subject' => 'setSubject',
         'ttl' => 'setTtl'
     ];
@@ -184,6 +188,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
         'metadata' => 'getMetadata',
         'notification_area' => 'getNotificationArea',
         'notify_url' => 'getNotifyUrl',
+        'source' => 'getSource',
         'subject' => 'getSubject',
         'ttl' => 'getTtl'
     ];
@@ -261,6 +266,7 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
         $this->container['metadata'] = isset($data['metadata']) ? $data['metadata'] : null;
         $this->container['notification_area'] = isset($data['notification_area']) ? $data['notification_area'] : 'CN';
         $this->container['notify_url'] = isset($data['notify_url']) ? $data['notify_url'] : null;
+        $this->container['source'] = isset($data['source']) ? $data['source'] : 'Default';
         $this->container['subject'] = isset($data['subject']) ? $data['subject'] : null;
         $this->container['ttl'] = isset($data['ttl']) ? $data['ttl'] : null;
     }
@@ -306,6 +312,9 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
         }
         if ($this->container['notify_url'] === null) {
             $invalidProperties[] = "'notify_url' can't be null";
+        }
+        if ($this->container['source'] === null) {
+            $invalidProperties[] = "'source' can't be null";
         }
         if ($this->container['subject'] === null) {
             $invalidProperties[] = "'subject' can't be null";
@@ -636,6 +645,30 @@ class V1CreateChargeRequest implements ModelInterface, ArrayAccess
     public function setNotifyUrl($notify_url)
     {
         $this->container['notify_url'] = $notify_url;
+
+        return $this;
+    }
+
+    /**
+     * Gets source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->container['source'];
+    }
+
+    /**
+     * Sets source
+     *
+     * @param string $source [OPTIONAL] 支付来源。固定值: DEFAULT
+     *
+     * @return $this
+     */
+    public function setSource($source)
+    {
+        $this->container['source'] = $source;
 
         return $this;
     }

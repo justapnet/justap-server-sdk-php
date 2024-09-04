@@ -84,6 +84,13 @@ class V1ExtraAlipayPageTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "direct_pay_form"
+     */
+    public function testPropertyDirectPayForm()
+    {
+    }
+
+    /**
      * Test attribute "disable_pay_channels"
      */
     public function testPropertyDisablePayChannels()

@@ -1,6 +1,6 @@
 <?php
 /**
- * V1CreateChargeRequestExtraTest
+ * V1ExtraUnionPayCardlessQuickPayTest
  *
  * PHP version 5
  *
@@ -30,15 +30,15 @@
 namespace Justapnet\Justap;
 
 /**
- * V1CreateChargeRequestExtraTest Class Doc Comment
+ * V1ExtraUnionPayCardlessQuickPayTest Class Doc Comment
  *
  * @category    Class
- * @description V1CreateChargeRequestExtra
+ * @description V1ExtraUnionPayCardlessQuickPay
  * @package     Justapnet\Justap
  * @author      Swagger Codegen team
  * @link        https://github.com/swagger-api/swagger-codegen
  */
-class V1CreateChargeRequestExtraTest extends \PHPUnit_Framework_TestCase
+class V1ExtraUnionPayCardlessQuickPayTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -70,114 +70,79 @@ class V1CreateChargeRequestExtraTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test "V1CreateChargeRequestExtra"
+     * Test "V1ExtraUnionPayCardlessQuickPay"
      */
-    public function testV1CreateChargeRequestExtra()
+    public function testV1ExtraUnionPayCardlessQuickPay()
     {
     }
 
     /**
-     * Test attribute "alipay_app"
+     * Test attribute "bank_account_type"
      */
-    public function testPropertyAlipayApp()
+    public function testPropertyBankAccountType()
     {
     }
 
     /**
-     * Test attribute "alipay_face"
+     * Test attribute "bank_name"
      */
-    public function testPropertyAlipayFace()
+    public function testPropertyBankName()
     {
     }
 
     /**
-     * Test attribute "alipay_jsapi"
+     * Test attribute "bank_type"
      */
-    public function testPropertyAlipayJsapi()
+    public function testPropertyBankType()
     {
     }
 
     /**
-     * Test attribute "alipay_lite"
+     * Test attribute "buyer_card_number"
      */
-    public function testPropertyAlipayLite()
+    public function testPropertyBuyerCardNumber()
     {
     }
 
     /**
-     * Test attribute "alipay_page"
+     * Test attribute "buyer_id_no"
      */
-    public function testPropertyAlipayPage()
+    public function testPropertyBuyerIdNo()
     {
     }
 
     /**
-     * Test attribute "alipay_qr"
+     * Test attribute "buyer_mobile"
      */
-    public function testPropertyAlipayQr()
+    public function testPropertyBuyerMobile()
     {
     }
 
     /**
-     * Test attribute "alipay_scan"
+     * Test attribute "buyer_name"
      */
-    public function testPropertyAlipayScan()
+    public function testPropertyBuyerName()
     {
     }
 
     /**
-     * Test attribute "alipay_wap"
+     * Test attribute "credit_card_cvn2"
      */
-    public function testPropertyAlipayWap()
+    public function testPropertyCreditCardCvn2()
     {
     }
 
     /**
-     * Test attribute "unionpay_cardless_quick_pay"
+     * Test attribute "credit_card_expiry"
      */
-    public function testPropertyUnionpayCardlessQuickPay()
+    public function testPropertyCreditCardExpiry()
     {
     }
 
     /**
-     * Test attribute "wechatpay_app"
+     * Test attribute "support_card_type"
      */
-    public function testPropertyWechatpayApp()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_h5"
-     */
-    public function testPropertyWechatpayH5()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_jsapi"
-     */
-    public function testPropertyWechatpayJsapi()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_lite"
-     */
-    public function testPropertyWechatpayLite()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_native"
-     */
-    public function testPropertyWechatpayNative()
-    {
-    }
-
-    /**
-     * Test attribute "wechatpay_scan"
-     */
-    public function testPropertyWechatpayScan()
+    public function testPropertySupportCardType()
     {
     }
 }

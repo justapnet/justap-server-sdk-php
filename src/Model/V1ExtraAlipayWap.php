@@ -59,6 +59,7 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     protected static $swaggerTypes = [
         'auth_token' => 'string',
         'business_params' => 'string',
+        'direct_pay_form' => '\Justapnet\Justap\Model\ExtraAlipayPageAlipayDirectPayForm',
         'disable_pay_channels' => 'string',
         'enable_pay_channels' => 'string',
         'extend_params' => '\Justapnet\Justap\Model\V1ExtraAlipayExtendParams',
@@ -84,6 +85,7 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     protected static $swaggerFormats = [
         'auth_token' => 'string',
         'business_params' => 'string',
+        'direct_pay_form' => null,
         'disable_pay_channels' => 'string',
         'enable_pay_channels' => 'string',
         'extend_params' => null,
@@ -130,6 +132,7 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     protected static $attributeMap = [
         'auth_token' => 'auth_token',
         'business_params' => 'business_params',
+        'direct_pay_form' => 'direct_pay_form',
         'disable_pay_channels' => 'disable_pay_channels',
         'enable_pay_channels' => 'enable_pay_channels',
         'extend_params' => 'extend_params',
@@ -155,6 +158,7 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     protected static $setters = [
         'auth_token' => 'setAuthToken',
         'business_params' => 'setBusinessParams',
+        'direct_pay_form' => 'setDirectPayForm',
         'disable_pay_channels' => 'setDisablePayChannels',
         'enable_pay_channels' => 'setEnablePayChannels',
         'extend_params' => 'setExtendParams',
@@ -180,6 +184,7 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     protected static $getters = [
         'auth_token' => 'getAuthToken',
         'business_params' => 'getBusinessParams',
+        'direct_pay_form' => 'getDirectPayForm',
         'disable_pay_channels' => 'getDisablePayChannels',
         'enable_pay_channels' => 'getEnablePayChannels',
         'extend_params' => 'getExtendParams',
@@ -259,6 +264,7 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     {
         $this->container['auth_token'] = isset($data['auth_token']) ? $data['auth_token'] : null;
         $this->container['business_params'] = isset($data['business_params']) ? $data['business_params'] : null;
+        $this->container['direct_pay_form'] = isset($data['direct_pay_form']) ? $data['direct_pay_form'] : null;
         $this->container['disable_pay_channels'] = isset($data['disable_pay_channels']) ? $data['disable_pay_channels'] : null;
         $this->container['enable_pay_channels'] = isset($data['enable_pay_channels']) ? $data['enable_pay_channels'] : null;
         $this->container['extend_params'] = isset($data['extend_params']) ? $data['extend_params'] : null;
@@ -383,6 +389,30 @@ class V1ExtraAlipayWap implements ModelInterface, ArrayAccess
     public function setBusinessParams($business_params)
     {
         $this->container['business_params'] = $business_params;
+
+        return $this;
+    }
+
+    /**
+     * Gets direct_pay_form
+     *
+     * @return \Justapnet\Justap\Model\ExtraAlipayPageAlipayDirectPayForm
+     */
+    public function getDirectPayForm()
+    {
+        return $this->container['direct_pay_form'];
+    }
+
+    /**
+     * Sets direct_pay_form
+     *
+     * @param \Justapnet\Justap\Model\ExtraAlipayPageAlipayDirectPayForm $direct_pay_form direct_pay_form
+     *
+     * @return $this
+     */
+    public function setDirectPayForm($direct_pay_form)
+    {
+        $this->container['direct_pay_form'] = $direct_pay_form;
 
         return $this;
     }

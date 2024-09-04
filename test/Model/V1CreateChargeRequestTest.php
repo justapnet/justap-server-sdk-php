@@ -168,6 +168,13 @@ class V1CreateChargeRequestTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test attribute "source"
+     */
+    public function testPropertySource()
+    {
+    }
+
+    /**
      * Test attribute "subject"
      */
     public function testPropertySubject()

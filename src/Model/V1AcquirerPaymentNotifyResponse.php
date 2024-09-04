@@ -57,7 +57,8 @@ class V1AcquirerPaymentNotifyResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerTypes = [
-        
+        'charge_id' => 'int',
+        'error' => '\Justapnet\Justap\Model\V1ServiceError'
     ];
 
     /**
@@ -66,7 +67,8 @@ class V1AcquirerPaymentNotifyResponse implements ModelInterface, ArrayAccess
       * @var string[]
       */
     protected static $swaggerFormats = [
-        
+        'charge_id' => 'int64',
+        'error' => null
     ];
 
     /**
@@ -96,7 +98,8 @@ class V1AcquirerPaymentNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $attributeMap = [
-        
+        'charge_id' => 'charge_id',
+        'error' => 'error'
     ];
 
     /**
@@ -105,7 +108,8 @@ class V1AcquirerPaymentNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $setters = [
-        
+        'charge_id' => 'setChargeId',
+        'error' => 'setError'
     ];
 
     /**
@@ -114,7 +118,8 @@ class V1AcquirerPaymentNotifyResponse implements ModelInterface, ArrayAccess
      * @var string[]
      */
     protected static $getters = [
-        
+        'charge_id' => 'getChargeId',
+        'error' => 'getError'
     ];
 
     /**
@@ -177,6 +182,8 @@ class V1AcquirerPaymentNotifyResponse implements ModelInterface, ArrayAccess
      */
     public function __construct(array $data = null)
     {
+        $this->container['charge_id'] = isset($data['charge_id']) ? $data['charge_id'] : 0;
+        $this->container['error'] = isset($data['error']) ? $data['error'] : null;
     }
 
     /**
@@ -188,6 +195,9 @@ class V1AcquirerPaymentNotifyResponse implements ModelInterface, ArrayAccess
     {
         $invalidProperties = [];
 
+        if ($this->container['charge_id'] === null) {
+            $invalidProperties[] = "'charge_id' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -202,6 +212,54 @@ class V1AcquirerPaymentNotifyResponse implements ModelInterface, ArrayAccess
         return count($this->listInvalidProperties()) === 0;
     }
 
+
+    /**
+     * Gets charge_id
+     *
+     * @return int
+     */
+    public function getChargeId()
+    {
+        return $this->container['charge_id'];
+    }
+
+    /**
+     * Sets charge_id
+     *
+     * @param int $charge_id 支付单 ID
+     *
+     * @return $this
+     */
+    public function setChargeId($charge_id)
+    {
+        $this->container['charge_id'] = $charge_id;
+
+        return $this;
+    }
+
+    /**
+     * Gets error
+     *
+     * @return \Justapnet\Justap\Model\V1ServiceError
+     */
+    public function getError()
+    {
+        return $this->container['error'];
+    }
+
+    /**
+     * Sets error
+     *
+     * @param \Justapnet\Justap\Model\V1ServiceError $error error
+     *
+     * @return $this
+     */
+    public function setError($error)
+    {
+        $this->container['error'] = $error;
+
+        return $this;
+    }
     /**
      * Returns true if offset exists. False otherwise.
      *

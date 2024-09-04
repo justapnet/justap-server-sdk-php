@@ -65,6 +65,7 @@ class V1ChargeExtra implements ModelInterface, ArrayAccess
         'alipay_qr' => '\Justapnet\Justap\Model\V1ExtraAlipayQr',
         'alipay_scan' => '\Justapnet\Justap\Model\V1ExtraAlipayScan',
         'alipay_wap' => '\Justapnet\Justap\Model\V1ExtraAlipayWap',
+        'unionpay_cardless_quick_pay' => '\Justapnet\Justap\Model\V1ExtraUnionPayCardlessQuickPay',
         'wechatpay_app' => '\Justapnet\Justap\Model\V1ExtraWechatpayApp',
         'wechatpay_h5' => '\Justapnet\Justap\Model\V1ExtraWechatpayH5',
         'wechatpay_jsapi' => '\Justapnet\Justap\Model\V1ExtraWechatpayJsapi',
@@ -87,6 +88,7 @@ class V1ChargeExtra implements ModelInterface, ArrayAccess
         'alipay_qr' => null,
         'alipay_scan' => null,
         'alipay_wap' => null,
+        'unionpay_cardless_quick_pay' => null,
         'wechatpay_app' => null,
         'wechatpay_h5' => null,
         'wechatpay_jsapi' => null,
@@ -130,6 +132,7 @@ class V1ChargeExtra implements ModelInterface, ArrayAccess
         'alipay_qr' => 'alipay_qr',
         'alipay_scan' => 'alipay_scan',
         'alipay_wap' => 'alipay_wap',
+        'unionpay_cardless_quick_pay' => 'unionpay_cardless_quick_pay',
         'wechatpay_app' => 'wechatpay_app',
         'wechatpay_h5' => 'wechatpay_h5',
         'wechatpay_jsapi' => 'wechatpay_jsapi',
@@ -152,6 +155,7 @@ class V1ChargeExtra implements ModelInterface, ArrayAccess
         'alipay_qr' => 'setAlipayQr',
         'alipay_scan' => 'setAlipayScan',
         'alipay_wap' => 'setAlipayWap',
+        'unionpay_cardless_quick_pay' => 'setUnionpayCardlessQuickPay',
         'wechatpay_app' => 'setWechatpayApp',
         'wechatpay_h5' => 'setWechatpayH5',
         'wechatpay_jsapi' => 'setWechatpayJsapi',
@@ -174,6 +178,7 @@ class V1ChargeExtra implements ModelInterface, ArrayAccess
         'alipay_qr' => 'getAlipayQr',
         'alipay_scan' => 'getAlipayScan',
         'alipay_wap' => 'getAlipayWap',
+        'unionpay_cardless_quick_pay' => 'getUnionpayCardlessQuickPay',
         'wechatpay_app' => 'getWechatpayApp',
         'wechatpay_h5' => 'getWechatpayH5',
         'wechatpay_jsapi' => 'getWechatpayJsapi',
@@ -250,6 +255,7 @@ class V1ChargeExtra implements ModelInterface, ArrayAccess
         $this->container['alipay_qr'] = isset($data['alipay_qr']) ? $data['alipay_qr'] : null;
         $this->container['alipay_scan'] = isset($data['alipay_scan']) ? $data['alipay_scan'] : null;
         $this->container['alipay_wap'] = isset($data['alipay_wap']) ? $data['alipay_wap'] : null;
+        $this->container['unionpay_cardless_quick_pay'] = isset($data['unionpay_cardless_quick_pay']) ? $data['unionpay_cardless_quick_pay'] : null;
         $this->container['wechatpay_app'] = isset($data['wechatpay_app']) ? $data['wechatpay_app'] : null;
         $this->container['wechatpay_h5'] = isset($data['wechatpay_h5']) ? $data['wechatpay_h5'] : null;
         $this->container['wechatpay_jsapi'] = isset($data['wechatpay_jsapi']) ? $data['wechatpay_jsapi'] : null;
@@ -470,6 +476,30 @@ class V1ChargeExtra implements ModelInterface, ArrayAccess
     public function setAlipayWap($alipay_wap)
     {
         $this->container['alipay_wap'] = $alipay_wap;
+
+        return $this;
+    }
+
+    /**
+     * Gets unionpay_cardless_quick_pay
+     *
+     * @return \Justapnet\Justap\Model\V1ExtraUnionPayCardlessQuickPay
+     */
+    public function getUnionpayCardlessQuickPay()
+    {
+        return $this->container['unionpay_cardless_quick_pay'];
+    }
+
+    /**
+     * Sets unionpay_cardless_quick_pay
+     *
+     * @param \Justapnet\Justap\Model\V1ExtraUnionPayCardlessQuickPay $unionpay_cardless_quick_pay 银联无卡快捷支付渠道元数据
+     *
+     * @return $this
+     */
+    public function setUnionpayCardlessQuickPay($unionpay_cardless_quick_pay)
+    {
+        $this->container['unionpay_cardless_quick_pay'] = $unionpay_cardless_quick_pay;
 
         return $this;
     }

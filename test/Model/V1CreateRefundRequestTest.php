@@ -124,4 +124,18 @@ class V1CreateRefundRequestTest extends \PHPUnit_Framework_TestCase
     public function testPropertyMetadata()
     {
     }
+
+    /**
+     * Test attribute "notification_area"
+     */
+    public function testPropertyNotificationArea()
+    {
+    }
+
+    /**
+     * Test attribute "notify_url"
+     */
+    public function testPropertyNotifyUrl()
+    {
+    }
 }
